@@ -1,8 +1,12 @@
 <?php
 session_start();
-//unset($_SESSION['user_email']);
 if (!isset($_SESSION['user_email'])) {
     header("Location:../index.php");
+} else {
+    $conn = mysqli_connect("77.104.142.97", "ayolanin_dev", "WelComeDB1129", "ayolanin_datahost");
+    if (mysqli_connect_errno()) {
+        echo "Falied to Connect the Database" . mysqli_connect_error();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -12,7 +16,6 @@ if (!isset($_SESSION['user_email'])) {
         <title>User | Home</title>
         <?php include '../assets/include/head.php'; ?>
         <link rel="stylesheet" href="../assets/css/home.css">
-
     </head>
     <body>
         <nav id="top">
@@ -25,7 +28,17 @@ if (!isset($_SESSION['user_email'])) {
                             </a>
                             <span class="hidden-xs hidden-sm hidden-md">0342265107</span>
                         </li>
-                        <li><a href="../admin/index.php"  title="User Management"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">User Management</span></a></li>
+
+                        <?php
+                        global $conn;
+                        $logged_user = $_SESSION['user_email'];
+                        $query = "SELECT * FROM userlogin WHERE user_type='11' AND user_email='$logged_user'";
+                        $run_query = mysqli_query($conn, $query);
+                        if (mysqli_num_rows($run_query) > 0) {
+                            ?>
+
+                            <li><a href="../admin/index.php"  title="User Management"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">Switch Admin</span></a></li>
+                        <?php } ?>
                         <li><a href="../admin/user_management/update_user_account.php"  title="My Account"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span></a></li>
                         <li><a href="../controller/co_logout.php" style="text-decoration: none;"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">Logout</span></a></li>	
                     </ul>

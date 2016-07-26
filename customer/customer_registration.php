@@ -381,12 +381,12 @@ if (!isset($_SESSION['user_email'])) {
                                             <input type="text" id="cus_nic" name="cus_nic" maxlength="10" placeholder="XXXXXXXXXV"  class="form-control" style="text-transform: uppercase;"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Date of Birth (mm/dd/yyyy):</label>
+                                            <span style="color:red;">*</span><label class="control-label" >Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="cus_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" name="cus_dob" value="<?php echo $gua_dob; ?>" placeholder="Date of Birth" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span><label class="control-label" >Employment/Position:</label>
-                                            <input type="text" id="cus_position" maxlength="100" name="cus_position" value="<?php echo $cus_position; ?>" placeholder="Employment/Position"  class="form-control" maxlength="80"/>
+                                            <input type="text" id="cus_position" maxlength="100" name="cus_position" value="<?php echo $cus_position;?>" placeholder="Employment/Position"  class="form-control" maxlength="80"/>
                                         </div>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span><label class="control-label" >Monthly Salary/Net Income:</label>
@@ -422,7 +422,7 @@ if (!isset($_SESSION['user_email'])) {
                                             <input type="text" id="cus_spouse_name"  readonly maxlength="100"  name="cus_spouse_name" id="fname" placeholder="Full Name" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (mm/dd/yyyy):</label>
+                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="cus_spouse_dob" readonly min="1900-12-31" max="<?php echo $reg_date; ?>" value="<?php echo $reg_date; ?>" name="cus_spouse_dob" placeholder="Date of Birth" class="form-control" />
                                         </div>
 
@@ -460,7 +460,7 @@ if (!isset($_SESSION['user_email'])) {
                                             <input type="number" id="prop_tp" name="prop_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" value="<?php echo $gua_tp; ?>" placeholder="077XXXXXXX"  min="0" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (mm/dd/yyyy):</label>
+                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="prop_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" value="<?php echo $reg_date; ?>" name="prop_dob" placeholder="Date of Birth" class="form-control" />
                                         </div>
                                         <div class="form-group">
@@ -516,7 +516,7 @@ if (!isset($_SESSION['user_email'])) {
                                             <input type="number" id="g1_tp" name="g1_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" min="0" value="<?php echo $gua_tp; ?>" placeholder="077XXXXXXX" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (mm/dd/yyyy):</label>
+                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="g1_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" name="g1_dob" value="<?php echo $gua_dob; ?>" placeholder="Date of Birth"   class="form-control" />
 
                                         </div>
@@ -568,7 +568,7 @@ if (!isset($_SESSION['user_email'])) {
                                             <input type="number" id="g2_tp" name="g2_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" value="<?php echo $gua_tp; ?>" placeholder="077XXXXXXX"  min="0" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (mm/dd/yyyy):</label>
+                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="g2_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" name="g2_dob" value="<?php echo $gua_dob; ?>" placeholder="Date of Birth"   class="form-control" />
 
                                         </div>
