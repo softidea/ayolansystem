@@ -48,9 +48,9 @@
                                 <a href="user_management/user_account.php" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">Create New User Account</button></a>
                                 <a href="user_management/user_account.php" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">Create New Administrator Account</button></a>
                                 <a href="../admin/user_management/view_user_account.php" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">View User Accounts</button></a>
-                                <a href="" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">Update User Account</button></a>
-                                <a href="" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">View Administrator Accounts</button></a>
-                                <a href="" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">Update Administrator Account</button></a>
+                                <a href="../admin/user_management/update_user_account.php" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">Update User Account</button></a>
+                                <a href="../admin/user_management/view_user_account.php" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">View Administrator Accounts</button></a>
+                                <a href="../admin/user_management/update_user_account.php" style="text-decoration: none;"><button type="button" class="list-group-item" id="listButton">Update Administrator Account</button></a>
                             </div>
                             <div class="panel-footer">
                                 <div style="height: 15px;clear: both;"></div>

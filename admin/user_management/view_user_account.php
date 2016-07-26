@@ -14,23 +14,11 @@ if (!isset($_SESSION['user_email'])) {
     <head>
         <meta charset="UTF-8">
         <title>View User Account</title>
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <!-- Latest compiled and minified CSS -->
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-        <!-- Optional theme -->
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,300,300italic,400italic,600,700,600italic,700italic,900,900italic' rel='stylesheet' type='text/css'>
-        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <link rel="icon" href="favicon.ico">
+       <?php include '../../assets/include/head.php'; ?>
         <link rel="stylesheet" type="text/css" href="../../assets/css/user_common/user_common.css"/>
         <script type="text/javascript">
-            function searchAccounts(value) {
+            function searchAccounts() {
+                var value = document.getElementById('select_account_type').value;
                 if (value != "") {
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -40,23 +28,27 @@ if (!isset($_SESSION['user_email'])) {
                     }
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            document.getElementById("v_type").innerHTML = xmlhttp.responseText;
+                            //alert(xmlhttp.responseText);
+                            if (xmlhttp.responseText != "") {
+                                document.getElementById('account_tbody').innerHTML = "";
+                                document.getElementById('account_tbody').innerHTML = xmlhttp.responseText;
+                            }
                         }
                     }
-                    xmlhttp.open("GET", "../controller/co_load_vehicle_types.php?q=" + str, true);
+                    xmlhttp.open("GET", "../../controller/admin_search_user_accounts.php?user_account_search_value=" + value, true);
                     xmlhttp.send();
                 }
             }
         </script>
     </head>
-    <body>
+    <body onload="searchAccounts();">
         <!--Service View Main Panel-->
         <div class="container" style="margin-top: 50px;">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading" id="panelheading">
-                            <h3 class="panel-title">Create New Account</h3>
+                            <h3 class="panel-title">View User Accounts</h3>
                         </div>
                         <div class="panel-body" style="background-color: #FAFAFA;">
                             <div class="col-sm-6">
@@ -64,8 +56,8 @@ if (!isset($_SESSION['user_email'])) {
                                     <legend>Search Option 01</legend>
                                     <div class="form-group required">
                                         <label class="control-label">Select Account Type:</label>
-                                        <select name="select_account_type" id="select_account_type" class="form-control" required onchange="searchAccounts(this.value);">
-                                            <option value=""> --- Please Select --- </option>
+                                        <select name="select_account_type" id="select_account_type" class="form-control" required onchange="searchAccounts();">
+                                            <!--<option value=""> --- Please Select --- </option>-->
                                             <option value="1">User</option>
                                             <option value="2">Administrator</option>
                                         </select>
@@ -85,22 +77,11 @@ if (!isset($_SESSION['user_email'])) {
                                             <th>Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Malinda Senanayake</td>
-                                            <td>malinda@gmail.com</td>
-                                            <td>User</td>
-                                            <td>Horana</td>
-                                            <td>
-                                                <select name="user_status" id="user_status" class="form-control" onchange="readValues(this);">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Deactive</option>
-                                                </select>
-                                            </td>
-                                        </tr>
+                                    <tbody id="account_tbody">
+
                                     </tbody>
                                 </table> 
+                                <input type="button" class="btn btn" name="back_home" id="custcontinue" value="Back Home" onclick="backtoHome();">
                             </div>
                         </div>
                     </div>
@@ -121,6 +102,42 @@ if (!isset($_SESSION['user_email'])) {
         var user_id = cel;
         alert(user_id);
         // window.location.href = "customer_updateinfo.php?nic=" + cus_nic;
+    }
+    function changeAcccountStatus(value, status) {
+        //alert(value + "###" + status);
+        if (value != "" && status != "") {
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else { // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    //alert(xmlhttp.responseText);
+                    if (xmlhttp.responseText != "") {
+                        if (xmlhttp.responseText == "Account status successfully updated") {
+                            alert(xmlhttp.responseText);
+                            searchAccounts();
+                        } else if (xmlhttp.responseText == "Error while updating the account status,Please check the Values") {
+                            alert(xmlhttp.responseText);
+                        }
+                    }
+                }
+            }
+            xmlhttp.open("GET", "../../controller/admin_search_user_accounts.php?user_account_id=" + value + "&status=" + status, true);
+            xmlhttp.send();
+        }
+
+
+
+
+
+    }
+</script>
+<script type="text/javascript">
+    function backtoHome() {
+        window.location.href = "../index.php";
     }
 </script>
 </html>

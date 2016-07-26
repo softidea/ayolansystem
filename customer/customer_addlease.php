@@ -350,19 +350,19 @@ else{
                                                 <button type="button" id="cviewbuttons" class="btn btn" onclick="searchCustomerforLease();">Search</button>
                                             </div>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Customer Name:</label>
                                             <input type="text" name="cus_name" readonly id="customer_name" value="<?php echo $cus_name; ?>" placeholder="Customer Name" class="form-control"/>
                                         </div>
-                                        <div class="form-inline required" style="margin-bottom: 8px;">
+                                        <div class="form-inline" style="margin-bottom: 8px;">
                                             <a href="customer_registration.php"><button type="button" id="cviewbuttons" class="btn btn">New Customer</button></a>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label" for="input-email">Upload Customer:</label>
                                             <input type="file" name="product_image[]" id="idupload" onchange="imagepreview(this);"/>
                                             <img id="imgpreview" title="Image Preview" style="width: 200px;height: 200px;">
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label" for="input-email">Upload Property:</label>
                                             <input type="file" name="product_image"/>
                                         </div>
@@ -371,9 +371,9 @@ else{
                                 <div class="col-sm-6">
                                     <fieldset id="account">
                                         <legend>Leasing Details</legend>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Service No:</label>
-                                            <div class="form-inline required">
+                                            <div class="form-inline">
                                                 <select name="service_code" id="scode" class="form-control" onchange="" style="width: 40%;">
                                                     <option value="HOR">HOR</option>
                                                     <option value="BUL">BUL</option>
@@ -381,7 +381,7 @@ else{
                                                 <input type="text" name="service_no" id="sno" placeholder="Service No" class="form-control" maxlength="4" style="width: 59%;" required/>
                                             </div>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Select Category:</label>
                                             <select name="vehicle_category" id="v_cat" class="form-control" onchange="set_vehicle_div(this.value);">
                                                 <option value="0">~~Select Category~~</option>
@@ -389,43 +389,43 @@ else{
                                                 <option value="2">Three-Wheel</option>
                                             </select>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Select Vehicle Brand:</label>
                                             <select name="vehicle_brand" id="v_brand" class="form-control" onchange="showTypes(this.value);">
                                                 <?php load_vehicle_brands(); ?>
                                             </select>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Select Vehicle Type:</label>
                                             <select name="vehicle_type" id="v_type" class="form-control" required onchange="showVehicleMods(this.value);">
                                                 <option value="0">~~Select Vehicle Type~~</option>
                                             </select>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Vehicle Pre Code:</label>
                                             <select name="v_code" id="v_code" class="form-control" required onchange="showDetails();">
                                                 <option value="0">~~Select Vehicle Code~~</option>
                                             </select>
                                         </div>
-                                        <div class="form-inline required">
+                                        <div class="form-inline">
                                             <input type="text" name="vehicle_code" style="text-transform: uppercase;" id="v_no_code" placeholder="Ex:ME" id="input-email" class="form-control" required/>
                                             <label class="control-label"> - </label>
                                             <input type="text" name="v_no_num" maxlength="4" id="v_no_num" placeholder="Ex:2558" class="form-control" required/>
                                             <br>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Model Year:</label>
                                             <input type="text" readonly name="model_year" value="<?php echo $model_year; ?>" id="m_year" placeholder="Model Year" id="input-email" class="form-control" required/>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Lease Rental:</label>
                                             <input type="text" readonly name="lease_rate" id="l_rate" value="<?php echo $lease_rate; ?>" placeholder="Lease Rate" id="input-email" class="form-control" required/>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Fixed Rental:</label>
                                             <input type="text" name="fixed_rate" id="f_rate" value="<?php echo $fixed_rate; ?>" placeholder="Fix Rate" id="input-email" class="form-control" required/>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Select Period:</label>
                                             <select name="cbo_loan_duration" id="v_lease_period" class="form-control" required onchange="setServiceInstallment();">
                                                 <option value="0">~~Select Period~~</option>
@@ -443,11 +443,11 @@ else{
                                                 <option value="60">5 Years</option>
                                             </select>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label">Service Installment:</label>
                                             <input type="text" name="ser_installment" id="ser_installment" value="<?php echo $fixed_rate; ?>" placeholder="Fix Rate" class="form-control" required readonly/>
                                         </div>
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <label class="control-label" for="input-email">Description of the Loan:</label>
                                             <input type="text" id="lease_des" class="form-control" name="loan_description" placeholder="Description of the Loan">
                                         </div>

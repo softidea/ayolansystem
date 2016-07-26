@@ -366,11 +366,11 @@ if (!isset($_SESSION['user_email'])) {
                                         <legend>Customer Personal Details</legend>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span><label class="control-label">Full Name:</label>
-                                            <input type="text" id="cus_name" maxlength="100" name="cus_name" placeholder="Full Name"   class="form-control" maxlength="100" autofocus required />
+                                            <input type="text" id="cus_name" maxlength="100" name="cus_name" placeholder="Full Name"   class="form-control" maxlength="100" autofocus />
                                         </div>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span><label class="control-label" >Permanent Address :</label>
-                                            <input type="text" id="cus_paddress" maxlength="255"  name="cus_address" placeholder="Permanent Address"   class="form-control" maxlength="150" required />
+                                            <input type="text" id="cus_paddress" maxlength="255"  name="cus_address" placeholder="Permanent Address"   class="form-control" maxlength="150"/>
                                         </div>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span><label class="control-label" >Telephone:</label>
@@ -402,7 +402,7 @@ if (!isset($_SESSION['user_email'])) {
                                         </div>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span><label class="control-label" >Married Status:</label>
-                                            <select name="cus_ms" class="form-control" id="c_m_status" onchange="setCusDependancy();" required>
+                                            <select name="cus_ms" class="form-control" id="c_m_status" onchange="setCusDependancy();">
                                                 <option value="">~~Select Status~~</option>
                                                 <option value="Single">Single</option>
                                                 <option value="Married">Married</option>
@@ -469,7 +469,7 @@ if (!isset($_SESSION['user_email'])) {
                                         </div>
                                         <div class="form-group">
                                             <span style="color:red;">*</span><label class="control-label">Married Status:</label>
-                                            <select name="prop_ms" value="<?php echo $gua_ms; ?>" class="form-control" id="prop_ms" onchange="setPropDependancy();" required>
+                                            <select name="prop_ms" value="<?php echo $gua_ms; ?>" class="form-control" id="prop_ms" onchange="setPropDependancy();">
                                                 <option value="">~~Select Status~~</option>
                                                 <option value="Single">Single</option>
                                                 <option value="Married">Married</option>
@@ -526,7 +526,7 @@ if (!isset($_SESSION['user_email'])) {
                                         </div>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span><label class="control-label">Married Status:</label>
-                                            <select name="g1_ms" id="g1_ms" class="form-control"  onchange="setGua1Dependancy();" required>
+                                            <select name="g1_ms" id="g1_ms" class="form-control"  onchange="setGua1Dependancy();">
                                                 <option value="">~~Select Status~~</option>
                                                 <option value="Single">Single</option>
                                                 <option value="Married">Married</option>
@@ -578,7 +578,7 @@ if (!isset($_SESSION['user_email'])) {
                                         </div>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span><label class="control-label">Married Status:</label>
-                                            <select name="g2_ms" value="<?php echo $gua_ms; ?>" class="form-control" id="g2_ms" onchange="setGua2Dependancy();" required>
+                                            <select name="g2_ms" value="<?php echo $gua_ms; ?>" class="form-control" id="g2_ms" onchange="setGua2Dependancy();">
                                                 <option value="">~~Select Status~~</option>
                                                 <option value="Single">Single</option>
                                                 <option value="Married">Married</option>
