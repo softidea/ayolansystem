@@ -2,7 +2,10 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 body {
     font-family: 'Open Sans', 'sans-serif';
-    background:#f0f0f0;
+    background:#FFFF;
+    /*background-image: url('../..//assets/images/home/Screen-Shot-2013-03-14-at-9.53.50-PM.png');*/
+    /*background-size: 1366px 768px;*/
+    /*background-repeat: none;*/
 }
 .navbar-nav>li>.dropdown-menu {
     margin-top:20px;

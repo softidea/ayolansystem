@@ -185,7 +185,7 @@ session_start();
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
+<!--                                <div class="col-sm-12">
                                     <div class="panel panel-default">
                                         <div class="panel-body" style="height: 250px;">
 
@@ -193,7 +193,7 @@ session_start();
 
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
 
