@@ -15,12 +15,6 @@ if (!isset($_SESSION['user_email'])) {
 
     </head>
     <body>
-        <?php
-//         unset($_SESSION['login_process']);
-//        if ($_SESSION) {
-//            echo '<pre><script>'.print_r($_SESSION).'</script></pre>';
-//        }
-        ?>
         <nav id="top">
             <div class="container">
                 <div id="top-links" class="nav pull-right">
@@ -29,10 +23,10 @@ if (!isset($_SESSION['user_email'])) {
                             <a href="#">
                                 <i class="glyphicon glyphicon-earphone"></i>
                             </a>
-                            <span class="hidden-xs hidden-sm hidden-md">+94714 339 339</span>
+                            <span class="hidden-xs hidden-sm hidden-md">0342265107</span>
                         </li>
                         <li><a href="../admin/index.php"  title="User Management"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">User Management</span></a></li>
-                        <li><a href="#"  title="My Account"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span></a></li>
+                        <li><a href="../admin/user_management/update_user_account.php"  title="My Account"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">My Account</span></a></li>
                         <li><a href="../controller/co_logout.php" style="text-decoration: none;"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm hidden-md">Logout</span></a></li>	
                     </ul>
                 </div>

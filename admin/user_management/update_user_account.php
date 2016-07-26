@@ -3,17 +3,22 @@
 session_start();
 if (!isset($_SESSION['user_email'])) {
     header("Location:../index.php");
-}
+} else {
+    $loggeduser = $_SESSION['user_email'];
     $conn = mysqli_connect("77.104.142.97", "ayolanin_dev", "WelComeDB1129", "ayolanin_datahost");
     if (mysqli_connect_errno()) {
         echo "Falied to Connect the Database" . mysqli_connect_error();
     }
+}
+
+$emailu = filter_input(INPUT_POST, 'email');
+$_SESSION['email'] = $emailu;
 ?>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Update User Accounts</title>
-         <?php include '../../assets/include/head.php'; ?>
+        <?php include '../../assets/include/head.php'; ?>
         <link rel="stylesheet" type="text/css" href="../../assets/css/user_common/user_common.css"/>
     </head>
     <body>
@@ -33,7 +38,7 @@ if (!isset($_SESSION['user_email'])) {
                                         <div class="form-group required">
                                             <div class="form-group required">
                                                 <label class="control-label">E-mail:</label>
-                                                <input type="text" name="email" id="email" placeholder="Enter E-mail" class="form-control" required/>
+                                                <input type="text" name="email" id="email" placeholder="Enter E-mail" class="form-control" value="<?php echo $loggeduser; ?>" required readonly/>
                                             </div>
                                         </div>
                                         <div class="form-group required">
@@ -69,38 +74,37 @@ if (!isset($_SESSION['user_email'])) {
     if (isset($_POST['password_update'])) {
 
         global $conn;
-        
+
         $email = filter_input(INPUT_POST, 'email');
-        $current_password=  filter_input(INPUT_POST, 'current_password');
-        $new_password=  filter_input(INPUT_POST, 'new_password');
-        $confirm_password=  filter_input(INPUT_POST, 'confirm_password');
-        
-        if($email!="" && $current_password!="" && $new_password!="" && $confirm_password!=""){
-            if($new_password==$confirm_password){
-                $query="SELECT * FROM userlogin WHERE user_email='$email' AND user_password='$current_password'";
-                $run_query=  mysqli_query($conn, $query);
-                if(mysqli_num_rows($run_query)>0){
-                    $change_pass= "UPDATE userlogin SET user_password = '$confirm_password' WHERE user_email = '$email'";
-                    $run_change=  mysqli_query($conn, $change_pass);
-                    if($run_change){
-                        echo "<script>alert('Account Password successfully changed');</script>";
-                    }
-                    else{
+        $current_password = filter_input(INPUT_POST, 'current_password');
+        $new_password = filter_input(INPUT_POST, 'new_password');
+        $confirm_password = filter_input(INPUT_POST, 'confirm_password');
+
+        if ($email != "" && $current_password != "" && $new_password != "" && $confirm_password != "") {
+            if ($new_password == $confirm_password) {
+                $query = "SELECT * FROM userlogin WHERE user_email='$email' AND user_password='$current_password'";
+                $run_query = mysqli_query($conn, $query);
+                if (mysqli_num_rows($run_query) == 1) {
+                    $change_pass = "UPDATE userlogin SET user_password = '$confirm_password' WHERE user_email = '$email'";
+                    $run_change = mysqli_query($conn, $change_pass);
+                    if ($run_change) {
+                        echo "<script>alert('Account Password successfully changed');document.getElementById('email').value='';</script>";
+                        $emailu = "";
+                    } else {
                         echo "<script>alert('Error while changing password,please check again');</script>";
                     }
-                    
-                }else{
+                } else {
                     echo "<script>alert('Please enter valid user email and password');</script>";
                 }
-            }else{
+            } else {
                 echo "<script>alert('Passwords are not matched,Please enter matched Password');</script>";
             }
-        } 
+        }
     }
     ?>
     <script type="text/javascript">
-        function backtoHome(){
-            window.location.href="../index.php";
+        function backtoHome() {
+            window.location.href = "../index.php";
         }
     </script>
 </html>

@@ -142,10 +142,12 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
             $service_date = $row['ser_date'];
 
             //$service_date="2016-05-01";
-            $curr_ser_date = split("-", $service_date)[2];
-
-            $serv_mon_year = split("-", $service_date)[0] . "-" . split("-", $service_date)[1];
-
+            
+            //$curr_ser_date = split("-", $service_date)[2];
+            list($year, $month, $curr_ser_date) = explode("-", $service_date);
+            
+            //$serv_mon_year = split("-", $service_date)[0] . "-" . split("-", $service_date)[1];
+            list($serv_mon_year, $month, $curr_ser_date) = explode("-", $service_date);
 
             $default_service_date = 5;
 

@@ -104,7 +104,7 @@ if (!isset($_SESSION['user_email'])) {
         // window.location.href = "customer_updateinfo.php?nic=" + cus_nic;
     }
     function changeAcccountStatus(value, status) {
-        //alert(value + "###" + status);
+        alert(value + "###" + status);
         if (value != "" && status != "") {
             if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
