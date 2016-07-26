@@ -104,7 +104,7 @@ $_SESSION['email'] = $emailu;
     ?>
     <script type="text/javascript">
         function backtoHome() {
-            window.location.href = "../index.php";
+            window.location.href = "../../controller/co_logout.php";
         }
     </script>
 </html>
