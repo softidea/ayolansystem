@@ -127,17 +127,30 @@ if (!isset($_SESSION['user_email'])) {
                                         <li><a href="../customer/customer_installment.php" style="text-decoration: none;">Pay Installment</a></li>							
                                         <li class="divider"></li>
                                         <li class="dropdown-header" style="color: #004D40;">Search Customers</li>
-                                        <form class="form" role="form">
+                                        
                                             <div class="form-group">
                                                 <label class="sr-only" for="email">Name | ID</label>
-                                                <input type="email" class="form-control" id="email" placeholder="Name | ID | Service No">                                                              
+                                                <input type="email" class="form-control" id="email" placeholder="Name | ID | Service No"> 
+                                                <select class="form-control">
+                                                    <option value="0">~~Select Period~~</option>
+                                                    <option value="3">3 Months</option>
+                                                    <option value="6">6 Months</option>
+                                                <option value="9">9 Months</option>
+                                                <option value="12">1 Year</option>
+                                                <option value="18">1.5 Years</option>
+                                                <option value="24">2 Years</option>
+                                                <option value="30">2.5 Years</option>
+                                                <option value="36">3 Years</option>
+                                                <option value="42">3.5 Years</option>
+                                                <option value="48">4 Years</option>
+                                                <option value="54">4.5 Years</option>
+                                                <option value="60">5 Years</option>
+                                                </select>
                                             </div>
                                             <a href="../customer/customer_view.php" style="text-decoration: none;color: white;">
                                                 <button type="button" class="btn btn btn-block" style="background-color: #009688;color: white;">Search
                                                 </button>
                                             </a>
-                                        </form>  
-
                                     </ul>
                                 </li>
                             </ul>

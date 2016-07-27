@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php
 session_start();
+ date_default_timezone_set('Asia/Colombo');
+ $date_setter = date("Y-m-d");
 ?>
 <html>
     <head>
@@ -77,12 +79,12 @@ session_start();
                                 <legend>Search Option 02</legend>
                                 <form method="post">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Start Date:</label>
-                                        <input type="date" name="date1" id="fname" value="" placeholder="Registration Date" id="input-email" class="form-control"/>
+                                        <label class="control-label">Start Date:</label>
+                                        <input type="date" name="date1" id="date1" min="1900-12-31" max="<?php echo $date_setter; ?>" value="<?php echo $date_setter;?>" placeholder="Registration Date" class="form-control"/>
                                     </div>
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">End Here:</label>
-                                        <input type="date" name="date2" id="fname" value="" placeholder="Search Here" id="input-email" class="form-control" required/>
+                                        <label class="control-label">End Here:</label>
+                                        <input type="date" name="date2" id="date2" min="1900-12-31" max="<?php echo $date_setter; ?>" value="<?php echo $date_setter;?>" placeholder="Search Here" class="form-control" required/>
                                         <br>
                                         <button type="submit" on name="search_date" id="cservicebtn" class="btn btn">Search</button>
                                     </div>
@@ -145,7 +147,7 @@ session_start();
                                         $i = 1;
                                         ?>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                            <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?> onClick = "readValues(this)">
+                                            <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?>>
 
 
                                                 <td><?php echo $row['cus_id'] ?></td>
@@ -170,7 +172,7 @@ session_start();
                                         <div class="form-inline">
                                             <button type="submit"  class="btn btn" id="cservicebtn">Save as PDF</button>
                                             <button type="submit"  class="btn btn" id="cservicebtn">Print</button>
-                                            <script>
+<!--                                            <script>
 
                                                 var cel;
                                                 function readValues(x) {
@@ -180,7 +182,7 @@ session_start();
                                                     alert(cus_nic);
                                                     window.location.href = "customer_updateinfo.php?nic=" + cus_nic;
                                                 }
-                                            </script>                                           
+                                            </script>                                           -->
 
                                         </div>
                                     </div>

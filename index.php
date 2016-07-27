@@ -21,7 +21,7 @@ session_start();
                     document.getElementsById('panelloginusers').style.display = "none";
                 }
             }
-            document.onkeydown = function(e) {
+            document.onkeydown = function (e) {
                 if (e.ctrlKey &&
                         (e.keyCode === 67 ||
                                 e.keyCode === 86 ||
@@ -47,7 +47,6 @@ session_start();
                         </div>
                     </div>
                     <aside id="column-right" class="col-sm-6">
-
                         <div class="panel">
                             <div class="panel-heading" style="background-color: #004D40;">
                                 <h3 class="panel-title"><h2 style="color: white;">AYOLAN INVESTMENTS</h2></h3>
@@ -76,57 +75,6 @@ session_start();
                 </div>
             </div>
             <!--Login panel start-->
-
-            <!--Register Panel Start-->
-            <div id="panelreguser" style="display: none;">
-                <div class="row">
-                    <div class="col-sm-6"'>
-                        <div>
-                            <img class="log-wap"src="http://fourgenius.com/ayolan_src/images/login/Logo500x500_transpernt.png">
-                        </div>
-                    </div>
-                    <aside id="column-right" class="col-sm-6">
-                        <div class="panel">
-                            <div class="panel-heading" style="background-color: #004D40;">
-                                <h3 class="panel-title"><h2 style="color: white;">AYOLAN INVESTMENTS</h2></h3>
-                                <p class="sub_topic">Finance Management System</p>
-                            </div>
-                            <div class="panel-body">
-
-                                <form action="controller/user_login.php" method="POST" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <label class="control-label" for="input-email">First Name :</label>
-                                        <input type="text" name="email" value="" placeholder="E-Mail Address" id="input-email" class="form-control" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="input-email">Last Name :</label>
-                                        <input type="text" name="email" value="" placeholder="E-Mail Address" id="input-email" class="form-control" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="input-email">E-Mail Address :</label>
-                                        <input type="text" name="email" value="" placeholder="E-Mail Address" id="input-email" class="form-control" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="input-password">New Password :</label>
-                                        <input type="password" name="password" placeholder="Password" id="input-password" class="form-control" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="input-password">Confirm Password :</label>
-                                        <input type="password" name="password" placeholder="Password" id="input-password" class="form-control" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="input-email">Telephone :</label>
-                                        <input type="text" name="email" value="" placeholder="E-Mail Address" id="input-email" class="form-control" required/>
-                                    </div>
-                                    <input type="submit" name="login_process" value="Register Here" class="btn" id='btn_login'/>
-                                    <!-- <input type="submit" name="login_process" value="Back Login" class="btn" id='btn_login'/> -->
-                                </form>
-                            </div>
-                        </div>
-                    </aside>
-                </div>
-            </div>
-            <!--Register panel start-->
         </div>
         <!--Container Panel Start-->
 
