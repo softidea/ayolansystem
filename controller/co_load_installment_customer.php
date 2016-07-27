@@ -14,6 +14,7 @@ $s_no = filter_input(INPUT_GET, 's_no');
 $service_no = filter_input(INPUT_GET, 'service_no');
 //$payment = filter_input(INPUT_GET, 'payment');
 $sno_begin_ins = filter_input(INPUT_GET, 'sno_begin_ins');
+$ser_number = filter_input(INPUT_GET, 'ser_number');
 
 
 $installment = filter_input(INPUT_GET, 'installment');
@@ -22,6 +23,39 @@ $payabaledate = filter_input(INPUT_GET, 'payabledate');
 $paiddate = filter_input(INPUT_GET, 'paiddate');
 $serno = filter_input(INPUT_GET, 'serno');
 $saveinstallment = filter_input(INPUT_GET, 'saveinstallment');
+
+
+if ($ser_number != "" && $ser_number != null) {
+    global $conn;
+    $query = "SELECT * FROM service WHERE ser_number='$ser_number'";
+    $run_query = mysqli_query($conn, $query);
+    if (mysqli_num_rows($run_query) > 0) {
+        if ($row = mysqli_fetch_assoc($run_query)) {
+            $cuss_nic = $row['cus_nic'];
+            $cus_query = "SELECT * FROM customer WHERE cus_nic='$cuss_nic'";
+            $run_cuss = mysqli_query($conn, $cus_query);
+            if (mysqli_num_rows($run_cuss) > 0) {
+                if ($row_cus = mysqli_fetch_assoc($run_cuss)) {
+
+                    $ser_no = $row['vehicle_no'];
+                    $pre_code = $row['v_code'];
+                    $vehicle_no = $pre_code . "" . $ser_no;
+
+                    $fixed_rent = $row['fix_rate'];
+                    $install = $row['installment'];
+
+                    $cus_name = $row_cus['cus_fullname'];
+                    $cus_tp = $row_cus['cus_tp'];
+                    $cus_address = $row_cus['cus_address'];
+                    $cus_regdate = $row_cus['cus_reg_date'];
+
+                    echo $cuss_nic . "#" . $cus_name . "#" . $cus_tp . "#" . $cus_address . "#" . $cus_regdate . "#" . $vehicle_no . "#" . $fixed_rent . "#" . $install;
+                }
+            }
+        }
+    }
+}
+
 
 if ($saveinstallment != "" && $saveinstallment != null) {
 
@@ -44,8 +78,8 @@ VALUES (
         '$paid_payment',
         '$customer_due',
         '$compnay_due')";
-    $run_query=  mysqli_query($conn, $query);
-    if($run_query){
+    $run_query = mysqli_query($conn, $query);
+    if ($run_query) {
         echo "Installment Successfully Added";
     }
 }
@@ -91,13 +125,16 @@ if ($s_no != "" && $s_no != null) {
     $run_query = mysqli_query($conn, $sql_query);
     if (mysqli_num_rows($run_query) > 0) {
         if ($row = mysqli_fetch_assoc($run_query)) {
+
+            $ser_number=$row['ser_number'];
             $ser_no = $row['vehicle_no'];
-            $ser_date = $row['ser_date'];
+            $pre_code = $row['v_code'];
+            $vehicle_no = $pre_code . "" . $ser_no;
+
             $fixed_rent = $row['fix_rate'];
             $install = $row['installment'];
-            $ser_duration = $row['period'];
 
-            echo $ser_no . "#" . $ser_date . "#" . $fixed_rent . "#" . $install . "#" . $ser_duration;
+            echo $ser_number."#".$vehicle_no . "#" . $fixed_rent . "#" . $install;
         }
     }
 }
@@ -142,10 +179,9 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
             $service_date = $row['ser_date'];
 
             //$service_date="2016-05-01";
-            
             //$curr_ser_date = split("-", $service_date)[2];
             list($year, $month, $curr_ser_date) = explode("-", $service_date);
-            
+
             //$serv_mon_year = split("-", $service_date)[0] . "-" . split("-", $service_date)[1];
             list($serv_mon_year, $month, $curr_ser_date) = explode("-", $service_date);
 
@@ -211,7 +247,7 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                         $temp_rounded_off_date = date('Y-m-d', strtotime('+1 week', strtotime($rounded_off_date)));
                         $dis_round_date = $temp_rounded_off_date;
                         $sql_payment = "SELECT SUM(payment) FROM ser_installment where paid_date<='$temp_rounded_off_date' and paid_date>='$rounded_off_date' and ser_number='$sno_begin_ins'";
-                        
+
                         $run_payment = mysqli_query($conn, $sql_payment);
                         if ($row = mysqli_fetch_array($run_payment)) {
                             $mon_pay = $row[0];
@@ -285,12 +321,11 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
 
                 $customer_due = $temp_due;
             }
-            
-            
+
+
             if ($customer_due <= 0) {
-                $customer_due = $installment_amount+$customer_due;
+                $customer_due = $installment_amount + $customer_due;
                 $dis_round_date = date('Y-m-d', strtotime('+1 month', strtotime($dis_round_date)));
-               
             }
             echo $dis_round_date . "#" . $customer_due;
 

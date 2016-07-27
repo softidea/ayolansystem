@@ -9,8 +9,7 @@ if (!isset($_SESSION['user_email'])) {
 if (isset($_SESSION['cus_nic'])) {
     $cus_nic = $_SESSION['cus_nic'];
     $cus_name = $_SESSION['cus_name'];
-} 
-else{
+} else {
     $cus_nic = "";
     $cus_name = "";
 }
@@ -310,7 +309,7 @@ else{
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                             //alert(xmlhttp.responseText);
-                            
+
                             document.getElementById('ser_installment').value = xmlhttp.responseText;
                         }
                     }
@@ -329,7 +328,7 @@ else{
         </script>
     </head>
     <body>
-        <?php include '../assets/include/navigation_bar.php';?>
+        <?php include '../assets/include/navigation_bar.php'; ?>
         <!--Lease Registration Panel-->
         <div class="container" style="margin-top: 80px;display: block;" id="one">
             <form action="../controller/co_customer.php" method="POST" enctype="multipart/form-data">
@@ -344,7 +343,7 @@ else{
                                     <fieldset id="account">
                                         <legend>Customer Details</legend>
                                         <div class="form-group required">
-                                            <label class="control-label" for="input-email">Customer NIC:</label>
+                                            <label class="control-label">Customer NIC:</label>
                                             <div class="form-inline required">
                                                 <input type="text" name="cus_nic" id="customer_nic" value="<?php echo $cus_nic; ?>" placeholder="Customer NIC" class="form-control" required style="width: 85%;" maxlength="10"/>
                                                 <button type="button" id="cviewbuttons" class="btn btn" onclick="searchCustomerforLease();">Search</button>
@@ -358,12 +357,12 @@ else{
                                             <a href="customer_registration.php"><button type="button" id="cviewbuttons" class="btn btn">New Customer</button></a>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label" for="input-email">Upload Customer:</label>
+                                            <label class="control-label">Upload Customer:</label>
                                             <input type="file" name="product_image[]" id="idupload" onchange="imagepreview(this);"/>
                                             <img id="imgpreview" title="Image Preview" style="width: 200px;height: 200px;">
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label" for="input-email">Upload Property:</label>
+                                            <label class="control-label">Upload Property:</label>
                                             <input type="file" name="product_image"/>
                                         </div>
                                     </fieldset>
@@ -378,7 +377,7 @@ else{
                                                     <option value="HOR">HOR</option>
                                                     <option value="BUL">BUL</option>
                                                 </select>
-                                                <input type="text" name="service_no" id="sno" placeholder="Service No" class="form-control" maxlength="4" style="width: 59%;" required/>
+                                                <input type="text" name="service_no" id="sno" placeholder="Service No" class="form-control" onKeyPress="return numbersonly(this, event)" max="4" maxlength="4" style="width: 59%;" required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -410,7 +409,7 @@ else{
                                         <div class="form-inline">
                                             <input type="text" name="vehicle_code" style="text-transform: uppercase;" id="v_no_code" placeholder="Ex:ME" id="input-email" class="form-control" required/>
                                             <label class="control-label"> - </label>
-                                            <input type="number" name="v_no_num" maxlength="4" id="v_no_num" placeholder="Ex:2558" class="form-control" required/>
+                                            <input type="number" name="v_no_num" min="1" max="9999" id="v_no_num" placeholder="Ex:2558" class="form-control" required/>
                                             <br>
                                         </div>
                                         <div class="form-group">
@@ -467,5 +466,32 @@ else{
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="http://bootsnipp.com/dist/scripts.min.js"></script>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+
+        function numbersonly(myfield, e, dec)
+        {
+            var key;
+            var keychar;
+            if (window.event)
+                key = window.event.keyCode;
+            else if (e)
+                key = e.which;
+            else
+                return true;
+            keychar = String.fromCharCode(key);
+            if ((key == null) || (key == 0) || (key == 8) ||
+                    (key == 9) || (key == 13) || (key == 27))
+                return true;
+            else if ((("0123456789").indexOf(keychar) > -1))
+                return true;
+            else if (dec && (keychar == ".")) {
+                myfield.form.elements[dec].focus();
+                return false;
+            } else
+                return false;
+        }
+
+
+    </script>
 
 </html>

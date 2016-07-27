@@ -12,7 +12,6 @@ $gua_nic = filter_input(INPUT_GET, 'gua_nic');
 $g_as_c_nic = filter_input(INPUT_GET, 'g_as_c_nic');
 $ser_value_cus_installment=  filter_input(INPUT_GET, 'ser_value_cus_installment');
 
-
 if (isset($customer_nic)) {
     global $conn;
     $sql_customer = "SELECT * FROM customer WHERE cus_nic='$customer_nic'";
