@@ -51,8 +51,9 @@ session_start();
                                 <fieldset id="account">
                                     <legend>Search Option 01</legend>
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Search by:</label>
-                                        <form method="post" >  <select name="cbopayment" id="input-search-option" class="form-control" required onchange="setServiceOptionPanel();">
+                                        <label class="control-label">Search by:</label>
+                                        <form method="post"> 
+                                            <select name="cbopayment" id="input-search-option" class="form-control" required onchange="setServiceOptionPanel();">
                                                 <option value=""> --- Please Select --- </option>
                                                 <option value="nic">Customer NIC</option>
                                                 <option value="tp">Phone Number</option>
