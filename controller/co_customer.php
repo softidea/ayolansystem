@@ -90,7 +90,7 @@ $cus_daily_loan_account_no = "";
 
 
 if (isset($_POST['customer_continue'])) {
-    echo "inner";
+    
     $cus_name = $_SESSION['cus_name'] = filter_input(INPUT_POST, 'cus_name');
     $cus_address = $_SESSION['cus_address'] = filter_input(INPUT_POST, 'cus_address');
     $cus_tp = $_SESSION['cus_tp'] = filter_input(INPUT_POST, 'cus_tp');
@@ -443,6 +443,14 @@ VALUES (
 
 //saving customer bank account details~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //saving leasing~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        $check_service="SELECT * FROM service WHERE ser_number='$service_number'";
+        $run_check=  mysqli_query($conn, $check_service);
+        if(mysqli_num_rows($run_check)>0){
+            echo "<script>alert('Service already added');</script>";
+        }else{
+        
+        
         $query_lease = "INSERT INTO service
             (
              ser_number,
@@ -480,7 +488,7 @@ VALUES (
         '$cus_nic')";
 
         $save_lease = mysqli_query($conn, $query_lease);
-
+        
 //saving leasing~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // saving gurantors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -547,11 +555,12 @@ VALUES (
         '$service_number');";
 
         $save_g2 = mysqli_query($conn, $query_guarantor2);
-
+        }
 // saving gurantors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         if ($save_savings && $save_mobile && $save_daily_loan && $save_property1 && $save_property2 && $save_lease && $save_g1 && $save_g2) {
             echo "<script>alert('Customer Lease has been sussfully added');</script>";
+            echo "<script>window.location.href='../user/user_home.php';</script>";
             $_SESSION['cus_nic'] = "";
             $_SESSION['cus_name'] = "";
         } else {

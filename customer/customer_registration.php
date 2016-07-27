@@ -149,7 +149,7 @@ if (!isset($_SESSION['user_email'])) {
             function load_interest() {
                 var aid = document.getElementById('aid').value;
                 var yid = document.getElementById('yid').value;
-                alert(aid + "###" + yid);
+                //alert(aid + "###" + yid);
                 if (aid != 0 && yid != 0) {
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -219,7 +219,7 @@ if (!isset($_SESSION['user_email'])) {
                 if (document.getElementById('v_cat').selectedIndex == 1) {
                     var v_type = document.getElementById('v_type').value;
                     var v_code = document.getElementById('v_code').value;
-                    alert(v_type + " " + v_code);
+                    //alert(v_type + " " + v_code);
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
                         xmlhttp = new XMLHttpRequest();
@@ -228,7 +228,7 @@ if (!isset($_SESSION['user_email'])) {
                     }
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
                             var value = xmlhttp.responseText;
                             var result_arr = value.split("#");
 
@@ -253,10 +253,10 @@ if (!isset($_SESSION['user_email'])) {
                     xmlhttp.open("GET", "../controller/co_load_vehicle_details.php?v_type=" + v_type + "&v_code=" + v_code, true);
                     xmlhttp.send();
                 } else if (document.getElementById('v_cat').selectedIndex == 2) {
-                    alert('inner');
+                    //alert('inner');
                     var v_tw_type = document.getElementById('v_type').value;
                     var v_tw_code = document.getElementById('v_code').value;
-                    alert(v_tw_type + "tw " + v_tw_code);
+                    //alert(v_tw_type + "tw " + v_tw_code);
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
                         xmlhttp = new XMLHttpRequest();
@@ -265,7 +265,7 @@ if (!isset($_SESSION['user_email'])) {
                     }
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
                             document.getElementById('l_rate').value = xmlhttp.responseText;
                         }
                     }
@@ -327,7 +327,7 @@ if (!isset($_SESSION['user_email'])) {
                     }
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
                             document.getElementById('ser_installment').value = xmlhttp.responseText;
                         }
                     }
@@ -365,43 +365,43 @@ if (!isset($_SESSION['user_email'])) {
                                         <!-- Start.Customer Personal Details -->
                                         <legend>Customer Personal Details</legend>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Full Name:</label>
+                                            <label class="control-label">Full Name:</label>
                                             <input type="text" id="cus_name" maxlength="100" name="cus_name" placeholder="Full Name"   class="form-control" maxlength="100" autofocus />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Permanent Address :</label>
+                                            <label class="control-label" >Permanent Address :</label>
                                             <input type="text" id="cus_paddress" maxlength="255"  name="cus_address" placeholder="Permanent Address"   class="form-control" maxlength="150"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Telephone:</label>
+                                            <label class="control-label" >Telephone:</label>
                                             <input type="number" id="cus_tp" name="cus_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" min="0" placeholder="077XXXXXXX" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >NIC Number:</label>
-                                            <input type="text" id="cus_nic" name="cus_nic" maxlength="10" placeholder="XXXXXXXXXV"  class="form-control" style="text-transform: uppercase;"/>
+                                            <span style="color:red;">*</span>  <label class="control-label" >NIC Number:</label>
+                                            <input type="text" id="cus_nic" name="cus_nic" maxlength="10" placeholder="XXXXXXXXXV"  class="form-control" style="text-transform: uppercase;" required/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Date of Birth (dd/mm/yyyy):</label>
+                                            <label class="control-label" >Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="cus_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" name="cus_dob" value="<?php echo $gua_dob; ?>" placeholder="Date of Birth" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Employment/Position:</label>
-                                            <input type="text" id="cus_position" maxlength="100" name="cus_position" value="<?php echo $cus_position;?>" placeholder="Employment/Position"  class="form-control" maxlength="80"/>
+                                            <label class="control-label" >Employment/Position:</label>
+                                            <input type="text" id="cus_position" maxlength="100" name="cus_position" value="<?php echo $cus_position; ?>" placeholder="Employment/Position"  class="form-control" maxlength="80"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Monthly Salary/Net Income:</label>
+                                            <label class="control-label" >Monthly Salary/Net Income:</label>
                                             <input type="number" id="cus_salary" name="cus_salary" value="<?php echo $cus_monthly_salary; ?>" placeholder="XXXXXXXX"  class="form-control" min="0"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Employer Name:</label>
+                                            <label class="control-label" >Employer Name:</label>
                                             <input type="text" name="cus_emp_name" maxlength="100" value="<?php echo $cus_emp_name; ?>" placeholder="Employer Name"   class="form-control" maxlength="200"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employer Address:</label>
+                                            <label class="control-label">Employer Address:</label>
                                             <input type="text" id="cus_emp_name" maxlength="100"  name="cus_emp_address" value="<?php echo $cus_emp_address; ?>" placeholder="No,Street,City"   class="form-control" maxlength="250"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Married Status:</label>
+                                            <label class="control-label" >Married Status:</label>
                                             <select name="cus_ms" class="form-control" id="c_m_status" onchange="setCusDependancy();">
                                                 <option value="">~~Select Status~~</option>
                                                 <option value="Single">Single</option>
@@ -409,7 +409,7 @@ if (!isset($_SESSION['user_email'])) {
                                             </select>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label" >Have any Dependencies:</label>
+                                            <label class="control-label" >Have any Dependencies:</label>
                                             <input type="number" id="cus_dependdency" min="0" max="20" name="cus_dependdency" value="0" placeholder="Have any Dependencies"  class="form-control" maxlength="2" readonly/>
                                         </div>
                                     </fieldset>
@@ -418,57 +418,57 @@ if (!isset($_SESSION['user_email'])) {
                                         <legend>Customer Spouse Details</legend>
 
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Full Name:</label>
+                                            <label class="control-label">Full Name:</label>
                                             <input type="text" id="cus_spouse_name"  readonly maxlength="100"  name="cus_spouse_name" id="fname" placeholder="Full Name" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (dd/mm/yyyy):</label>
+                                            <label class="control-label">Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="cus_spouse_dob" readonly min="1900-12-31" max="<?php echo $reg_date; ?>" value="<?php echo $reg_date; ?>" name="cus_spouse_dob" placeholder="Date of Birth" class="form-control" />
                                         </div>
 
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employment/Position:</label>
+                                            <label class="control-label">Employment/Position:</label>
                                             <input type="text" id="cus_spouse_position" readonly maxlength="100" name="cus_spouse_position" placeholder="Employment/Position" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Monthly Salary/Net Income:</label>
+                                            <label class="control-label">Monthly Salary/Net Income:</label>
                                             <input type="number" id="cus_spouse_salary" readonly min="0" name="cus_spouse_salary" placeholder="XXXXXXXX" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employer Name:</label>
+                                            <label class="control-label">Employer Name:</label>
                                             <input type="text" id="cus_spouse_emp_name" readonly maxlength="100"  name="cus_spouse_emp_name" placeholder="Employer Name" class="form-control" />
                                         </div>
 
                                         <div class="form-group  ">
-                                            <span style="color:green;">*</span><label class="control-label">Map Link :</label>
-                                            <input type="text" readonly id="cus_addr_map_link" name="cus_addr_map_link" value="<?php echo $cus_addr_map_link;?>" placeholder="Map Link" class="form-control" form="f1_cus"/>
+                                            <label class="control-label">Map Link :</label>
+                                            <input type="text" readonly id="cus_addr_map_link" name="cus_addr_map_link" value="<?php echo $cus_addr_map_link; ?>" placeholder="Map Link" class="form-control" form="f1_cus"/>
                                         </div>
 
                                     </fieldset>
                                     <fieldset id="account">
                                         <legend>Proposer Personal Details</legend>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Full Name:</label>
+                                            <label class="control-label">Full Name:</label>
                                             <input type="text" id="prop_name" maxlength="100" name="prop_name" id="fname" placeholder="Full Name" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Permanent Address :</label>
+                                            <label class="control-label">Permanent Address :</label>
                                             <input type="text" id="prop_address" maxlength="255" name="prop_address" value="<?php echo $gua_address; ?>" placeholder="Permanent Address" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Telephone:</label>
+                                            <label class="control-label">Telephone:</label>
                                             <input type="number" id="prop_tp" name="prop_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" value="<?php echo $gua_tp; ?>" placeholder="077XXXXXXX"  min="0" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (dd/mm/yyyy):</label>
+                                            <label class="control-label">Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="prop_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" value="<?php echo $reg_date; ?>" name="prop_dob" placeholder="Date of Birth" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">NIC Number:</label>
+                                            <label class="control-label">NIC Number:</label>
                                             <input type="text" id="prop_nic" name="prop_nic" maxlength="10" value="<?php echo $gua_nic; ?>" placeholder="XXXXXXXXXV" class="form-control" style="text-transform: uppercase;"/>
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Married Status:</label>
+                                            <label class="control-label">Married Status:</label>
                                             <select name="prop_ms" value="<?php echo $gua_ms; ?>" class="form-control" id="prop_ms" onchange="setPropDependancy();">
                                                 <option value="">~~Select Status~~</option>
                                                 <option value="Single">Single</option>
@@ -476,23 +476,23 @@ if (!isset($_SESSION['user_email'])) {
                                             </select>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Spouse Name:</label>
+                                            <label class="control-label">Spouse Name:</label>
                                             <input type="text" id="prop_spouse_name" readonly maxlength="100" name="prop_spouse_name" id="fname" placeholder="Spouse Name" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employment/Position:</label>
+                                            <label class="control-label">Employment/Position:</label>
                                             <input type="text" id="prop_postion" name="prop_postion" placeholder="Employment/Position" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Monthly Salary/Net Income:</label>
+                                            <label class="control-label">Monthly Salary/Net Income:</label>
                                             <input type="number" id="prop_salary" min="0" name="prop_salary" value="<?php echo $gua_monthly_salary; ?>" placeholder="XXXXXXXX" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employer Name:</label>
+                                            <label class="control-label">Employer Name:</label>
                                             <input type="text" id="prop_emp_name" maxlength="100" name="prop_emp_name" value="<?php echo $gua_emp_name; ?>" placeholder="Employer Name" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employer Address:</label>
+                                            <label class="control-label">Employer Address:</label>
                                             <input type="text" id="prop_emp_address" maxlength="255" name="prop_emp_address" value="<?php echo $gua_emp_address; ?>" placeholder="No,Street,City" class="form-control"/>
                                         </div>
                                     </fieldset>
@@ -504,28 +504,28 @@ if (!isset($_SESSION['user_email'])) {
                                     <fieldset id="account">
                                         <legend>Guarantor-01 Personal Details</legend>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Full Name:</label>
+                                            <label class="control-label">Full Name:</label>
                                             <input type="text" id="g1_name" maxlength="100"  name="g1_name" id="g1_name" placeholder="Full Name" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Permanent Address :</label>
+                                            <label class="control-label">Permanent Address :</label>
                                             <input type="text" id="g1_address" maxlength="255"  name="g1_address" placeholder="Permanent Address" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Telephone:</label>
+                                            <label class="control-label">Telephone:</label>
                                             <input type="number" id="g1_tp" name="g1_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" min="0" value="<?php echo $gua_tp; ?>" placeholder="077XXXXXXX" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (dd/mm/yyyy):</label>
+                                            <label class="control-label">Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="g1_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" name="g1_dob" value="<?php echo $gua_dob; ?>" placeholder="Date of Birth"   class="form-control" />
 
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">NIC Number:</label>
+                                            <label class="control-label">NIC Number:</label>
                                             <input type="text" id="g1_nic" name="g1_nic" maxlength="10" value="<?php echo $gua_nic; ?>" placeholder="XXXXXXXXXV"   class="form-control" style="text-transform: uppercase;"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Married Status:</label>
+                                            <label class="control-label">Married Status:</label>
                                             <select name="g1_ms" id="g1_ms" class="form-control"  onchange="setGua1Dependancy();">
                                                 <option value="">~~Select Status~~</option>
                                                 <option value="Single">Single</option>
@@ -533,51 +533,51 @@ if (!isset($_SESSION['user_email'])) {
                                             </select>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Spouse Name:</label>
+                                            <label class="control-label">Spouse Name:</label>
                                             <input type="text" id="g1_spouse" readonly maxlength="100" name="g1_spouse" id="fname" value="<?php echo $gua_bhalf_fullname; ?>" placeholder="Spouse Name" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employment/Position:</label>
+                                            <label class="control-label">Employment/Position:</label>
                                             <input type="text" id="g1_position" name="g1_position" value="<?php echo $gua_position; ?>" placeholder="Employment/Position" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Monthly Salary/Net Income:</label>
+                                            <label class="control-label">Monthly Salary/Net Income:</label>
                                             <input type="number" id="g1_salary" min="0" name="g1_salary" value="<?php echo $gua_monthly_salary; ?>" placeholder="XXXXXXXX" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employer Name:</label>
+                                            <label class="control-label">Employer Name:</label>
                                             <input type="text" id="g1_emp_name" maxlength="100" name="g1_emp_name" value="<?php echo $gua_emp_name; ?>" placeholder="Employer Name" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employer Address:</label>
+                                            <label class="control-label">Employer Address:</label>
                                             <input type="text" id="g1_emp_address" maxlength="255" name="g1_emp_address" value="<?php echo $gua_emp_address; ?>" placeholder="No,Street,City" class="form-control"/>
                                         </div>
                                     </fieldset>
                                     <fieldset id="account">
                                         <legend>Guarantor-02 Personal Details</legend>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Full Name:</label>
+                                            <label class="control-label">Full Name:</label>
                                             <input type="text" id="g2_name" maxlength="100"  name="g2_name" id="fname" value="<?php echo $gua_fullname; ?>" placeholder="Full Name" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Permanent Address :</label>
+                                            <label class="control-label">Permanent Address :</label>
                                             <input type="text" id="g2_address" maxlength="255"  name="g2_address" value="<?php echo $gua_address; ?>" placeholder="Permanent Address" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Telephone:</label>
+                                            <label class="control-label">Telephone:</label>
                                             <input type="number" id="g2_tp" name="g2_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" value="<?php echo $gua_tp; ?>" placeholder="077XXXXXXX"  min="0" class="form-control" />
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">Date of Birth (dd/mm/yyyy):</label>
+                                            <label class="control-label">Date of Birth (dd/mm/yyyy):</label>
                                             <input type="date" id="g2_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" name="g2_dob" value="<?php echo $gua_dob; ?>" placeholder="Date of Birth"   class="form-control" />
 
                                         </div>
                                         <div class="form-group">
-                                            <span style="color:red;">*</span><label class="control-label">NIC Number:</label>
+                                            <label class="control-label">NIC Number:</label>
                                             <input type="text" id="g2_nic" name="g2_nic" maxlength="10" value="<?php echo $gua_nic; ?>" placeholder="XXXXXXXXXV" class="form-control" style="text-transform: uppercase;"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Married Status:</label>
+                                            <label class="control-label">Married Status:</label>
                                             <select name="g2_ms" value="<?php echo $gua_ms; ?>" class="form-control" id="g2_ms" onchange="setGua2Dependancy();">
                                                 <option value="">~~Select Status~~</option>
                                                 <option value="Single">Single</option>
@@ -589,19 +589,19 @@ if (!isset($_SESSION['user_email'])) {
                                             <input type="text" maxlength="100" readonly name="g2_spouse" id="g2_spouse" value="<?php echo $gua_bhalf_fullname; ?>" placeholder="Spouse Name" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employment/Position:</label>
+                                            <label class="control-label">Employment/Position:</label>
                                             <input type="text" id="g2_position" name="g2_position" value="<?php echo $gua_position; ?>" placeholder="Employment/Position" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Monthly Salary/Net Income:</label>
+                                            <label class="control-label">Monthly Salary/Net Income:</label>
                                             <input type="number" id="g2_salary" min="0" name="g2_salary" value="<?php echo $gua_monthly_salary; ?>" placeholder="XXXXXXXX" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employer Name:</label>
+                                            <label class="control-label">Employer Name:</label>
                                             <input type="text" id="g2_emp_name" maxlength="100" name="g2_emp_name" value="<?php echo $gua_emp_name; ?>" placeholder="Employer Name" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span><label class="control-label">Employer Address:</label>
+                                            <label class="control-label">Employer Address:</label>
                                             <input type="text" id="g2_emp_address" maxlength="255" name="g2_emp_address" value="<?php echo $gua_emp_address; ?>" placeholder="No,Street,City" class="form-control"/>
                                         </div>
                                     </fieldset>
@@ -626,11 +626,11 @@ if (!isset($_SESSION['user_email'])) {
                                                 <tbody>
                                                     <tr>
                                                         <td>House<input type="hidden" value="House" name="home"></td>
-                                                        <td><span style="color:red;">*</span><input type="text" id="house_property" name="real_prp_house_position" maxlength="100" value="<?php echo $real_prp_house_position; ?>" placeholder="Address" class="form-control"/></td>
-                                                        <td><span style="color:red;">*</span><input type="text" id="house_size" name="real_prp_house_size" maxlength="100" value="<?php echo $real_prp_house_size; ?>" placeholder="Size" class="form-control" /></td>
-                                                        <td><span style="color:red;">*</span><input type="text" id="house_value" name="real_prp_house_value" maxlength="10" value="<?php echo $real_prp_house_value; ?>" placeholder="XXXXXXXX" class="form-control" /></td>
-                                                        <td><span style="color:red;">*</span><input type="text" id="house_pawned" name="real_prp_house_pawned" maxlength="10" value="<?php echo $real_prp_house_pawned; ?>" placeholder="Yes or No" class="form-control" /></td>
-                                                        <td><span style="color:red;">*</span><input type="text" id="house_pawn_getter" name="real_prp_house_pawn_getter" maxlength="100" value="<?php echo $real_prp_house_pawn_getter; ?>" placeholder="Pawn Getter" class="form-control" /></td>
+                                                        <td>  <input type="text" id="house_property" name="real_prp_house_position" maxlength="100" value="<?php echo $real_prp_house_position; ?>" placeholder="Address" class="form-control"/></td>
+                                                        <td>  <input type="text" id="house_size" name="real_prp_house_size" maxlength="100" value="<?php echo $real_prp_house_size; ?>" placeholder="Size" class="form-control" /></td>
+                                                        <td>  <input type="text" id="house_value" name="real_prp_house_value" maxlength="10" value="<?php echo $real_prp_house_value; ?>" placeholder="XXXXXXXX" class="form-control" /></td>
+                                                        <td>  <input type="text" id="house_pawned" name="real_prp_house_pawned" maxlength="10" value="<?php echo $real_prp_house_pawned; ?>" placeholder="Yes or No" class="form-control" /></td>
+                                                        <td>  <input type="text" id="house_pawn_getter" name="real_prp_house_pawn_getter" maxlength="100" value="<?php echo $real_prp_house_pawn_getter; ?>" placeholder="Pawn Getter" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Other Property<input type="hidden" value="Other Property" name="op"></td>
@@ -661,9 +661,9 @@ if (!isset($_SESSION['user_email'])) {
                                                 <tbody>
                                                     <tr>
                                                         <td>Savings Account</td>
-                                                        <td><span style="color:red;">*</span><input type="text" id="saving_account_bank" name="cus_savings_bank_branch" value="<?php echo $cus_savings_bank_branch; ?>" placeholder="Bank Name & Branch" maxlength="100"  class="form-control" /></td>
-                                                        <td><span style="color:red;">*</span><input type="text" id="saving_facility" name="cus_savings_facilities" value="<?php echo $cus_savings_facilities; ?>" placeholder="Facilities" maxlength="100" class="form-control" /></td>
-                                                        <td><span style="color:red;">*</span><input type="text" id="saving_acc_no" name="cus_savings_account_no" value="<?php echo $cus_savings_account_no; ?>" placeholder="Account Number" maxlength="50" class="form-control" /></td>
+                                                        <td>  <input type="text" id="saving_account_bank" name="cus_savings_bank_branch" value="<?php echo $cus_savings_bank_branch; ?>" placeholder="Bank Name & Branch" maxlength="100"  class="form-control" /></td>
+                                                        <td>  <input type="text" id="saving_facility" name="cus_savings_facilities" value="<?php echo $cus_savings_facilities; ?>" placeholder="Facilities" maxlength="100" class="form-control" /></td>
+                                                        <td>  <input type="text" id="saving_acc_no" name="cus_savings_account_no" value="<?php echo $cus_savings_account_no; ?>" placeholder="Account Number" maxlength="50" class="form-control" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Current Account</td>
@@ -685,10 +685,10 @@ if (!isset($_SESSION['user_email'])) {
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <span style="color:red;">*</span><label class="control-label">Registration Date</label>
+                                        <label class="control-label">Registration Date</label>
                                         <div class="fomr-inline" id="msg_caption">
                                             <input type="date" id="cus_reg_date" name="cus_reg_date" value="<?php echo $reg_date; ?>" placeholder="Date" class="form-control" />
-                                            <br><p><b>Warning</b> :~~<span style="color:red;">*</span>~~ are mandatory fields, should not be empty</p>
+                                            <br><p><b>Warning</b> :~~  ~~ are mandatory fields, should not be empty</p>
                                         </div>
                                     </div>
                                 </div>
@@ -798,18 +798,18 @@ if (!isset($_SESSION['user_email'])) {
                                         }
                                         function setPropDependancy() {
                                             if (document.getElementById('prop_ms').value == "Single") {
-                                                alert(document.getElementById('prop_ms').value);
+                                                //alert(document.getElementById('prop_ms').value);
                                                 document.getElementById('prop_spouse_name').value = "None";
                                                 document.getElementById('prop_spouse_name').readOnly = true;
 
                                             }
                                             else if (document.getElementById('prop_ms').value == "Married") {
-                                                alert(document.getElementById('prop_ms').value);
+                                               //alert(document.getElementById('prop_ms').value);
                                                 document.getElementById('prop_spouse_name').value = "";
                                                 document.getElementById('prop_spouse_name').readOnly = false;
                                             }
                                         }
-                                        
+
                                         function setGua2Dependancy() {
                                             if (document.getElementById('g2_ms').value == "Single") {
                                                 document.getElementById('g2_spouse').value = "None";
@@ -831,17 +831,17 @@ if (!isset($_SESSION['user_email'])) {
                 var property = document.getElementById('input-region').value;
                 if (property == 'bike')
                 {
-                    alert("Bike");
+                    //alert("Bike");
                     document.getElementById('landpanel').style.display = 'none';
                     document.getElementById('leasepanel').style.display = 'block';
                 } else if (property == 'twheel')
                 {
-                    alert("Three-Wheel");
+                    //alert("Three-Wheel");
                     document.getElementById('landpanel').style.display = 'none';
                     document.getElementById('leasepanel').style.display = 'block';
                 } else if (property == 'land')
                 {
-                    alert("Land");
+                    //alert("Land");
                     document.getElementById('leasepanel').style.display = 'none';
                     document.getElementById('landpanel').style.display = 'block';
                 }

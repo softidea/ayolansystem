@@ -133,7 +133,7 @@ else{
                 if (document.getElementById('v_cat').selectedIndex == 1) {
                     var v_type = document.getElementById('v_type').value;
                     var v_code = document.getElementById('v_code').value;
-                    alert(v_type + " " + v_code);
+                    //alert(v_type + " " + v_code);
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
                         xmlhttp = new XMLHttpRequest();
@@ -142,7 +142,7 @@ else{
                     }
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
                             var value = xmlhttp.responseText;
                             var result_arr = value.split("#");
                             document.getElementById('m_year').value = result_arr[0];
@@ -165,10 +165,10 @@ else{
                     xmlhttp.open("GET", "../controller/co_load_vehicle_details.php?v_type=" + v_type + "&v_code=" + v_code, true);
                     xmlhttp.send();
                 } else if (document.getElementById('v_cat').selectedIndex == 2) {
-                    alert('inner');
+                    //alert('inner');
                     var v_tw_type = document.getElementById('v_type').value;
                     var v_tw_code = document.getElementById('v_code').value;
-                    alert(v_tw_type + "tw " + v_tw_code);
+                    //alert(v_tw_type + "tw " + v_tw_code);
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
                         xmlhttp = new XMLHttpRequest();
@@ -190,14 +190,14 @@ else{
         </script>
         <script type="text/javascript">
             function set_vehicle_div(val) {
-                alert(val);
+                //alert(val);
                 if (val == 1) {
-                    alert(val);
+                    //alert(val);
                     reset_form_values();
                     document.getElementById('v_brand').disabled = false;
                 }
                 else if (val == 2) {
-                    alert(val);
+                    //alert(val);
                     reset_form_values();
                     document.getElementById('v_brand').disabled = true;
                     document.getElementById("v_type").innerHTML = "";
@@ -236,7 +236,7 @@ else{
             function searchCustomerforLease() {
 
                 if (document.getElementById('customer_nic').value != "") {
-                    alert('searchCustomerforLease');
+                    //alert('searchCustomerforLease');
                     var val = document.getElementById('customer_nic').value;
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -246,7 +246,7 @@ else{
                     }
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
                             document.getElementById('customer_name').value = xmlhttp.responseText;
                         }
                     }
@@ -278,7 +278,7 @@ else{
                         && v_number != "" && v_myear != "" && v_lrate != ""
                         && v_frate != "" && v_lease_period != "" && v_lease_des != "" && c_nic != "" && installment != "") {
 
-                    alert("inside save code");
+                    //alert("inside save code");
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
                         xmlhttp = new XMLHttpRequest();
@@ -309,7 +309,7 @@ else{
                     }
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
                             
                             document.getElementById('ser_installment').value = xmlhttp.responseText;
                         }
@@ -410,7 +410,7 @@ else{
                                         <div class="form-inline">
                                             <input type="text" name="vehicle_code" style="text-transform: uppercase;" id="v_no_code" placeholder="Ex:ME" id="input-email" class="form-control" required/>
                                             <label class="control-label"> - </label>
-                                            <input type="text" name="v_no_num" maxlength="4" id="v_no_num" placeholder="Ex:2558" class="form-control" required/>
+                                            <input type="number" name="v_no_num" maxlength="4" id="v_no_num" placeholder="Ex:2558" class="form-control" required/>
                                             <br>
                                         </div>
                                         <div class="form-group">
