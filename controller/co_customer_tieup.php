@@ -10,7 +10,10 @@ $ser_value = filter_input(INPUT_GET, 'ser_value');
 $ser_no_g = filter_input(INPUT_GET, 'ser_no_g');
 $gua_nic = filter_input(INPUT_GET, 'gua_nic');
 $g_as_c_nic = filter_input(INPUT_GET, 'g_as_c_nic');
-$ser_value_cus_installment=  filter_input(INPUT_GET, 'ser_value_cus_installment');
+$g_sno_search = filter_input(INPUT_GET, 'g_sno_search');
+$ser_value_cus_installment = filter_input(INPUT_GET, 'ser_value_cus_installment');
+$cus_ins_ser_number = filter_input(INPUT_GET, 'cus_ins_ser_number');
+
 
 if (isset($customer_nic)) {
     global $conn;
@@ -115,21 +118,27 @@ if (isset($g_as_c_nic)) {
     if (mysqli_num_rows($run_query) > 0) {
         echo "<option value='0'> --- Please Select --- </option>";
         while ($row = mysqli_fetch_array($run_query)) {
-            $service_num=$row['ser_number'];
+            $service_num = $row['ser_number'];
             echo "<option value='$service_num'>$service_num</option>";
         }
-    }else{
+    } else {
         echo "No Services Found";
     }
 }
-//if(isset($ser_value_cus_installment)){
-//    global $conn;
-//    $sql_query="SELECT * FROM ser_installment WHERE ser_number='$ser_value_cus_installment'";
-//    $run_query=  mysqli_query($conn, $sql_query);
-//    if(mysqli_num_rows($run_query)>0){
-//        if($row=  mysqli_fetch_assoc($run_customer)){
-//            
-//        }
-//    }
-//}
+if (isset($g_sno_search)) {
+    global $conn;
+    $sql_query = "SELECT * FROM service WHERE ser_number='$g_sno_search'";
+    $run_query = mysqli_query($conn, $sql_query);
+    if (mysqli_num_rows($run_query) > 0) {
+        if ($row = mysqli_fetch_assoc($run_query)) {
+            $rental = $row['fix_rate'];
+            $period = $row['period'];
+            $installment = $row['installment'];
+            echo $rental . "#" . $period . "#" . $installment;
+        }
+    } else {
+        echo 'No Gurantor Services Found';
+    }
+}
+
 ?>

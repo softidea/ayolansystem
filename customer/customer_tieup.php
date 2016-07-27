@@ -42,11 +42,12 @@
                     xmlhttp.open("GET", "../controller/co_customer_tieup.php?cus_nic=" + cus_nic, true);
                     xmlhttp.send();
                 }
-
             }
+        </script>
+        <script type="text/javascript">
             function searchCustomerbyTP() {
                 var cus_tp = document.getElementById('customer_tp').value;
-                //alert(cus_tp);
+                alert(cus_tp);
                 if (cus_tp !== "" && cus_tp !== null) {
                     if (window.XMLHttpRequest) {
                         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -69,6 +70,8 @@
                     xmlhttp.send();
                 }
             }
+        </script>
+        <script type="text/javascript">
             function loadCustomerServiceNobyNIC(nic) {
                 if (nic !== "" && nic !== null) {
                     if (window.XMLHttpRequest) {
@@ -89,6 +92,8 @@
                     xmlhttp.send();
                 }
             }
+        </script>
+        <script type="text/javascript">
             function loadCustomerServiceNobyTP(tp) {
                 if (tp !== "" && tp !== null) {
                     if (window.XMLHttpRequest) {
@@ -109,6 +114,8 @@
                     xmlhttp.send();
                 }
             }
+        </script>
+        <script type="text/javascript">
             function loadServiceDetailsCustomerSide(value) {
                 if (value !== "" && value !== null) {
                     if (window.XMLHttpRequest) {
@@ -120,7 +127,7 @@
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                             var val = xmlhttp.responseText;
-                            alert(val);
+                            //alert(val);
                             var result_arr = val.split("#");
                             document.getElementById('service_rental').value = result_arr[0];
                             document.getElementById('service_period').value = result_arr[1];
@@ -132,7 +139,8 @@
                     xmlhttp.send();
                 }
             }
-
+        </script>
+        <script type="text/javascript">
             function loadServiceIntallmentDetailsCus(value) {
                 if (value !== "" && value !== null) {
                     if (window.XMLHttpRequest) {
@@ -144,7 +152,7 @@
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                             var val = xmlhttp.responseText;
-                            alert(val);
+                            //alert(val);
                             var result_arr = val.split("#");
                             document.getElementById('service_rental').value = result_arr[0];
                             document.getElementById('service_period').value = result_arr[1];
@@ -156,6 +164,8 @@
                     xmlhttp.send();
                 }
             }
+        </script>
+        <script type="text/javascript">
             function loadServiceGurantors(value) {
                 if (value !== "" && value !== null) {
                     if (window.XMLHttpRequest) {
@@ -178,6 +188,8 @@
                     xmlhttp.send();
                 }
             }
+        </script>
+        <script type="text/javascript">
             function loadGurantorNICs(value) {
                 if (value != "" && value != null) {
                     if (window.XMLHttpRequest) {
@@ -189,7 +201,7 @@
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                             var val = xmlhttp.responseText;
-                            alert(val);
+                            //alert(val);
                             document.getElementById('cbo_customer_nic').innerHTML = "";
                             document.getElementById('cbo_customer_nic').innerHTML = val;
                         }
@@ -198,6 +210,8 @@
                     xmlhttp.send();
                 }
             }
+        </script>
+        <script type="text/javascript">
             function loadGuratorDetails(value) {
                 if (value != "" && value != null) {
                     if (window.XMLHttpRequest) {
@@ -209,7 +223,7 @@
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                             var val = xmlhttp.responseText;
-                            alert(val);
+                            //alert(val);
                             var result_arr = val.split("#");
                             document.getElementById('guarantor_tp').value = result_arr[0];
                             document.getElementById('guarantor_name').value = result_arr[1];
@@ -221,6 +235,8 @@
                     xmlhttp.send();
                 }
             }
+        </script>
+        <script type="text/javascript">
             function loadServiceNoG_as_Cus(value) {
                 if (value != "" && value != null) {
                     if (window.XMLHttpRequest) {
@@ -234,29 +250,11 @@
                             var val = xmlhttp.responseText;
                             if (val == "No Services Found") {
                                 alert(val);
-                            } else {
-                                document.getElementById('cbo_service_as_customer').innerHTML = "";
-                                document.getElementById('cbo_service_as_customer').innerHTML = val;
-                            }
-                        }
-                    }
-                    xmlhttp.open("GET", "../controller/co_customer_tieup.php?g_as_c_nic=" + value, true);
-                    xmlhttp.send();
-                }
-            }
-            function searchG_as_Cus_Service_Detils(value) {
-                if (value != "" && value != null) {
-                    if (window.XMLHttpRequest) {
-                        // code for IE7+, Firefox, Chrome, Opera, Safari
-                        xmlhttp = new XMLHttpRequest();
-                    } else { // code for IE6, IE5
-                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-                    xmlhttp.onreadystatechange = function () {
-                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            var val = xmlhttp.responseText;
-                            if (val == "No Services Found") {
-                                alert(val);
+                                document.getElementById('cbo_service_as_customer').innerHTML="<option value='0'> --- Please Select --- </option>";
+                                document.getElementById('service_rental_g').value = "";
+                                document.getElementById('service_period_g').value = "";
+                                document.getElementById('g_installment').value = "";
+                                createNotTieupNote();
                             } else {
                                 document.getElementById('cbo_service_as_customer').innerHTML = "";
                                 document.getElementById('cbo_service_as_customer').innerHTML = val;
@@ -268,6 +266,7 @@
                 }
             }
         </script>
+
     </head>
     <body>
         <?php include '../assets/include/navigation_bar.php'; ?>
@@ -310,8 +309,6 @@
                                         <label class="control-label">Service No:</label>
                                         <select name="cbo_service_search" id="cbo_service_search" class="form-control" required onchange="loadServiceDetailsCustomerSide(this.value);">
                                             <option value=""> --- Please Select Service --- </option>
-                                            <option value="">HOR-23432</option>
-                                            <option value="">HOR-324</option>
                                         </select>
                                     </div>
                                     <div class="form-group required">
@@ -358,8 +355,8 @@
                                         </div>
                                         <div class="form-group required">
                                             <label class="control-label">Services as a Customer:</label>
-                                            <select name="cbo_service_as_customer" id="cbo_service_as_customer" class="form-control" required onchange="searchG_as_Cus_Service_Detils(this.value);">
-                                                <option value=""> --- Please Select --- </option>
+                                            <select name="cbo_service_as_customer" id="cbo_service_as_customer" class="form-control" onchange="check();">
+                                                <option value="0"> --- Please Select --- </option>
                                             </select>
                                         </div>
                                         <div class="form-group required">
@@ -386,34 +383,10 @@
                             <!--Service View Main Panel-->
 
                             <!--Customer Service Loader-->
-                            <div class="col-sm-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body" style="height: 250px;">
-                                        <label class="control-label">Installment:</label>
-                                        <label class="control-label">Installment:</label>
-                                        <label class="control-label">Installment:</label>
-                                        <label class="control-label">Installment:</label>
-                                        <label class="control-label">Installment:</label>
-                                        <label class="control-label">Installment:</label>
-                                        <label class="control-label">Installment:</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-body" style="height: 250px;">
-
-
-
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-sm-12">
                                 <div class="panel panel-default">
                                     <div class="panel-body" style="height: 100px;">
-
-
-
+                                        <h4 id="tieup_note"></h4>
                                     </div>
                                 </div>
                             </div>
@@ -440,4 +413,67 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="http://bootsnipp.com/dist/scripts.min.js"></script>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script type="text/javascript">
+                                                function check() {
+                                                    var value = document.getElementById('cbo_service_as_customer').value;
+
+                                                    if (value != "" && value != null) {
+                                                        if (window.XMLHttpRequest) {
+                                                            // code for IE7+, Firefox, Chrome, Opera, Safari
+                                                            xmlhttp = new XMLHttpRequest();
+                                                        } else { // code for IE6, IE5
+                                                            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                                                        }
+                                                        xmlhttp.onreadystatechange = function () {
+                                                            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                                                                var val = xmlhttp.responseText;
+                                                                if (val == "No Gurantor Services Found") {
+                                                                    alert(val);
+                                                                    document.getElementById('cbo_service_as_customer').innerHTML="<option value='0'> --- Please Select --- </option>";
+                                                                    document.getElementById('service_rental_g').value = "";
+                                                                    document.getElementById('service_period_g').value = "";
+                                                                    document.getElementById('g_installment').value= "";
+                                                                    createNotTieupNote();
+                                                                } else {
+                                                                    var val = xmlhttp.responseText;
+                                                                    //alert(val);
+                                                                    var result_arr = val.split("#");
+                                                                    document.getElementById('service_rental_g').value = result_arr[0];
+                                                                    document.getElementById('service_period_g').value = result_arr[1];
+                                                                    document.getElementById('g_installment').value = result_arr[2];
+                                                                    createTieupNote();
+                                                                }
+                                                            }
+                                                        }
+                                                        xmlhttp.open("GET", "../controller/co_customer_tieup.php?g_sno_search=" + value, true);
+                                                        xmlhttp.send();
+                                                    }
+
+                                                }
+
+
+    </script>
+    <script type="text/javascript">
+        function createTieupNote() {
+            var customer_name = document.getElementById('customer_name').value;
+            var cus_service = document.getElementById('cbo_service_search').value;
+            var gurantor_name = document.getElementById('guarantor_name').value;
+            var gua_service = document.getElementById('cbo_service_as_customer').value;
+
+            var note = gurantor_name + " of " + gua_service + " tie-up with " + customer_name + " of " + cus_service;
+            document.getElementById('tieup_note').innerHTML = note;
+            document.getElementById('tieup_note').style.color = "#e53935";
+        }
+    </script>
+    <script type="text/javascript">
+        function createNotTieupNote() {
+            var customer_name = document.getElementById('customer_name').value;
+            var cus_service = document.getElementById('cbo_service_search').value;
+            var gurantor_name = document.getElementById('guarantor_name').value;
+
+            var note = gurantor_name + " not tie-up with " + customer_name + " of " + cus_service;
+            document.getElementById('tieup_note').innerHTML = note;
+            document.getElementById('tieup_note').style.color = "#43A047";
+        }
+    </script>
 </html>
