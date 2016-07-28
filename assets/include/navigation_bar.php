@@ -47,7 +47,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Re-Process Management<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo ('addsis.php'); ?>">Add New Re-process</a></li>
+                           <li><a href="<?php echo ('../../admin/customer/addsis.php'); ?>">Add New Re-process</a></li>
                             <li><a href="<?php echo ('../../admin/customer/viewsis.php'); ?>">View Re-Process</a></li>
                             <li><a href="<?php echo ('../../admin/customer/viewsis.php'); ?>">Release Sis</a></li>
                             <li><a href="<?php echo ('../../admin/customer/checksis.php'); ?>">Check Re-Process</a></li>
@@ -56,10 +56,10 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo ('customer_view.php'); ?>">Customer Report</a></li>
-                            <li><a href="<?php echo ('customer_serviceview.php'); ?>">Service Report</a></li>
-                            <li><a href="<?php echo ('customer_installment.php'); ?>">Installment Report</a></li>
-                            <li><a href="<?php echo ('customer_installment.php'); ?>">Service Settle Report</a></li>
+                            <li><a href="<?php echo ('customer_view.php');?>">Customer Report</a></li>
+                            <li><a href="<?php echo ('customer_serviceview.php');?>">Service Report</a></li>
+                            <li><a href="<?php echo ('customer_installment.php');?>">Installment Report</a></li>
+                            <li><a href="<?php echo ('customer_installment.php');?>">Service Settle Report</a></li>
                         </ul>
                     </li>
                 </ul>

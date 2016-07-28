@@ -130,22 +130,7 @@ if (!isset($_SESSION['user_email'])) {
                                         
                                             <div class="form-group">
                                                 <label class="sr-only" for="email">Name | ID</label>
-                                                <input type="email" class="form-control" id="email" placeholder="Name | ID | Service No"> 
-                                                <select class="form-control">
-                                                    <option value="0">~~Select Period~~</option>
-                                                    <option value="3">3 Months</option>
-                                                    <option value="6">6 Months</option>
-                                                <option value="9">9 Months</option>
-                                                <option value="12">1 Year</option>
-                                                <option value="18">1.5 Years</option>
-                                                <option value="24">2 Years</option>
-                                                <option value="30">2.5 Years</option>
-                                                <option value="36">3 Years</option>
-                                                <option value="42">3.5 Years</option>
-                                                <option value="48">4 Years</option>
-                                                <option value="54">4.5 Years</option>
-                                                <option value="60">5 Years</option>
-                                                </select>
+                                                <input type="email" class="form-control" id="email" placeholder="Name | ID | Service No">
                                             </div>
                                             <a href="../customer/customer_view.php" style="text-decoration: none;color: white;">
                                                 <button type="button" class="btn btn btn-block" style="background-color: #009688;color: white;">Search
@@ -172,7 +157,7 @@ if (!isset($_SESSION['user_email'])) {
                         </div>
                         <div class="list-group">
                             <a href="../customer/customer_registration.php" style="text-decoration: none;"><button type="button" class="list-group-item">New Registration</button></a>
-                            <a href="../customer/customer_view.php" style="text-decoration: none;"><button type="button" class="list-group-item">Update Customers</button></a>
+                            <a href="../customer/customer_updateinfo.php" style="text-decoration: none;"><button type="button" class="list-group-item">Update Customers</button></a>
                             <a href="../customer/customer_view.php" style="text-decoration: none;"><button type="button" class="list-group-item">Search Customers</button></a>
                             <a href="../customer/customer_addlease.php" style="text-decoration: none;"><button type="button" class="list-group-item">Add a Vehicle Lease</button></a>
                             <a href="#" style="text-decoration: none;"><button type="button" class="list-group-item">Add a Land Pawn</button></a>

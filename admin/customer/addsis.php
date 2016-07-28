@@ -94,6 +94,15 @@
                                 <fieldset id="account">
                                     <legend>Customer Information</legend>
                                     <div class="form-group required">
+                                            <label class="control-label" for="input-email">Service No:</label>
+                                            <div class="form-inline required">
+                                                <div class="form-inline required">
+                                                    <input type="text"  name="cus_nic" id="cus_nic" placeholder="NIC" class="form-control" style="width:85%;text-transform: uppercase;" maxlength="10" required/>
+                                                    <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="loadInstallmentCustomer();">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="form-group required">
                                         <div class="form-group required">
                                             <label class="control-label" for="input-email">Customer Name:</label>
                                             <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Customer Name" id="input-email" class="form-control" required/>
@@ -104,13 +113,6 @@
                                         <div class="form-group required">
                                             <label class="control-label" for="input-email">NIC:</label>
                                             <input type="text" disabled name="customersearch" id="fname" value="" placeholder="NIC" id="input-email" class="form-control" required/>
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group required">
-                                        <div class="form-group required">
-                                            <label class="control-label" for="input-email">Phone Number:</label>
-                                            <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Phone Number" id="input-email" class="form-control" required/>
 
                                         </div>
                                     </div>
@@ -128,9 +130,12 @@
                                     <fieldset id="account">
                                         <legend>Service Information</legend>
                                         <div class="form-group required">
-                                            <div class="form-group required">
-                                                <label class="control-label" for="input-email">Service No:</label>
-                                                <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Service No" id="input-email" class="form-control" required/>
+                                            <label class="control-label" for="input-email">Service No:</label>
+                                            <div class="form-inline required">
+                                                <div class="form-inline required">
+                                                    <input type="text"  name="cus_nic" id="cus_nic" placeholder="NIC" class="form-control" style="width:85%;text-transform: uppercase;" maxlength="10" required/>
+                                                    <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="loadInstallmentCustomer();">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group required">
@@ -188,7 +193,7 @@
 
                                     </div>
                                 </div>
-                               <div class="form-group required">
+                                <div class="form-group required">
                                     <div class="form-group required">
                                         <label class="control-label" for="input-email">Paid Installment :</label>
                                         <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Paid Installment" id="input-email" class="form-control" required/>
@@ -204,7 +209,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                 <div class="form-group required">
+                                <div class="form-group required">
                                     <div class="form-group required">
                                         <label class="control-label" for="input-email">Rental Cost :</label>
                                         <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Rental Cost" id="input-email" class="form-control" required/>
@@ -226,7 +231,7 @@
                                     </div>
                                 </div>
                             </div>
-                          
+
                             <div class="col-md-12">
                                 <fieldset>
                                     <legend>Re-Process Description:</legend>
@@ -236,7 +241,7 @@
                                     <button type="submit"  class="btn btn" id="cservicebtn">View All</button>
                                 </fieldset>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
