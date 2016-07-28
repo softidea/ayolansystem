@@ -39,7 +39,7 @@ if ($ser_number != "" && $ser_number != null) {
 
                     $ser_no = $row['vehicle_no'];
                     $pre_code = $row['v_code'];
-                    $vehicle_no = $pre_code . "" . $ser_no;
+                    $vehicle_no = $ser_no;
 
                     $fixed_rent = $row['fix_rate'];
                     $install = $row['installment'];
@@ -55,7 +55,6 @@ if ($ser_number != "" && $ser_number != null) {
         }
     }
 }
-
 
 if ($saveinstallment != "" && $saveinstallment != null) {
 
@@ -129,7 +128,7 @@ if ($s_no != "" && $s_no != null) {
             $ser_number=$row['ser_number'];
             $ser_no = $row['vehicle_no'];
             $pre_code = $row['v_code'];
-            $vehicle_no = $pre_code . "" . $ser_no;
+            $vehicle_no = $ser_no;
 
             $fixed_rent = $row['fix_rate'];
             $install = $row['installment'];

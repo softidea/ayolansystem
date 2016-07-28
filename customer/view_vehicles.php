@@ -69,24 +69,25 @@
                 var t = document.getElementById('v_type').value;
                 var m = document.getElementById('v_code').value;
                 alert(b + " " + t + " " + m);
-
-
             }
-
         </script>
         <script type="text/javascript">
             function changeModel() {
-                if (document.getElementById('v_code').value == "newmodel") {
+                if (document.getElementById('v_code').value == "newmodel") 
+                {
                     document.getElementById('newmodel').readOnly = false;
                 }
-                else {
+                else
+                {
                     document.getElementById('newmodel').readOnly = true;
                 }
             }
             function showTypes(str) {
-                if (document.getElementById('v_brand').value == "newbrand") {
+                if (document.getElementById('v_brand').value == "newbrand") 
+                {
                     document.getElementById('newbrand').readOnly = false;
-                } else {
+                } else 
+                {
                     document.getElementById('newbrand').readOnly = true;
                     document.getElementById('newbrand').value = "";
                     if (str == "") {
@@ -438,7 +439,6 @@
                                                 <label class="control-label" for="input-email">Select Model:</label>
                                                 <select name="vcode" id="v_code" class="form-control" onchange="changeModel();">
                                                     <option>~~Select Model~~</option>
-
                                                 </select>
                                             </div>
                                             <div class="form-group required">
@@ -475,7 +475,6 @@
                                                 <label class="control-label" for="input-email">Select Model:</label>
                                                 <select name="vcode" id="tw_code" class="form-control" onchange="enablenewtwmodel();">
                                                     <option>~~Select Model~~</option>
-
                                                 </select>
                                             </div>
                                             <div class="form-group required">
@@ -581,13 +580,14 @@
 <script type="text/javascript">
     /*--This JavaScript method for Print command--*/
     function PrintDoc() {
-        var toPrint = document.getElementById('printarea');
-        var popupWin = window.open('', '_blank', 'width=1024,height=600,location=no,left=200px');
-        popupWin.document.open();
-        popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="print.css" /></head><body onload="window.print()">')
-        popupWin.document.write(toPrint.innerHTML);
-        popupWin.document.write('</html>');
-        popupWin.document.close();
+//        var toPrint = document.getElementById('printarea');
+//        var popupWin = window.open('', '_blank', 'width=1024,height=600,location=no,left=200px');
+//        popupWin.document.open();
+//        popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="print.css" /></head><body onload="window.print()">')
+//        popupWin.document.write(toPrint.innerHTML);
+//        popupWin.document.write('</html>');
+//        popupWin.document.close();
+        window.print();
     }
     /*--This JavaScript method for Print Preview command--*/
     function PrintPreview() {

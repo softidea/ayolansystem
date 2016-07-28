@@ -90,7 +90,7 @@ $cus_daily_loan_account_no = "";
 
 
 if (isset($_POST['customer_continue'])) {
-    
+
     $cus_name = $_SESSION['cus_name'] = filter_input(INPUT_POST, 'cus_name');
     $cus_address = $_SESSION['cus_address'] = filter_input(INPUT_POST, 'cus_address');
     $cus_tp = $_SESSION['cus_tp'] = filter_input(INPUT_POST, 'cus_tp');
@@ -264,10 +264,27 @@ if (isset($_POST['lease_reg'])) {
     $vehicle_category = $_SESSION['vehicle_category'] = filter_input(INPUT_POST, 'vehicle_category');
     $vehicle_brand = $_SESSION['vehicle_brand'] = filter_input(INPUT_POST, 'vehicle_brand');
     $vehicle_type = $_SESSION['vehicle_type'] = filter_input(INPUT_POST, 'vehicle_type');
-    $vehicle_code = $_SESSION['v_code'] = filter_input(INPUT_POST, 'v_code');
+
+
+    $pre_code = $_SESSION['v_code'] = filter_input(INPUT_POST, 'v_code');
+    $alter_code = $_SESSION['v_no_code'] = filter_input(INPUT_POST, 'v_no_code');
     $v_no_num = $_SESSION['v_no_num'] = filter_input(INPUT_POST, 'v_no_num');
-    $v_no_code=$_SESSION['v_no_code']=  filter_input(INPUT_GET, 'v_no_code');
-    $vehicle_num=$v_no_code."-".$v_no_num;
+    $vehicle_num="";
+    $vehicle_code="";
+    if (strlen($pre_code) == 1) {
+        $vehicle_num = $pre_code . "" . $alter_code . "-" . $v_no_num;
+        $vehicle_code = $pre_code . "" . $alter_code;
+    } else {
+        $vehicle_num = $alter_code . "-" . $v_no_num;
+        $vehicle_code = $alter_code;
+    }
+    echo "jhbkbkjkj";
+    echo $pre_code;
+    echo '</br>';
+    echo $alter_code;
+    echo '</br>';
+    echo $v_no_num;
+    
     $model_year = $_SESSION['model_year'] = filter_input(INPUT_POST, 'model_year');
     $lease_rate = $_SESSION['lease_rate'] = filter_input(INPUT_POST, 'lease_rate');
     $fixed_rate = $_SESSION['fixed_rate'] = filter_input(INPUT_POST, 'fixed_rate');
@@ -443,15 +460,15 @@ VALUES (
 
 //saving customer bank account details~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //saving leasing~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        
-        $check_service="SELECT * FROM service WHERE ser_number='$service_number'";
-        $run_check=  mysqli_query($conn, $check_service);
-        if(mysqli_num_rows($run_check)>0){
+
+        $check_service = "SELECT * FROM service WHERE ser_number='$service_number'";
+        $run_check = mysqli_query($conn, $check_service);
+        if (mysqli_num_rows($run_check) > 0) {
             echo "<script>alert('Service already added');</script>";
-        }else{
-        
-        
-        $query_lease = "INSERT INTO service
+        } else {
+
+
+            $query_lease = "INSERT INTO service
             (
              ser_number,
              ser_category,
@@ -487,12 +504,12 @@ VALUES (
         '1',
         '$cus_nic')";
 
-        $save_lease = mysqli_query($conn, $query_lease);
-        
+            $save_lease = mysqli_query($conn, $query_lease);
+
 //saving leasing~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // saving gurantors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        $query_guarantor1 = "INSERT INTO guarantor
+            $query_guarantor1 = "INSERT INTO guarantor
             (
              ger_fullname,
              ger_address,
@@ -522,9 +539,9 @@ VALUES (
         '1',
         '$service_number');";
 
-        $save_g1 = mysqli_query($conn, $query_guarantor1);
+            $save_g1 = mysqli_query($conn, $query_guarantor1);
 
-        $query_guarantor2 = "INSERT INTO guarantor
+            $query_guarantor2 = "INSERT INTO guarantor
             (
              ger_fullname,
              ger_address,
@@ -554,13 +571,13 @@ VALUES (
         '1',
         '$service_number');";
 
-        $save_g2 = mysqli_query($conn, $query_guarantor2);
+            $save_g2 = mysqli_query($conn, $query_guarantor2);
         }
 // saving gurantors~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         if ($save_savings && $save_mobile && $save_daily_loan && $save_property1 && $save_property2 && $save_lease && $save_g1 && $save_g2) {
             echo "<script>alert('Customer Lease has been sussfully added');</script>";
-            echo "<script>window.location.href='../user/user_home.php';</script>";
+            //echo "<script>window.location.href='../user/user_home.php';</script>";
             $_SESSION['cus_nic'] = "";
             $_SESSION['cus_name'] = "";
         } else {

@@ -179,6 +179,20 @@ if (isset($_SESSION['cus_nic'])) {
                             //alert(xmlhttp.responseText);
                             document.getElementById('l_rate').value = xmlhttp.responseText;
                             document.getElementById('m_year').value = "None";
+                            if (v_tw_code.length === 1) {
+                                //alert("length 1");
+                                document.getElementById('v_no_code').maxLength = v_tw_code.length;
+                                document.getElementById('v_no_code').readOnly = false;
+                                document.getElementById('v_no_code').value = "";
+                                document.getElementById('v_no_num').value = "";
+                            } else{
+                                //alert("length else");
+                                document.getElementById('v_no_code').value = "";
+                                document.getElementById('v_no_num').value = "";
+                                document.getElementById('v_no_code').readOnly = true;
+                                document.getElementById('v_no_code').maxLength = v_tw_code.length;
+                                document.getElementById('v_no_code').value = document.getElementById('v_code').value;
+                            }
                         }
                     }
                     xmlhttp.open("GET", "del.php?v_tw_type=" + v_tw_type + "&v_tw_code=" + v_tw_code, true);
@@ -356,7 +370,7 @@ if (isset($_SESSION['cus_nic'])) {
                                         <div class="form-inline" style="margin-bottom: 8px;">
                                             <a href="customer_registration.php"><button type="button" id="cviewbuttons" class="btn btn">New Customer</button></a>
                                         </div>
-                                        <div class="form-group">
+<!--                                        <div class="form-group">
                                             <label class="control-label">Upload Customer:</label>
                                             <input type="file" name="product_image[]" id="idupload" onchange="imagepreview(this);"/>
                                             <img id="imgpreview" title="Image Preview" style="width: 200px;height: 200px;">
@@ -364,7 +378,7 @@ if (isset($_SESSION['cus_nic'])) {
                                         <div class="form-group">
                                             <label class="control-label">Upload Property:</label>
                                             <input type="file" name="product_image"/>
-                                        </div>
+                                        </div>-->
                                     </fieldset>
                                 </div>
                                 <div class="col-sm-6">
@@ -375,7 +389,7 @@ if (isset($_SESSION['cus_nic'])) {
                                             <div class="form-inline">
                                                 <select name="service_code" id="scode" class="form-control" onchange="" style="width: 40%;">
                                                     <option value="HOR">HOR</option>
-                                                    <option value="BUL">BUL</option>
+                                                    <option value="BLS">BLS</option>
                                                 </select>
                                                 <input type="text" name="service_no" id="sno" placeholder="Service No" class="form-control" onKeyPress="return numbersonly(this, event)" max="4" maxlength="4" style="width: 59%;" required/>
                                             </div>
@@ -407,22 +421,22 @@ if (isset($_SESSION['cus_nic'])) {
                                             </select>
                                         </div>
                                         <div class="form-inline">
-                                            <input type="text" name="vehicle_code" style="text-transform: uppercase;" id="v_no_code" placeholder="Ex:ME" id="input-email" class="form-control" required/>
+                                            <input type="text" name="v_no_code" style="text-transform: uppercase;" id="v_no_code" placeholder="Ex:ME" class="form-control" required/>
                                             <label class="control-label"> - </label>
-                                            <input type="number" name="v_no_num" min="1" max="9999" id="v_no_num" placeholder="Ex:2558" class="form-control" required/>
+                                            <input type="text" name="v_no_num" onKeyPress="return numbersonly(this, event)" max="4" maxlength="4" id="v_no_num" placeholder="Ex:2558" class="form-control" required/>
                                             <br>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Model Year:</label>
-                                            <input type="text" readonly name="model_year" value="<?php echo $model_year; ?>" id="m_year" placeholder="Model Year" id="input-email" class="form-control" required/>
+                                            <input type="text" readonly name="model_year" value="<?php echo $model_year; ?>" id="m_year" placeholder="Model Year" class="form-control" required/>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Lease Rental:</label>
-                                            <input type="text" readonly name="lease_rate" id="l_rate" value="<?php echo $lease_rate; ?>" placeholder="Lease Rate" id="input-email" class="form-control" required/>
+                                            <input type="text" readonly name="lease_rate" id="l_rate" value="<?php echo $lease_rate; ?>" placeholder="Lease Rate" class="form-control" required/>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Fixed Rental:</label>
-                                            <input type="text" name="fixed_rate" id="f_rate" value="<?php echo $fixed_rate; ?>" placeholder="Fix Rate" id="input-email" class="form-control" required/>
+                                            <input type="text" name="fixed_rate" id="f_rate" value="<?php echo $fixed_rate; ?>" placeholder="Fix Rate" class="form-control" required/>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Select Period:</label>
@@ -432,13 +446,13 @@ if (isset($_SESSION['cus_nic'])) {
                                                 <option value="6">6 Months</option>
                                                 <option value="9">9 Months</option>
                                                 <option value="12">1 Year</option>
-                                                <option value="18">1.5 Years</option>
+                                                <option value="18">1 Year & 6 Months</option>
                                                 <option value="24">2 Years</option>
-                                                <option value="30">2.5 Years</option>
+                                                <option value="30">2 Year & 6 Months</option>
                                                 <option value="36">3 Years</option>
-                                                <option value="42">3.5 Years</option>
+                                                <option value="42">3 Year & 6 Months</option>
                                                 <option value="48">4 Years</option>
-                                                <option value="54">4.5 Years</option>
+                                                <option value="54">4 Year & 6 Months</option>
                                                 <option value="60">5 Years</option>
                                             </select>
                                         </div>
@@ -468,28 +482,28 @@ if (isset($_SESSION['cus_nic'])) {
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
 
-        function numbersonly(myfield, e, dec)
-        {
-            var key;
-            var keychar;
-            if (window.event)
-                key = window.event.keyCode;
-            else if (e)
-                key = e.which;
-            else
-                return true;
-            keychar = String.fromCharCode(key);
-            if ((key == null) || (key == 0) || (key == 8) ||
-                    (key == 9) || (key == 13) || (key == 27))
-                return true;
-            else if ((("0123456789").indexOf(keychar) > -1))
-                return true;
-            else if (dec && (keychar == ".")) {
-                myfield.form.elements[dec].focus();
-                return false;
-            } else
-                return false;
-        }
+                                                function numbersonly(myfield, e, dec)
+                                                {
+                                                    var key;
+                                                    var keychar;
+                                                    if (window.event)
+                                                        key = window.event.keyCode;
+                                                    else if (e)
+                                                        key = e.which;
+                                                    else
+                                                        return true;
+                                                    keychar = String.fromCharCode(key);
+                                                    if ((key == null) || (key == 0) || (key == 8) ||
+                                                            (key == 9) || (key == 13) || (key == 27))
+                                                        return true;
+                                                    else if ((("0123456789").indexOf(keychar) > -1))
+                                                        return true;
+                                                    else if (dec && (keychar == ".")) {
+                                                        myfield.form.elements[dec].focus();
+                                                        return false;
+                                                    } else
+                                                        return false;
+                                                }
 
 
     </script>

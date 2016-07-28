@@ -373,7 +373,7 @@ $current_date = date("Y-m-d");
                                             <div class="container">
                                                 <ul class="nav nav-tabs" style="width: 1000px;">
                                                     <li class="active"><a data-toggle="tab" href="#home">Add New</a></li>
-                                                    <li><a data-toggle="tab" href="#menu1">Edit</a></li>
+                                                    <!--<li><a data-toggle="tab" href="#menu1">Edit</a></li>-->
                                                     <li><a data-toggle="tab" href="#menu2">View</a></li>
                                                     <li><a data-toggle="tab" href="#menu3">Settlement</a></li>
                                                 </ul>
@@ -494,7 +494,7 @@ $current_date = date("Y-m-d");
                                                     </div>
                                                     <div id="menu3" class="tab-pane fade">
                                                         <h3>Settlement of the Loan Payment</h3>
-                                                        <p>Service Settlement can be use minimum more than 5 installments(months) available</p>
+                                                        <p>Service Settlement can be 6% Discount if more than 5 installments (months) available</p>
                                                         <div class="col-md-3">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
