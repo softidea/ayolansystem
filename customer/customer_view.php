@@ -157,7 +157,7 @@ session_start();
                                                 <td><?php echo $row['cus_address'] ?></td>
                                                 <td><?php echo $row['cus_reg_date'] ?></td>
                                                 <td><?php echo $row['cus_tp'] ?></td>
-                                                <td><?php echo '<button type="submit" name="view"  id="cservicebtn" method="post" class="btn btn">View</button>' ?></td>
+                                                <td><?php echo '<form action="customer_updateinfo.php"><button type="submit" name="view" id="cservicebtn" method="post" class="btn btn">View</button></form>' ?></td>
 
                                             </tr>
                                             <?php $i++; ?>

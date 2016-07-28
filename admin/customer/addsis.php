@@ -106,21 +106,18 @@
                                         <div class="form-group required">
                                             <label class="control-label" for="input-email">Customer Name:</label>
                                             <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Customer Name" id="input-email" class="form-control" required/>
-
                                         </div>
                                     </div>
                                     <div class="form-group required">
                                         <div class="form-group required">
                                             <label class="control-label" for="input-email">NIC:</label>
                                             <input type="text" disabled name="customersearch" id="fname" value="" placeholder="NIC" id="input-email" class="form-control" required/>
-
                                         </div>
                                     </div>
                                     <div class="form-group required">
                                         <div class="form-group required">
                                             <label class="control-label" for="input-email">Address :</label>
                                             <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Address" id="input-email" class="form-control" required/>
-
                                         </div>
                                     </div>
                                 </fieldset>
