@@ -185,7 +185,7 @@ if (isset($_SESSION['cus_nic'])) {
                                 document.getElementById('v_no_code').readOnly = false;
                                 document.getElementById('v_no_code').value = "";
                                 document.getElementById('v_no_num').value = "";
-                            } else{
+                            } else {
                                 //alert("length else");
                                 document.getElementById('v_no_code').value = "";
                                 document.getElementById('v_no_num').value = "";
@@ -370,15 +370,15 @@ if (isset($_SESSION['cus_nic'])) {
                                         <div class="form-inline" style="margin-bottom: 8px;">
                                             <a href="customer_registration.php"><button type="button" id="cviewbuttons" class="btn btn">New Customer</button></a>
                                         </div>
-<!--                                        <div class="form-group">
-                                            <label class="control-label">Upload Customer:</label>
-                                            <input type="file" name="product_image[]" id="idupload" onchange="imagepreview(this);"/>
-                                            <img id="imgpreview" title="Image Preview" style="width: 200px;height: 200px;">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Upload Property:</label>
-                                            <input type="file" name="product_image"/>
-                                        </div>-->
+                                        <!--                                        <div class="form-group">
+                                                                                    <label class="control-label">Upload Customer:</label>
+                                                                                    <input type="file" name="product_image[]" id="idupload" onchange="imagepreview(this);"/>
+                                                                                    <img id="imgpreview" title="Image Preview" style="width: 200px;height: 200px;">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">Upload Property:</label>
+                                                                                    <input type="file" name="product_image"/>
+                                                                                </div>-->
                                     </fieldset>
                                 </div>
                                 <div class="col-sm-6">
@@ -461,9 +461,25 @@ if (isset($_SESSION['cus_nic'])) {
                                             <input type="text" name="ser_installment" id="ser_installment" value="<?php echo $fixed_rate; ?>" placeholder="Fix Rate" class="form-control" required readonly/>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label" for="input-email">Description of the Loan:</label>
+                                            <label class="control-label">Vehicle Province Code:</label>
+                                            <select name="province_code" id="province_code" class="form-control" required>
+                                                <option value="0">~~Select Period~~</option>
+                                                <option value="CP">CP-Central Province</option>
+                                                <option value="EP">EP-Eastern Province</option>
+                                                <option value="NC">NC-North Central Province</option>
+                                                <option value="NP">NP-Nouthern Province</option>
+                                                <option value="NW">NW-North West</option>
+                                                <option value="SB">SB-Sabaragamuwa Province</option>
+                                                <option value="SP">SP-Southern Province</option>
+                                                <option value="UP">UP-Uva Province</option>
+                                                <option value="WP">WP-Western Province</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Description of the Loan:</label>
                                             <input type="text" id="lease_des" class="form-control" name="loan_description" placeholder="Description of the Loan">
                                         </div>
+
                                         <input type="submit" class="btn btn" id="custcontinue" name="lease_reg" value="Register Lease"/>
                                     </fieldset>
                                 </div>

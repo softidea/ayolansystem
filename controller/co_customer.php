@@ -278,12 +278,6 @@ if (isset($_POST['lease_reg'])) {
         $vehicle_num = $alter_code . "-" . $v_no_num;
         $vehicle_code = $alter_code;
     }
-    echo "jhbkbkjkj";
-    echo $pre_code;
-    echo '</br>';
-    echo $alter_code;
-    echo '</br>';
-    echo $v_no_num;
     
     $model_year = $_SESSION['model_year'] = filter_input(INPUT_POST, 'model_year');
     $lease_rate = $_SESSION['lease_rate'] = filter_input(INPUT_POST, 'lease_rate');
@@ -291,6 +285,7 @@ if (isset($_POST['lease_reg'])) {
     $cbo_loan_duration = $_SESSION['cbo_loan_duration'] = filter_input(INPUT_POST, 'cbo_loan_duration');
     $ser_installment = $_SESSION['ser_installment'] = filter_input(INPUT_POST, 'ser_installment');
     $loan_description = $_SESSION['loan_description'] = filter_input(INPUT_POST, 'loan_description');
+    $province_code=$_SESSION['province_code']=  filter_input(INPUT_POST, 'province_code');
 
     //saving customer~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     global $conn;
@@ -482,6 +477,7 @@ VALUES (
              period,
              installment,
              description,
+             province_code,
              ser_date,
              refrence_person,
              ser_status,
@@ -499,6 +495,7 @@ VALUES (
         '$cbo_loan_duration',
         '$ser_installment',
         '$loan_description',
+        '$province_code',
         '$cus_regdate',
         '$reference_person',
         '1',
