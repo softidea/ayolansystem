@@ -114,7 +114,7 @@ if (!isset($_SESSION['user_email'])) {
                                         <li><a href="../customer/customer_serviceview.php" style="text-decoration: none;">View Leases</a></li>
                                         <li class="divider"></li>
                                         <li class="dropdown-header" style="color: #004D40;">Lands</li>
-                                        <li><a href="#" style="text-decoration: none;">New Pawn</a></li>
+                                        <li><a href="../customer/customer_addpawn.php" style="text-decoration: none;">New Pawn</a></li>
                                         <li><a href="#" style="text-decoration: none;">Update Land Pawn</a></li>
                                         <li><a href="#" style="text-decoration: none;">View Land Pawns</a></li>
                                     </ul>
@@ -160,7 +160,7 @@ if (!isset($_SESSION['user_email'])) {
                             <a href="../customer/customer_updateinfo.php" style="text-decoration: none;"><button type="button" class="list-group-item">Update Customers</button></a>
                             <a href="../customer/customer_view.php" style="text-decoration: none;"><button type="button" class="list-group-item">Search Customers</button></a>
                             <a href="../customer/customer_addlease.php" style="text-decoration: none;"><button type="button" class="list-group-item">Add a Vehicle Lease</button></a>
-                            <a href="#" style="text-decoration: none;"><button type="button" class="list-group-item">Add a Land Pawn</button></a>
+                            <a href="../customer/customer_addpawn.php" style="text-decoration: none;"><button type="button" class="list-group-item">Add a Land Pawn</button></a>
                             <a href="../customer/customer_installment.php" style="text-decoration: none;"><button type="button" class="list-group-item">Add Installment</button></a>
                         </div>
                         <div class="panel-footer"><div style="height: 15px;"></div></div>

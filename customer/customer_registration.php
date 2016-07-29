@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_email'])) {
     <?php
     //Asia/Colombo
     date_default_timezone_set('Asia/Colombo');
-
+//$reg_date= date("Y-m-d");
     $cus_salutation = "";
     $cus_fullname = "";
     $cus_initialname = "";
@@ -25,7 +25,7 @@ if (!isset($_SESSION['user_email'])) {
     $cus_emp_name = "";
     $cus_emp_address = "";
     $cus_addr_map_link = "No add this one";
-    //$reg_date= date("Y-m-d");
+    
 
 
     $cus_hhalf_name = "";
@@ -366,7 +366,7 @@ if (!isset($_SESSION['user_email'])) {
                                         <legend>Customer Personal Details</legend>
                                         <div class="form-group  ">
                                             <label class="control-label">Full Name:</label>
-                                            <input type="text" id="cus_name" maxlength="100" name="cus_name" placeholder="Full Name"   class="form-control" maxlength="100" autofocus />
+                                            <input type="text" id="cus_name" maxlength="100" name="cus_name" placeholder="Full Name" class="form-control" maxlength="100" autofocus />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Permanent Address :</label>
@@ -377,7 +377,7 @@ if (!isset($_SESSION['user_email'])) {
                                             <input type="number" id="cus_tp" name="cus_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" min="0" placeholder="077XXXXXXX" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
-                                            <span style="color:red;">*</span>  <label class="control-label" >NIC Number:</label>
+                                            <span style="color:red;">*</span><label class="control-label" >NIC Number:</label>
                                             <input type="text" id="cus_nic" name="cus_nic" maxlength="10" placeholder="XXXXXXXXXV"  class="form-control" style="text-transform: uppercase;" required/>
                                         </div>
                                         <div class="form-group  ">

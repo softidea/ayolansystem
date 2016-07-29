@@ -577,7 +577,7 @@ VALUES (
 
         if ($save_savings && $save_mobile && $save_daily_loan && $save_property1 && $save_property2 && $save_lease && $save_g1 && $save_g2) {
             echo "<script>alert('Customer Lease has been sussfully added');</script>";
-            //echo "<script>window.location.href='../user/user_home.php';</script>";
+            echo "<script>window.location.href='../user/user_home.php';</script>";
             $_SESSION['cus_nic'] = "";
             $_SESSION['cus_name'] = "";
         } else {

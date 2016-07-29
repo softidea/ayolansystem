@@ -6,7 +6,7 @@ $current_date = date("Y-m-d");
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Services | View</title>
+        <title>Land | Installments</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- Latest compiled and minified CSS -->
@@ -22,10 +22,11 @@ $current_date = date("Y-m-d");
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <link rel="icon" href="favicon.ico">
         <link rel="stylesheet" type="text/css" href="../assets/css/installments.css"/>
+
         <script type="text/javascript">
-            function loadInstallmentCustomer() {
-                var nic = document.getElementById('cus_nic').value;
-                //alert(nic);
+            function searchPawnByDeed() {
+                var deed_no = document.getElementById('deed_no').value;
+                alert(deed_no);
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
@@ -35,30 +36,30 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        //alert(xmlhttp.responseText);
-
-                        var value = xmlhttp.responseText;
-                        var result_arr = value.split("#");
-
-                        document.getElementById('cus_name').value = "";
-                        document.getElementById('cus_tp').value = "";
-                        document.getElementById('cus_address').value = "";
-                        document.getElementById('cus_reg_date').value = "";
-
-                        document.getElementById('cus_name').value = result_arr[0];
-                        document.getElementById('cus_tp').value = result_arr[1];
-                        document.getElementById('cus_address').value = result_arr[2];
-                        document.getElementById('cus_reg_date').value = result_arr[3];
-                        loadServices();
+                      var result_arr= xmlhttp.responseText.split("#");
+                      if(result_arr[0]==1){
+                          document.getElementById('pawn_period').value=result_arr[0]+" Year";
+                      }else{
+                         document.getElementById('pawn_period').value=result_arr[0]+" Years"; 
+                      }
+                      
+                      document.getElementById('pawn_amount').value=result_arr[1];
+                      document.getElementById('ser_installment').value=result_arr[2];
+                      document.getElementById('cus_nic').value=result_arr[3];
+                      document.getElementById('cus_name').value=result_arr[4];
+                      document.getElementById('cus_tp').value=result_arr[5];
+                      document.getElementById('cus_address').value=result_arr[6];
+                      document.getElementById('cus_reg_date').value=result_arr[7];
+                      checkInstallmentHave(deed_no);
                     }
                 }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?cus_nic=" + nic, true);
+                xmlhttp.open("GET", "../controller/land_pawn_search.php?deed_no=" + deed_no, true);
                 xmlhttp.send();
             }
         </script>
         <script type="text/javascript">
-            function loadServices() {
-                var nic = document.getElementById('cus_nic').value;
+            function checkInstallmentHave(deed_no){
+                alert(deed_no);
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
@@ -68,177 +69,10 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        //alert(xmlhttp.responseText);
-                        document.getElementById('service_combo').innerHTML = "";
-                        document.getElementById('service_combo').innerHTML = xmlhttp.responseText;
-
+                      alert(xmlhttp.responseText);  
                     }
                 }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?c_nic=" + nic, true);
-                xmlhttp.send();
-
-            }
-        </script>
-        <script type="text/javascript">
-            function loadServiceDetails(sno) {
-                //alert(sno);
-                if (window.XMLHttpRequest) {
-                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                } else { // code for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                    {
-                        //alert(xmlhttp.responseText);
-                        var value = xmlhttp.responseText;
-                        var result_arr = value.split("#");
-
-                        document.getElementById('ser_number').value = "";
-                        document.getElementById('ser_no').value = "";
-                        document.getElementById('ser_payment').value = "";
-                        document.getElementById('ser_installment').value = "";
-
-                        document.getElementById('ser_number').value = result_arr[0];
-                        document.getElementById('ser_no').value = result_arr[1];
-                        document.getElementById('ser_payment').value = result_arr[2];
-                        document.getElementById('ser_installment').value = result_arr[3] + ".00";
-                        loadServiceInstallments(sno);
-                    }
-                }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?s_no=" + sno, true);
-                xmlhttp.send();
-            }
-        </script>
-        
-        <script type="text/javascript">
-            function loadServiceInstallments(sno) {
-                //alert(sno);
-                if (window.XMLHttpRequest) {
-                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                } else { // code for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                    {
-                        if (xmlhttp.responseText == "No Installment at this moment") {
-                            alert(xmlhttp.responseText);
-                            document.getElementById('installment_result_panel').innerHTML = "";
-                            //loadBottomBeginInstallment();
-                            check();
-                        }
-                        else
-                        {
-                            alert(xmlhttp.responseText);
-
-                            document.getElementById('tbl_installment_body').innerHTML = "";
-                            document.getElementById('tbl_installment_body').innerHTML = xmlhttp.responseText;
-                            check();
-                        }
-                    }
-                }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?service_no=" + sno, true);
-                xmlhttp.send();
-            
-            }
-        </script>
-        <script type="text/javascript">
-            function check() {
-                var serviceno = document.getElementById('service_combo').value;
-                alert(serviceno);
-                if (window.XMLHttpRequest) 
-                {
-                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                } 
-                else 
-                { // code for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                    {
-                        alert(xmlhttp.responseText);
-                        var res_value = xmlhttp.responseText;
-                        var res_arr = res_value.split("#");
-                        document.getElementById('payble_installment').value = res_arr[1];
-                        document.getElementById('payable_date').value = res_arr[0];
-                    }
-                }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?sno_begin_ins=" + serviceno, true);
-                xmlhttp.send();
-
-            }
-        </script>
-        <script type="text/javascript">
-            function saveInstallment() {
-                var installment = document.getElementById('payble_installment').value;
-                var payment = document.getElementById('payment_submit').value;
-                var paybaledate = document.getElementById('payable_date').value;
-                var paiddate = document.getElementById('paid_date').value;
-                var serno = document.getElementById('service_combo').value;
-
-                if (window.XMLHttpRequest) {
-                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                } else { // code for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                    {
-                        alert(xmlhttp.responseText);
-
-                    }
-                }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?installment=" + installment + "&payment=" + payment + "&payabledate=" + paybaledate + "&paiddate=" + paiddate + "&serno=" + serno + "&saveinstallment=" + installment, true);
-                xmlhttp.send();
-
-            }
-        </script>
-        <script type="text/javascript">
-            function loadInstallmentService() {
-                var ser_number = document.getElementById('ser_number').value;
-                if (window.XMLHttpRequest) {
-                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                } else { // code for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                    {
-                        alert(xmlhttp.responseText);
-                        var value = xmlhttp.responseText;
-                        var result_arr = value.split("#");
-
-                        document.getElementById('cus_nic').value = "";
-                        document.getElementById('cus_name').value = "";
-                        document.getElementById('cus_tp').value = "";
-                        document.getElementById('cus_address').value = "";
-                        document.getElementById('cus_reg_date').value = "";
-
-                        document.getElementById('cus_nic').value = result_arr[0];
-                        document.getElementById('cus_name').value = result_arr[1];
-                        document.getElementById('cus_tp').value = result_arr[2];
-                        document.getElementById('cus_address').value = result_arr[3];
-                        document.getElementById('cus_reg_date').value = result_arr[4];
-
-                        document.getElementById('ser_no').value = "";
-                        document.getElementById('ser_payment').value = "";
-                        document.getElementById('ser_installment').value = "";
-
-                        document.getElementById('ser_no').value =result_arr[5];
-                        document.getElementById('ser_payment').value = result_arr[6];
-                        document.getElementById('ser_installment').value = result_arr[7] + ".00";
-                        loadServiceInstallments(ser_number);
-
-                    }
-                }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?ser_number=" + ser_number, true);
+                xmlhttp.open("GET", "../controller/land_pawn_search.php?deed_no_for_check_ins=" + deed_no, true);
                 xmlhttp.send();
             }
         </script>
@@ -252,7 +86,7 @@ $current_date = date("Y-m-d");
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading" id="panelheading">
-                            <h3 class="panel-title">Customer Service Information</h3>
+                            <h3 class="panel-title">Land Pawn Information</h3>
                         </div>
                         <div class="panel-body" style="background-color: #FAFAFA;">
                             <div class="col-sm-6">
@@ -262,13 +96,14 @@ $current_date = date("Y-m-d");
                                         <label class="control-label">Customer NIC:</label>
                                         <div class="form-inline required">
                                             <input type="text"  name="cus_nic" id="cus_nic" placeholder="NIC" class="form-control" style="width:85%;text-transform: uppercase;" maxlength="10" required/>
-                                            <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="loadInstallmentCustomer();">
+                                            <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="">
                                         </div>
                                     </div>
                                     <div class="form-group required">
-                                        <div class="form-group required">
+                                        <div class="form-inline required">
                                             <label class="control-label">Customer Name:</label>
-                                            <input type="text"  name="cus_name" id="cus_name" placeholder="Customer Name" class="form-control" required readonly/>
+                                            <input type="text"  name="cus_name" id="cus_name" placeholder="Customer Name" class="form-control" required style="width:85%;"/>
+                                            <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="">
                                         </div>
                                     </div>
                                     <div class="form-group required">
@@ -295,34 +130,29 @@ $current_date = date("Y-m-d");
                                 <div id="searchOptionPanel">
                                     <fieldset id="account">
                                         <legend>Service Details</legend>
-                                        <div class="form-group required" style="display: block;" id="service_combo_div">
-                                            <label class="control-label">Select Service:</label>
-                                            <select name="service_combo" id="service_combo" class="form-control" onchange="loadServiceDetails(this.value);">
+                                        <div class="form-group required">
+                                            <label class="control-label">Select Deed:</label>
+                                            <select name="deed_combo" id="deed_combo" class="form-control" onchange="">
                                                 <option value='0'>~~Select Service~~</option>
                                             </select>
                                         </div>
                                         <div class="form-group required">
-                                            <label class="control-label">Service No:</label>
+                                            <label class="control-label">Deed No:</label>
                                             <div class="form-inline required">
-                                                <input type="text"  name="ser_number" id="ser_number" placeholder="Service No" class="form-control" style="width:85%;" maxlength="10" required/>
-                                                <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="loadInstallmentService();">
+                                                <input type="text"  name="deed_no" id="deed_no" placeholder="Deed No" class="form-control" style="width:85%;" required/>
+                                                <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="searchPawnByDeed();">
                                             </div>
                                         </div>
-                                        <div class="form-group required" style="display: block;" id="service_text_div">
-                                            <label class="control-label">Vehicle No:</label>
+                                        <div class="form-group required">
+                                            <label class="control-label">Pawn Period:</label>
                                             <div class="form-group required">
-                                                <input type="text" name="ser_no" id="ser_no" placeholder="Vehicle No" class="form-control" required/>
-<!--                                                <input type="button" class="btn btn" id="custcontinue" onclick="loadServices();" value="Search">-->
+                                                <input type="text" name="pawn_period" id="pawn_period" placeholder="Pawn Period" class="form-control" required/>
                                             </div>
                                         </div>
-                                        <!--                                        <div class="form-group required">
-                                                                                    <label class="control-label">Service Date:</label>
-                                                                                    <input type="text" name="ser_date" id="ser_date" placeholder="Service Date" class="form-control" required readonly/>
-                                                                                </div>-->
                                         <div class="form-group required">
                                             <div class="form-group required">
-                                                <label class="control-label">Loan Payment:</label>
-                                                <input type="text" name="ser_payment" id="ser_payment" placeholder="Loan Payment" class="form-control" required readonly/>
+                                                <label class="control-label">Pawn Amount:</label>
+                                                <input type="text" name="pawn_amount" id="pawn_amount" placeholder="Loan Payment" class="form-control" required readonly/>
                                             </div>
                                         </div>
                                         <div class="form-group required">
@@ -376,7 +206,6 @@ $current_date = date("Y-m-d");
                                             <div class="container">
                                                 <ul class="nav nav-tabs" style="width: 1000px;">
                                                     <li class="active"><a data-toggle="tab" href="#home">Add New</a></li>
-                                                    <!--<li><a data-toggle="tab" href="#menu1">Edit</a></li>-->
                                                     <li><a data-toggle="tab" href="#menu2">View</a></li>
                                                     <li><a data-toggle="tab" href="#menu3">Settlement</a></li>
                                                 </ul>
@@ -392,7 +221,7 @@ $current_date = date("Y-m-d");
                                                                     <input type="text" readonly name="payble_installment" id="payble_installment" placeholder="Payable Installment" class="form-control" required/>
                                                                 </div>
                                                             </div>
-                                                            <button type="button"  class="btn btn" id="cservicebtn" onclick="saveInstallment();">Add Installment</button>
+                                                            <button type="button"  class="btn btn" id="cservicebtn" onclick="">Add Installment</button>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group required">

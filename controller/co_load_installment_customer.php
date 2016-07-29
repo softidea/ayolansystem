@@ -1,6 +1,6 @@
 <?php
 
-//session_start();
+session_start();
 
 $conn = mysqli_connect("77.104.142.97", "ayolanin_dev", "WelComeDB1129", "ayolanin_datahost");
 if (mysqli_connect_errno()) {

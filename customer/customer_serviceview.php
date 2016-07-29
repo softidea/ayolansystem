@@ -50,7 +50,7 @@
                                 <fieldset id="account">
                                     <legend>Search Option-01</legend>
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Select Customer Option:</label>
+                                        <label class="control-label">Select Customer Option:</label>
                                         <form method="post" > <select name="cbo_customer_search" id="cboservice" class="form-control" required onchange="check();">
                                                 <option value=""> --- Please Select --- </option>
                                                 <option value="sno">Search by Service No</option>
@@ -59,7 +59,7 @@
                                             </select>
 
                                             <div class="form-group required">
-                                                <label class="control-label" for="input-email">Search Here:</label>
+                                                <label class="control-label">Search Here:</label>
                                                 <div class="form-inline required">
                                                     <input type="text" name="customer_search_bar" id="customer_searchbar" value="" placeholder="Search Here" class="form-control" style="width: 86%;" required/>
                                                     <button type="submit" name="search" id="cservicebtn" class="btn btn">Search</button>
@@ -82,7 +82,7 @@
                                         <legend>Search Option-02</legend>
 
                                         <div class="form-group required">
-                                            <label class="control-label" for="input-email">Search by Service Type:</label>
+                                            <label class="control-label">Search by Service Type:</label>
                                             <div class="form-inline required">
                                                 <form method="post"> <select name="SearchVehicle" id="cboservice" class="form-control" required onchange="check();" style="width: 86%;">
                                                         <option value=""> --- Please Select --- </option>
@@ -103,7 +103,7 @@
                                         <form method="post">
                                             <div class="form-group required">
                                                 <div class="form-group required">
-                                                    <label class="control-label" for="input-email">Installment Date:</label>
+                                                    <label class="control-label">Registration Date:</label>
                                                     <div class="form-inline required">
                                                         <input type="date" name="install_date" id="service_searchbar"  class="form-control" style="width: 86%;" required/>
                                                         <button type="submit" name="searchByDate" id="cservicebtn" class="btn btn">Search</button>

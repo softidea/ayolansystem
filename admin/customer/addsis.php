@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<?php
+session_start();
+if (!isset($_SESSION['user_email'])) {
+    header("Location:../index.php");
+}else{
+    
+    //Asia/Colombo
+    date_default_timezone_set('Asia/Colombo');
+    $sis_date= date("Y-m-d");
+}
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -94,30 +105,27 @@
                                 <fieldset id="account">
                                     <legend>Customer Information</legend>
                                     <div class="form-group required">
-                                            <label class="control-label" for="input-email">Service No:</label>
-                                            <div class="form-inline required">
-                                                <div class="form-inline required">
-                                                    <input type="text"  name="cus_nic" id="cus_nic" placeholder="NIC" class="form-control" style="width:85%;text-transform: uppercase;" maxlength="10" required/>
-                                                    <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="loadInstallmentCustomer();">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <div class="form-group required">
                                         <div class="form-group required">
-                                            <label class="control-label" for="input-email">Customer Name:</label>
-                                            <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Customer Name" id="input-email" class="form-control" required/>
+                                            <label class="control-label">NIC:</label>
+                                            <input type="text" disabled name="cus_nic" id="cus_nic" placeholder="NIC" class="form-control" required/>
                                         </div>
                                     </div>
                                     <div class="form-group required">
                                         <div class="form-group required">
-                                            <label class="control-label" for="input-email">NIC:</label>
-                                            <input type="text" disabled name="customersearch" id="fname" value="" placeholder="NIC" id="input-email" class="form-control" required/>
+                                            <label class="control-label">Customer Name:</label>
+                                            <input type="text" disabled name="cus_name" id="cus_name" placeholder="Customer Name" class="form-control" required/>
                                         </div>
                                     </div>
                                     <div class="form-group required">
                                         <div class="form-group required">
-                                            <label class="control-label" for="input-email">Address :</label>
-                                            <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Address" id="input-email" class="form-control" required/>
+                                            <label class="control-label">Address :</label>
+                                            <input type="text" disabled name="cus_address" id="cus_address" placeholder="Address" class="form-control" required/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group required">
+                                        <div class="form-group required">
+                                            <label class="control-label">Registered Date :</label>
+                                            <input type="text" disabled name="reg_date" id="reg_date" placeholder="Address" class="form-control" required/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -127,33 +135,30 @@
                                     <fieldset id="account">
                                         <legend>Service Information</legend>
                                         <div class="form-group required">
-                                            <label class="control-label" for="input-email">Service No:</label>
+                                            <label class="control-label">Service No:</label>
                                             <div class="form-inline required">
                                                 <div class="form-inline required">
-                                                    <input type="text"  name="cus_nic" id="cus_nic" placeholder="NIC" class="form-control" style="width:85%;text-transform: uppercase;" maxlength="10" required/>
-                                                    <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="loadInstallmentCustomer();">
+                                                    <input type="text"  name="ser_no" id="ser_no" placeholder="Service No" class="form-control" style="width:85%;" maxlength="10" required/>
+                                                    <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="searchServiceDetails();">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group required">
                                             <div class="form-group required">
-                                                <label class="control-label" for="input-email">Service Type:</label>
-                                                <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Service Type" id="input-email" class="form-control" required/>
-
+                                                <label class="control-label">Vehicle No:</label>
+                                                <input type="text" disabled name="vehicle_no" id="vehicle_no"  placeholder="Vehicle No" class="form-control" required/>
                                             </div>
                                         </div>
                                         <div class="form-group required">
                                             <div class="form-group required">
-                                                <label class="control-label" for="input-email">Service Date:</label>
-                                                <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Service Date" id="input-email" class="form-control" required/>
-
+                                                <label class="control-label">Service Date:</label>
+                                                <input type="text" disabled name="ser_date" id="ser_date" value="" placeholder="Service Date" class="form-control" required/>
                                             </div>
                                         </div>
                                         <div class="form-group required">
                                             <div class="form-group required">
-                                                <label class="control-label" for="input-email">Sis Date :</label>
-                                                <input type="text" name="customersearch" id="fname" value="" placeholder="Sis Date" id="input-email" class="form-control" required/>
-
+                                                <label class="control-label">Sis Date :</label>
+                                                <input type="date" name="sis_date" id="sis_date"  min="1900-12-31" max="<?php echo $sis_date;?>" value="<?php echo $sis_date;?>" placeholder="Ex:2016-07-25" class="form-control" required/>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -162,97 +167,116 @@
                             <div class="col-md-4">
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">No of Installments :</label>
-                                        <input type="text" disabled name="customersearch" id="fname" value="" placeholder="No of Installments" id="input-email" class="form-control" required/>
+                                        <label class="control-label">No of Installments :</label>
+                                        <input type="text" disabled name="no_of_installments" id="no_of_installments" placeholder="No of Installments" class="form-control" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <div class="form-group required">
+                                        <label class="control-label">Due Installments :</label>
+                                        <input type="text" disabled name="due_installments" id="due_installments" placeholder="Due Installments" class="form-control" required/>
 
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Due Installments :</label>
-                                        <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Due Installments" id="input-email" class="form-control" required/>
-
-                                    </div>
-                                </div>
-                                <div class="form-group required">
-                                    <div class="form-group required">
-                                        <label class="control-label" for="input-email">Due Payment :</label>
-                                        <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Due Payment" id="input-email" class="form-control" required/>
-
+                                        <label class="control-label">Due Payment :</label>
+                                        <input type="text" disabled name="due_payment" id="due_payment" placeholder="Due Payment" class="form-control" required/>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Installment :</label>
-                                        <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Installment" id="input-email" class="form-control" required/>
-
+                                        <label class="control-label">Installment :</label>
+                                        <input type="text" disabled name="installment" id="installment" placeholder="Installment" class="form-control" required/>
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Paid Installment :</label>
-                                        <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Paid Installment" id="input-email" class="form-control" required/>
-
+                                        <label class="control-label">Paid Installment :</label>
+                                        <input type="text" disabled name="paid_installment" id="paid_installment" placeholder="Paid Installment" class="form-control" required/>
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Paid Payment :</label>
-                                        <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Paid Payment" id="input-email" class="form-control" required/>
-
+                                        <label class="control-label">Paid Payment :</label>
+                                        <input type="text" disabled name="paid_payment" id="paid_payment" placeholder="Paid Payment" class="form-control" required/>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Rental Cost :</label>
-                                        <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Rental Cost" id="input-email" class="form-control" required/>
-
+                                        <label class="control-label">Rental Cost :</label>
+                                        <input type="text" disabled name="rental_cost" id="rental_cost" placeholder="Rental Cost" class="form-control" required/>
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Total Customer Due :</label>
-                                        <input type="text" disabled name="customersearch" id="fname" value="" placeholder="Total Customer Due" id="input-email" class="form-control" required/>
-
+                                        <label class="control-label">Total Customer Due :</label>
+                                        <input type="text" disabled name="total_customer_due" id="total_customer_due" placeholder="Total Customer Due" class="form-control" required/>
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label" for="input-email">Sis Cost :</label>
-                                        <input type="text" name="customersearch" id="fname" value="" placeholder="Sis Cost" id="input-email" class="form-control" required/>
-
+                                        <label class="control-label">Sis Cost :</label>
+                                        <input type="text" name="sis_cost" id="sis_cost" placeholder="Sis Cost" class="form-control" required/>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-12">
                                 <fieldset>
                                     <legend>Re-Process Description:</legend>
-                                    <textarea  style="height: 100px;width: 100%;" placeholder="Enter Re-Process Description"></textarea>
+                                    <textarea  style="height: 100px;width: 100%;" name="re_process_des" id="re_process_des" placeholder="Enter Re-Process Description" required maxlength="500"></textarea>
                                     <button type="submit"  class="btn btn" id="cservicebtn">Back</button>
-                                    <button type="submit"  class="btn btn" id="cservicebtn">Re-Process</button>
+                                    <button type="submit"  class="btn btn" id="cservicebtn">Save Re-Process</button>
                                     <button type="submit"  class="btn btn" id="cservicebtn">View All</button>
                                 </fieldset>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</div>
-<!--Customer Service Loader-->
+        <!--Customer Service Loader-->
 
-<?php include '../../assets/include/footer.php'; ?>
-</body>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="http://bootsnipp.com/dist/scripts.min.js"></script>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <?php include '../../assets/include/footer.php'; ?>
+    </body>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="http://bootsnipp.com/dist/scripts.min.js"></script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script type="text/javascript">
+                                                        function searchServiceDetails() {
+                                                            var ser_number = document.getElementById('ser_no').value;
+                                                            if (ser_number != "" && ser_number != null) {
+                                                                if (window.XMLHttpRequest) {
+                                                                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                                                                    xmlhttp = new XMLHttpRequest();
+                                                                } else { // code for IE6, IE5
+                                                                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                                                                }
+                                                                xmlhttp.onreadystatechange = function () {
+                                                                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                                                                        alert(xmlhttp.responseText);
+                                                                        var result_arr = xmlhttp.responseText.split("#");
+                                                                        document.getElementById('cus_nic').value = result_arr[0];
+                                                                        document.getElementById('cus_name').value = result_arr[1];
+                                                                        document.getElementById('cus_address').value = result_arr[2];
+                                                                        document.getElementById('reg_date').value = result_arr[3];
+                                                                        document.getElementById('vehicle_no').value = result_arr[4];
+                                                                        document.getElementById('ser_date').value = result_arr[5];
+                                                                        document.getElementById('no_of_installments').value=result_arr[6];
+                                                                        document.getElementById('installment').value=result_arr[7]+".00";
+                                                                        document.getElementById('rental_cost').value=result_arr[8]+".00";
+
+                                                                    }
+                                                                }
+                                                                xmlhttp.open("GET", "../../controller/re_process_registration.php?ser_number=" + ser_number, true);
+                                                                xmlhttp.send();
+                                                            }
+                                                        }
+    </script>
 </html>
