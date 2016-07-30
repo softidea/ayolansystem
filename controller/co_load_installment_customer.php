@@ -177,7 +177,7 @@ if ($service_no != "" && $service_no != null) {
             echo "<td>$current_row</td>";
             echo "<td>$date</td>";
             echo "<td>$paid_date</td>";
-            echo "<td>$payment</td>";
+            echo "<td>$payment.00</td>";
             echo"</tr>";
             $current_row++;
         }
