@@ -6,7 +6,7 @@ $current_date = date("Y-m-d");
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Services | View</title>
+        <title>Lease | Installments</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- Latest compiled and minified CSS -->
@@ -103,7 +103,7 @@ $current_date = date("Y-m-d");
                         document.getElementById('ser_no').value = result_arr[1];
                         document.getElementById('ser_payment').value = result_arr[2];
                         document.getElementById('ser_installment').value = result_arr[3] + ".00";
-                        document.getElementById('cus_reg_date').value=result_arr[4];
+                        document.getElementById('cus_reg_date').value = result_arr[4];
                         loadServiceInstallments(sno);
                     }
                 }
@@ -127,8 +127,8 @@ $current_date = date("Y-m-d");
                         document.getElementById('installment_result_panel').style.visibility = "hidden";
                         if (xmlhttp.responseText == "No Installment at this moment") {
                             alert(xmlhttp.responseText);
-                            
-                            
+
+
                             //loadBottomBeginInstallment();
                             check(sno);
                             alert("check");
@@ -136,7 +136,7 @@ $current_date = date("Y-m-d");
                         {
                             alert(xmlhttp.responseText);
 
-                            
+
                             document.getElementById('tbl_installment_body').innerHTML = "";
                             document.getElementById('tbl_installment_body').innerHTML = xmlhttp.responseText;
                             document.getElementById('installment_result_panel').style.visibility = "visible";
@@ -160,28 +160,28 @@ $current_date = date("Y-m-d");
                 } else { // code for IE6, IE5
                     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-               // alert('ela 2');
+                // alert('ela 2');
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
                         //alert(xmlhttp.responseText);
                         var res_value = xmlhttp.responseText;
                         var res_arr = res_value.split("#");
-                        
-                        if(res_arr.length>1){
-                        
-                        document.getElementById('payable_date').value = res_arr[0];
-                        document.getElementById('payble_installment').value = res_arr[1]+ ".00";
-                        document.getElementById('next_installment').value = res_arr[2]+ ".00";
-                        document.getElementById('next_installment_date').value = res_arr[3];
-                        document.getElementById('total_payable_payment').value = res_arr[4];
-                       
-                         document.getElementById('remain_amount').value=res_arr[5]+".00";
-                         document.getElementById('total_payable_in_settlement').value=res_arr[7];
-                         document.getElementById('requiredpayment').value=res_arr[8];
-                         document.getElementById('maximumpayment').value=res_arr[5];
-                         document.getElementById('total_payable_installements').value=res_arr[6];
-                     }
+
+                        if (res_arr.length > 1) {
+
+                            document.getElementById('payable_date').value = res_arr[0];
+                            document.getElementById('payble_installment').value = res_arr[1] + ".00";
+                            document.getElementById('next_installment').value = res_arr[2] + ".00";
+                            document.getElementById('next_installment_date').value = res_arr[3];
+                            document.getElementById('total_payable_payment').value = res_arr[4];
+
+                            document.getElementById('remain_amount').value = res_arr[5] + ".00";
+                            document.getElementById('total_payable_in_settlement').value = res_arr[7];
+                            document.getElementById('requiredpayment').value = res_arr[8];
+                            document.getElementById('maximumpayment').value = res_arr[5];
+                            document.getElementById('total_payable_installements').value = res_arr[6];
+                        }
                     }
                 }
                 xmlhttp.open("GET", "../controller/co_load_installment_customer.php?sno_begin_ins=" + serviceno, true);
@@ -199,29 +199,29 @@ $current_date = date("Y-m-d");
                 var serno = document.getElementById('hidden_ser_number').value;
                 remaining = parseFloat(remaining);
                 alert(remaining);
-                if(remaining>=0){
-                    if(payment<=remaining){
-                if (window.XMLHttpRequest) {
-                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                } else { // code for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                    {
-                        alert(xmlhttp.responseText);
-                        loadServiceInstallments(serno);
-                        document.getElementById('payment_submit').value="";
-                        document.getElementById('hidden_ser_number').value = "NONE";
+                if (remaining >= 0) {
+                    if (payment <= remaining) {
+                        if (window.XMLHttpRequest) {
+                            // code for IE7+, Firefox, Chrome, Opera, Safari
+                            xmlhttp = new XMLHttpRequest();
+                        } else { // code for IE6, IE5
+                            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        xmlhttp.onreadystatechange = function () {
+                            if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                            {
+                                alert(xmlhttp.responseText);
+                                loadServiceInstallments(serno);
+                                document.getElementById('payment_submit').value = "";
+                                document.getElementById('hidden_ser_number').value = "NONE";
+                            }
+                        }
+                        xmlhttp.open("GET", "../controller/co_load_installment_customer.php?installment=" + installment + "&payment=" + payment + "&payabledate=" + paybaledate + "&paiddate=" + paiddate + "&serno=" + serno + "&saveinstallment=" + installment, true);
+                        xmlhttp.send();
+                    } else {
+                        alert("The Maximum Amount Allowed to pay is " + remaining);
                     }
-                }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?installment=" + installment + "&payment=" + payment + "&payabledate=" + paybaledate + "&paiddate=" + paiddate + "&serno=" + serno + "&saveinstallment=" + installment, true);
-                xmlhttp.send();
-                    }else{
-                    alert("The Maximum Amount Allowed to pay is "+remaining);
-                }
-                }else{
+                } else {
                     alert("The lease is already settled");
                 }
             }
@@ -265,7 +265,7 @@ $current_date = date("Y-m-d");
                             document.getElementById('ser_no').value = result_arr[5];
                             document.getElementById('ser_payment').value = result_arr[6];
                             document.getElementById('ser_installment').value = result_arr[7] + ".00";
-                           
+
                             loadServiceInstallments(ser_number);
                         } else {
                             document.getElementById('hidden_ser_number').value = "NONE";
@@ -279,11 +279,11 @@ $current_date = date("Y-m-d");
             }
         </script>
         <script type="text/javascript">
-            function saveLeaseSettlement(){
-                var settlement_payment=document.getElementById('settlement_payment').value;
-                var requiredpayment=document.getElementById('requiredpayment').value;
-                var maxpayment=document.getElementById('maximumpayment').value;
-                var hidden_ser_number=document.getElementById('hidden_ser_number').value;
+            function saveLeaseSettlement() {
+                var settlement_payment = document.getElementById('settlement_payment').value;
+                var requiredpayment = document.getElementById('requiredpayment').value;
+                var maxpayment = document.getElementById('maximumpayment').value;
+                var hidden_ser_number = document.getElementById('hidden_ser_number').value;
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
@@ -294,11 +294,11 @@ $current_date = date("Y-m-d");
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
                         alert(xmlhttp.responseText);
-                        document.getElementById('settlement_payment').value="";
+                        document.getElementById('settlement_payment').value = "";
                         loadServiceInstallments(hidden_ser_number);
                     }
                 }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?settlement_payment=" + settlement_payment+"&requiredpayment="+requiredpayment+"&hidden_ser_number="+hidden_ser_number+"&maximumpayment="+maxpayment , true);
+                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?settlement_payment=" + settlement_payment + "&requiredpayment=" + requiredpayment + "&hidden_ser_number=" + hidden_ser_number + "&maximumpayment=" + maxpayment, true);
                 xmlhttp.send();
             }
         </script>
@@ -412,10 +412,10 @@ $current_date = date("Y-m-d");
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbl_installment_body"></tbody>
-                                            
-                                            
+
+
                                             </table>
-                                            
+
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="container">
@@ -458,7 +458,7 @@ $current_date = date("Y-m-d");
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
                                                                     <label class="control-label">Payment:</label>
-                                                                    <input type="text" name="payment_submit" id="payment_submit" placeholder="Payment" class="form-control" required/>
+                                                                    <input type="text" name="payment_submit" id="payment_submit" placeholder="Payment" class="form-control" required onKeyPress="return numbersonly(this, event);"/>
                                                                 </div>
                                                                 <div class="form-group required">
                                                                     <label class="control-label">Total Payable Payment:</label>
@@ -480,7 +480,7 @@ $current_date = date("Y-m-d");
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div id="menu3" class="tab-pane fade">
                                                         <h3>Settlement of the Loan Payment</h3>
                                                         <p>Service Settlement can be 6% Discount if more than 5 installments (months) available</p>
@@ -506,7 +506,7 @@ $current_date = date("Y-m-d");
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
                                                                     <label class="control-label" for="settlement_payment">Payment:</label>
-                                                                    <input type="text" name="settlement_payment" placeholder="Payment" id="settlement_payment" class="form-control" required/>
+                                                                    <input type="text" name="settlement_payment" placeholder="Payment" id="settlement_payment" class="form-control" required onKeyPress="return numbersonly(this, event);"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group required">
@@ -562,5 +562,30 @@ $current_date = date("Y-m-d");
                                                         popupWin.document.write('</html>');
                                                         popupWin.document.close();
                                                     }
+    </script>
+    <script type="text/javascript">
+        function numbersonly(myfield, e, dec)
+        {
+            var key;
+            var keychar;
+            if (window.event)
+                key = window.event.keyCode;
+            else if (e)
+                key = e.which;
+            else
+                return true;
+            keychar = String.fromCharCode(key);
+            if ((key == null) || (key == 0) || (key == 8) ||
+                    (key == 9) || (key == 13) || (key == 27))
+                return true;
+            else if ((("0123456789").indexOf(keychar) > -1))
+                return true;
+            else if (dec && (keychar == ".")) {
+                myfield.form.elements[dec].focus();
+                return false;
+            } else
+                return false;
+        }
+
     </script>
 </html>
