@@ -175,6 +175,7 @@ $current_date = date("Y-m-d");
                         document.getElementById('next_installment').value = res_arr[2]+ ".00";
                         document.getElementById('next_installment_date').value = res_arr[3];
                         document.getElementById('total_payable_payment').value = res_arr[4];
+                       
                          document.getElementById('remain_amount').value=res_arr[5]+".00";
                          document.getElementById('total_payable_in_settlement').value=res_arr[7];
                          document.getElementById('requiredpayment').value=res_arr[8];
@@ -281,6 +282,7 @@ $current_date = date("Y-m-d");
             function saveLeaseSettlement(){
                 var settlement_payment=document.getElementById('settlement_payment').value;
                 var requiredpayment=document.getElementById('requiredpayment').value;
+                var maxpayment=document.getElementById('maximumpayment').value;
                 var hidden_ser_number=document.getElementById('hidden_ser_number').value;
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -296,7 +298,7 @@ $current_date = date("Y-m-d");
                         loadServiceInstallments(hidden_ser_number);
                     }
                 }
-                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?settlement_payment=" + settlement_payment+"&requiredpayment="+requiredpayment+"&hidden_ser_number="+hidden_ser_number , true);
+                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?settlement_payment=" + settlement_payment+"&requiredpayment="+requiredpayment+"&hidden_ser_number="+hidden_ser_number+"&maximumpayment="+maxpayment , true);
                 xmlhttp.send();
             }
         </script>

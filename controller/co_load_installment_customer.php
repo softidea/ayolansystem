@@ -191,7 +191,12 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
     $sql_query = "SELECT * FROM service WHERE ser_number='$sno_begin_ins'";
     $run_query = mysqli_query($conn, $sql_query);
     if (mysqli_num_rows($run_query) > 0) {
+        
         if ($row = mysqli_fetch_assoc($run_query)) {
+            
+            
+            if(($row['ser_status'])==1){
+            
             $installment_amount = $row['installment'];
             $service_date = $row['ser_date'];
             $fixed_rate = $row['period'] * $installment_amount;
@@ -570,7 +575,11 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
             echo $dis_round_date . "#" . $customer_due . "#" . $nextpayment . "#" . $nextpaydate . "#" . $totpaybleamnt . ".00" . "#" . $balance_lease . "#" . $no_of_installments . "#" . $settlement_amount . "#" . $temp_settlement;
 
 
-            //$temp_date = 
+            //$temp_date =
+            }else{
+                echo 'NA' . "#" . '0' . "#" . '0' . "#" . 'NA' . "#" . '0' . ".00" . "#" . '0' . "#" . '0' . "#" . 'Lease is Already Settled!' . "#" . 'NA';
+
+             }
         }
         
     }
@@ -580,11 +589,11 @@ if (isset($settlement_payment) && isset($requiredpayment) && isset($hidden_ser_n
         $check_status = "SELECT ser_status FROM service WHERE ser_number='$hidden_ser_number' AND ser_status='1'";
         $run_check = mysqli_query($conn, $check_status);
         if ($run_check_res=  mysqli_fetch_array($run_check)) {
-
+            echo $maximumpayment;
             if ($settlement_payment >= $requiredpayment) {
                 if($settlement_payment>$maximumpayment){
-                    die("The Settlement Amount Should be Equal or Lesser than Maximum Payment Amount");
-                }
+                    echo "The Settlement Amount Should be Equal or Lesser than Maximum Payment Amount";
+                }else{
 
                 $save_settlement = "INSERT INTO ser_installment
             (
@@ -610,6 +619,7 @@ VALUES (
                     if ($run_update) {
                         echo "Lease is Settled";
                     }
+                }
                 }
             } else {
                 echo 'The Settlement Amount Should be Equal or Greater than Required Payment';
