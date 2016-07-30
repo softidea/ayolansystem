@@ -71,7 +71,6 @@ $current_date = date("Y-m-d");
                         //alert(xmlhttp.responseText);
                         document.getElementById('service_combo').innerHTML = "";
                         document.getElementById('service_combo').innerHTML = xmlhttp.responseText;
-
                     }
                 }
                 xmlhttp.open("GET", "../controller/co_load_installment_customer.php?c_nic=" + nic, true);
@@ -104,6 +103,7 @@ $current_date = date("Y-m-d");
                         document.getElementById('ser_no').value = result_arr[1];
                         document.getElementById('ser_payment').value = result_arr[2];
                         document.getElementById('ser_installment').value = result_arr[3] + ".00";
+                        document.getElementById('cus_reg_date').value=result_arr[4];
                         loadServiceInstallments(sno);
                     }
                 }
@@ -111,7 +111,7 @@ $current_date = date("Y-m-d");
                 xmlhttp.send();
             }
         </script>
-        
+
         <script type="text/javascript">
             function loadServiceInstallments(sno) {
                 //alert(sno);
@@ -124,48 +124,63 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
+                        document.getElementById('installment_result_panel').style.visibility = "hidden";
                         if (xmlhttp.responseText == "No Installment at this moment") {
                             alert(xmlhttp.responseText);
-                            document.getElementById('installment_result_panel').innerHTML = "";
+                            
+                            
                             //loadBottomBeginInstallment();
-                            check();
-                        }
-                        else
+                            check(sno);
+                            alert("check");
+                        } else
                         {
                             alert(xmlhttp.responseText);
 
+                            
                             document.getElementById('tbl_installment_body').innerHTML = "";
                             document.getElementById('tbl_installment_body').innerHTML = xmlhttp.responseText;
-                            check();
+                            document.getElementById('installment_result_panel').style.visibility = "visible";
+                            check(sno);
+                            //alert("check");
                         }
                     }
                 }
                 xmlhttp.open("GET", "../controller/co_load_installment_customer.php?service_no=" + sno, true);
                 xmlhttp.send();
-            
+
             }
         </script>
         <script type="text/javascript">
-            function check() {
-                var serviceno = document.getElementById('service_combo').value;
+            function check(serviceno) {
+                //var serviceno = document.getElementById('hidden_ser_number').value;
                 alert(serviceno);
-                if (window.XMLHttpRequest) 
-                {
+                if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
-                } 
-                else 
-                { // code for IE6, IE5
+                } else { // code for IE6, IE5
                     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 }
+               // alert('ela 2');
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        alert(xmlhttp.responseText);
+                        //alert(xmlhttp.responseText);
                         var res_value = xmlhttp.responseText;
                         var res_arr = res_value.split("#");
-                        document.getElementById('payble_installment').value = res_arr[1];
+                        
+                        if(res_arr.length>1){
+                        
                         document.getElementById('payable_date').value = res_arr[0];
+                        document.getElementById('payble_installment').value = res_arr[1]+ ".00";
+                        document.getElementById('next_installment').value = res_arr[2]+ ".00";
+                        document.getElementById('next_installment_date').value = res_arr[3];
+                        document.getElementById('total_payable_payment').value = res_arr[4];
+                         document.getElementById('remain_amount').value=res_arr[5]+".00";
+                         document.getElementById('total_payable_in_settlement').value=res_arr[7];
+                         document.getElementById('requiredpayment').value=res_arr[8];
+                         document.getElementById('maximumpayment').value=res_arr[5];
+                         document.getElementById('total_payable_installements').value=res_arr[6];
+                     }
                     }
                 }
                 xmlhttp.open("GET", "../controller/co_load_installment_customer.php?sno_begin_ins=" + serviceno, true);
@@ -179,8 +194,12 @@ $current_date = date("Y-m-d");
                 var payment = document.getElementById('payment_submit').value;
                 var paybaledate = document.getElementById('payable_date').value;
                 var paiddate = document.getElementById('paid_date').value;
-                var serno = document.getElementById('service_combo').value;
-
+                var remaining = document.getElementById('remain_amount').value;
+                var serno = document.getElementById('hidden_ser_number').value;
+                remaining = parseFloat(remaining);
+                alert(remaining);
+                if(remaining>=0){
+                    if(payment<=remaining){
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
@@ -191,12 +210,19 @@ $current_date = date("Y-m-d");
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
                         alert(xmlhttp.responseText);
-
+                        loadServiceInstallments(serno);
+                        document.getElementById('payment_submit').value="";
+                        document.getElementById('hidden_ser_number').value = "NONE";
                     }
                 }
                 xmlhttp.open("GET", "../controller/co_load_installment_customer.php?installment=" + installment + "&payment=" + payment + "&payabledate=" + paybaledate + "&paiddate=" + paiddate + "&serno=" + serno + "&saveinstallment=" + installment, true);
                 xmlhttp.send();
-
+                    }else{
+                    alert("The Maximum Amount Allowed to pay is "+remaining);
+                }
+                }else{
+                    alert("The lease is already settled");
+                }
             }
         </script>
         <script type="text/javascript">
@@ -214,31 +240,63 @@ $current_date = date("Y-m-d");
                         alert(xmlhttp.responseText);
                         var value = xmlhttp.responseText;
                         var result_arr = value.split("#");
+                        alert(result_arr.length);
+                        if (result_arr.length > 1) {
 
-                        document.getElementById('cus_nic').value = "";
-                        document.getElementById('cus_name').value = "";
-                        document.getElementById('cus_tp').value = "";
-                        document.getElementById('cus_address').value = "";
-                        document.getElementById('cus_reg_date').value = "";
+                            document.getElementById('hidden_ser_number').value = ser_number;
 
-                        document.getElementById('cus_nic').value = result_arr[0];
-                        document.getElementById('cus_name').value = result_arr[1];
-                        document.getElementById('cus_tp').value = result_arr[2];
-                        document.getElementById('cus_address').value = result_arr[3];
-                        document.getElementById('cus_reg_date').value = result_arr[4];
+                            document.getElementById('cus_nic').value = "";
+                            document.getElementById('cus_name').value = "";
+                            document.getElementById('cus_tp').value = "";
+                            document.getElementById('cus_address').value = "";
+                            document.getElementById('cus_reg_date').value = "";
 
-                        document.getElementById('ser_no').value = "";
-                        document.getElementById('ser_payment').value = "";
-                        document.getElementById('ser_installment').value = "";
+                            document.getElementById('cus_nic').value = result_arr[0];
+                            document.getElementById('cus_name').value = result_arr[1];
+                            document.getElementById('cus_tp').value = result_arr[2];
+                            document.getElementById('cus_address').value = result_arr[3];
+                            document.getElementById('cus_reg_date').value = result_arr[4];
+                            document.getElementById('payble_installment').value = "";
+                            document.getElementById('ser_no').value = "";
+                            document.getElementById('ser_payment').value = "";
+                            document.getElementById('ser_installment').value = "";
 
-                        document.getElementById('ser_no').value =result_arr[5];
-                        document.getElementById('ser_payment').value = result_arr[6];
-                        document.getElementById('ser_installment').value = result_arr[7] + ".00";
-                        loadServiceInstallments(ser_number);
+                            document.getElementById('ser_no').value = result_arr[5];
+                            document.getElementById('ser_payment').value = result_arr[6];
+                            document.getElementById('ser_installment').value = result_arr[7] + ".00";
+                           
+                            loadServiceInstallments(ser_number);
+                        } else {
+                            document.getElementById('hidden_ser_number').value = "NONE";
 
+                            alert("No Service found Under This Number!");
+                        }
                     }
                 }
                 xmlhttp.open("GET", "../controller/co_load_installment_customer.php?ser_number=" + ser_number, true);
+                xmlhttp.send();
+            }
+        </script>
+        <script type="text/javascript">
+            function saveLeaseSettlement(){
+                var settlement_payment=document.getElementById('settlement_payment').value;
+                var requiredpayment=document.getElementById('requiredpayment').value;
+                var hidden_ser_number=document.getElementById('hidden_ser_number').value;
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else { // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        alert(xmlhttp.responseText);
+                        document.getElementById('settlement_payment').value="";
+                        loadServiceInstallments(hidden_ser_number);
+                    }
+                }
+                xmlhttp.open("GET", "../controller/co_load_installment_customer.php?settlement_payment=" + settlement_payment+"&requiredpayment="+requiredpayment+"&hidden_ser_number="+hidden_ser_number , true);
                 xmlhttp.send();
             }
         </script>
@@ -306,6 +364,7 @@ $current_date = date("Y-m-d");
                                             <div class="form-inline required">
                                                 <input type="text"  name="ser_number" id="ser_number" placeholder="Service No" class="form-control" style="width:85%;" maxlength="10" required/>
                                                 <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="loadInstallmentService();">
+                                                <input type="hidden" id="hidden_ser_number" value="NONE">
                                             </div>
                                         </div>
                                         <div class="form-group required" style="display: block;" id="service_text_div">
@@ -341,43 +400,25 @@ $current_date = date("Y-m-d");
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <div class="col-md-12" id="installment_result_panel">
-                                            <table class="table table-bordered table-striped">
+                                            <table class="table table-bordered table-striped" id="installment_table">
                                                 <thead>
                                                     <tr>
                                                         <th>Installment</th>
                                                         <th>Date</th>
                                                         <th>Paid Date</th>
                                                         <th>Payment</th>
-                                                        <th>Customer Due</th>
-                                                        <th>Company Due</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="tbl_installment_body">
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>2016/01/10</td>
-                                                        <td>2016-10-12</td>
-                                                        <td>6000.00</td>
-                                                        <td>00.00</td>
-                                                        <td>264.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>2016/02/10</td>
-                                                        <td>2016-10-12</td>
-                                                        <td>5000.00</td>
-                                                        <td>736.00</td>
-                                                        <td>00.00</td>
-                                                    </tr>
-                                                </tbody>
+                                                <tbody id="tbl_installment_body"></tbody>
+                                            
+                                            
                                             </table>
+                                            
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="container">
                                                 <ul class="nav nav-tabs" style="width: 1000px;">
                                                     <li class="active"><a data-toggle="tab" href="#home">Add New</a></li>
-                                                    <!--<li><a data-toggle="tab" href="#menu1">Edit</a></li>-->
-                                                    <li><a data-toggle="tab" href="#menu2">View</a></li>
                                                     <li><a data-toggle="tab" href="#menu3">Settlement</a></li>
                                                 </ul>
 
@@ -391,16 +432,13 @@ $current_date = date("Y-m-d");
                                                                     <label class="control-label">Payable Installment:</label>
                                                                     <input type="text" readonly name="payble_installment" id="payble_installment" placeholder="Payable Installment" class="form-control" required/>
                                                                 </div>
-                                                            </div>
-                                                            <button type="button"  class="btn btn" id="cservicebtn" onclick="saveInstallment();">Add Installment</button>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label">Payment:</label>
-                                                                    <input type="text" name="payment_submit" id="payment_submit" placeholder="Payment" class="form-control" required/>
+                                                                    <label class="control-label">Next Installment:</label>
+                                                                    <input type="text" readonly name="next_installment" id="next_installment" placeholder="Payable Installment" class="form-control" required/>
+
                                                                 </div>
                                                             </div>
+                                                            <button type="button"  class="btn btn" id="cservicebtn" onclick="saveInstallment();">Add Installment</button>
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group required">
@@ -408,122 +446,70 @@ $current_date = date("Y-m-d");
                                                                     <label class="control-label">Payable Date:</label>
                                                                     <input type="text" readonly name="payable_date" id="payable_date" placeholder="Payable Date" class="form-control" required/>
                                                                 </div>
+                                                                <div class="form-group required">
+                                                                    <label class="control-label">Next Installment Date:</label>
+                                                                    <input type="text" readonly name="next_installment_date" id="next_installment_date" placeholder="Payable Date" class="form-control" required/>
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group required">
+                                                                <div class="form-group required">
+                                                                    <label class="control-label">Payment:</label>
+                                                                    <input type="text" name="payment_submit" id="payment_submit" placeholder="Payment" class="form-control" required/>
+                                                                </div>
+                                                                <div class="form-group required">
+                                                                    <label class="control-label">Total Payable Payment:</label>
+                                                                    <input type="text" readonly name="total_payable_payment" id="total_payable_payment" placeholder="Payment" class="form-control" required/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="col-sm-2">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
                                                                     <label class="control-label">Paid Date:</label>
                                                                     <input type="date" name="paid_date" id="paid_date" value="<?php echo $current_date; ?>" placeholder="Paid Date" class="form-control" required/>
                                                                 </div>
+                                                                <div class="form-group required">
+                                                                    <label class="control-label">Remaining Lease:</label>
+                                                                    <input type="text" readonly name="remain_amount" id="remain_amount"  placeholder="Remaining Amount" class="form-control" required/>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="menu1" class="tab-pane fade">
-                                                        <h3>Edit Installments Here</h3>
-                                                        <p>You can edit the last installment of the above service</p>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label">Payable Installment:</label>
-                                                                    <input type="text" disabled name="fname" id="fname" value="5736.00" placeholder="Payable Installment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Paid Installment:</label>
-                                                                    <input type="text" disabled name="fname" id="fname" value="5780.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Payment:</label>
-                                                                    <input type="text" name="fname" id="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                                <button type="submit"  class="btn btn" id="cservicebtn">Update Installment</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="menu2" class="tab-pane fade">
-                                                        <h3>View Installment Information Here</h3>
-                                                        <p>Total Service Installments ad due payments available here</p>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Installment:</label>
-                                                                    <input type="text" name="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Next Installment Date:</label>
-                                                                    <input type="text" name="fname" value="2016-10-10" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Customer Due:</label>
-                                                                    <input type="text" name="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Next Installment:</label>
-                                                                    <input type="text" name="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Company Due:</label>
-                                                                    <input type="text" name="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Payable:</label>
-                                                                    <input type="text" name="fname" value="35000.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
+                                                    
                                                     <div id="menu3" class="tab-pane fade">
                                                         <h3>Settlement of the Loan Payment</h3>
                                                         <p>Service Settlement can be 6% Discount if more than 5 installments (months) available</p>
                                                         <div class="col-md-3">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Payable Installments:</label>
-                                                                    <input type="text" disabled name="fname" value="10" placeholder="Payment" id="input-email" class="form-control" required/>
+                                                                    <label class="control-label" for="total_payable_installements">Total Payable Installments:</label>
+                                                                    <input type="text" disabled name="fname" value="10" placeholder="Payment" id="total_payable_installements" class="form-control" required/>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Payable:</label>
-                                                                    <input type="text" disabled name="fname" value="35000.00" placeholder="Payment" id="input-email" class="form-control" required/>
+                                                                    <label class="control-label" for="total_payable_in_settlement">Total Payable:</label>
+                                                                    <input type="text" disabled name="tot_payabale_in_settlment" value="35000.00" placeholder="Payment" id="total_payable_in_settlement" class="form-control" required/>
+                                                                    <input type="hidden" value="NONE" id="requiredpayment" name="requiredpaymeny">
+                                                                    <input type="hidden" value="NONE" id="maximumpayment" name="maximumpayment">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Payment:</label>
-                                                                    <input type="text" name="fname" value="35000.00" placeholder="Payment" id="input-email" class="form-control" required/>
+                                                                    <label class="control-label" for="settlement_payment">Payment:</label>
+                                                                    <input type="text" name="settlement_payment" placeholder="Payment" id="settlement_payment" class="form-control" required/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <button type="submit"  class="btn btn" id="cservicebtn">Settle Loan</button>
+                                                                    <button type="button"  class="btn btn" id="cservicebtn" onclick="saveLeaseSettlement();">Settle Loan</button>
                                                                 </div>
                                                             </div>
                                                         </div>

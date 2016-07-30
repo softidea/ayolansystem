@@ -38,7 +38,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Installments<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo ('customer_installment.php'); ?>" style="text-decoration: none;">Pay Installment</a></li>
+                            <li><a href="<?php echo ('customer_installment.php'); ?>" style="text-decoration: none;">Pay Lease Installment</a></li>
+                            <li><a href="<?php echo ('land_pawn_payment.php'); ?>" style="text-decoration: none;">Pay Pawn Installment</a></li>
                             <li><a href="<?php echo ('customer_installment.php'); ?>" style="text-decoration: none;">View Installment</a></li>
                             <li><a href="<?php echo ('customer_installment.php'); ?>" style="text-decoration: none;">Update Installment</a></li>
                             <li><a href="<?php echo ('customer_installment.php'); ?>" style="text-decoration: none;">Settle Service</a></li>

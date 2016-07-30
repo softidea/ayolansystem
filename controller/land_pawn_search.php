@@ -51,6 +51,19 @@ if (isset($deed_no)) {
     }
 }
 if(isset($deed_no_for_check_ins)){
-    
+    $installment_query="SELECT * FROM pawn_installment WHERE deed_no='$deed_no_for_check_ins'";
+    $installment_run=  mysqli_query($conn, $installment_query);
+    if(mysqli_num_rows($installment_run)>0){
+        while($installment_row=  mysqli_fetch_array($installment_run)){
+            $date=$installment_row['date'];
+            $paid_date=$installment_row['paid_date'];
+            $payment=$installment_row['payment'];
+            $customer_due=$installment_row['customer_due'];
+            $company_due=$installment_row['company_due'];
+            echo $date."#".$paid_date."#".$payment."#".$customer_due."#".$company_due;
+        }
+    }else{
+        echo 'No Pawn Installment Found';
+    }
 }
 ?>

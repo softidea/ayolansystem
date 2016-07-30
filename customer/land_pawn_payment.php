@@ -22,7 +22,6 @@ $current_date = date("Y-m-d");
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <link rel="icon" href="favicon.ico">
         <link rel="stylesheet" type="text/css" href="../assets/css/installments.css"/>
-
         <script type="text/javascript">
             function searchPawnByDeed() {
                 var deed_no = document.getElementById('deed_no').value;
@@ -69,11 +68,23 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                      alert(xmlhttp.responseText);  
+                      if(xmlhttp.responseText=="No Pawn Installment Found"){
+                          alert(xmlhttp.responseText);
+                          document.getElementById('installment_result_panel').innerHTML="";
+                          document.getElementById('tbl_installment_body').innerHTML="";
+                      }else{
+                          alert(xmlhttp.responseText);
+                          document.getElementById('tbl_installment_body').innerHTML=xmlhttp.responseText;
+                      }
                     }
                 }
                 xmlhttp.open("GET", "../controller/land_pawn_search.php?deed_no_for_check_ins=" + deed_no, true);
                 xmlhttp.send();
+            }
+        </script>
+        <script type="text/javascript">
+            function savePawnInstallment(){
+                
             }
         </script>
     </head>
@@ -206,7 +217,7 @@ $current_date = date("Y-m-d");
                                             <div class="container">
                                                 <ul class="nav nav-tabs" style="width: 1000px;">
                                                     <li class="active"><a data-toggle="tab" href="#home">Add New</a></li>
-                                                    <li><a data-toggle="tab" href="#menu2">View</a></li>
+                                                    <!--<li><a data-toggle="tab" href="#menu2">View</a></li>-->
                                                     <li><a data-toggle="tab" href="#menu3">Settlement</a></li>
                                                 </ul>
 
@@ -245,35 +256,6 @@ $current_date = date("Y-m-d");
                                                                     <label class="control-label">Paid Date:</label>
                                                                     <input type="date" name="paid_date" id="paid_date" value="<?php echo $current_date; ?>" placeholder="Paid Date" class="form-control" required/>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="menu1" class="tab-pane fade">
-                                                        <h3>Edit Installments Here</h3>
-                                                        <p>You can edit the last installment of the above service</p>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label">Payable Installment:</label>
-                                                                    <input type="text" disabled name="fname" id="fname" value="5736.00" placeholder="Payable Installment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Paid Installment:</label>
-                                                                    <input type="text" disabled name="fname" id="fname" value="5780.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Payment:</label>
-                                                                    <input type="text" name="fname" id="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                                <button type="submit"  class="btn btn" id="cservicebtn">Update Installment</button>
                                                             </div>
                                                         </div>
                                                     </div>
