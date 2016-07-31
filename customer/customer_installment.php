@@ -131,10 +131,10 @@ $current_date = date("Y-m-d");
 
                             //loadBottomBeginInstallment();
                             check(sno);
-                            alert("check");
+                            //alert("check");
                         } else
                         {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
 
 
                             document.getElementById('tbl_installment_body').innerHTML = "";
@@ -153,7 +153,7 @@ $current_date = date("Y-m-d");
         <script type="text/javascript">
             function check(serviceno) {
                 //var serviceno = document.getElementById('hidden_ser_number').value;
-                alert(serviceno);
+                //alert(serviceno);
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
@@ -198,7 +198,7 @@ $current_date = date("Y-m-d");
                 var remaining = document.getElementById('remain_amount').value;
                 var serno = document.getElementById('hidden_ser_number').value;
                 remaining = parseFloat(remaining);
-                alert(remaining);
+                //alert(remaining);
                 if (remaining >= 0) {
                     if (payment <= remaining) {
                         if (window.XMLHttpRequest) {
@@ -210,7 +210,7 @@ $current_date = date("Y-m-d");
                         xmlhttp.onreadystatechange = function () {
                             if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                             {
-                                alert(xmlhttp.responseText);
+                                //alert(xmlhttp.responseText);
                                 loadServiceInstallments(serno);
                                 document.getElementById('payment_submit').value = "";
                                 document.getElementById('hidden_ser_number').value = "NONE";
@@ -238,10 +238,10 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        alert(xmlhttp.responseText);
+                        //alert(xmlhttp.responseText);
                         var value = xmlhttp.responseText;
                         var result_arr = value.split("#");
-                        alert(result_arr.length);
+                        //alert(result_arr.length);
                         if (result_arr.length > 1) {
 
                             document.getElementById('hidden_ser_number').value = ser_number;
@@ -293,7 +293,7 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        alert(xmlhttp.responseText);
+                        //alert(xmlhttp.responseText);
                         document.getElementById('settlement_payment').value = "";
                         loadServiceInstallments(hidden_ser_number);
                     }

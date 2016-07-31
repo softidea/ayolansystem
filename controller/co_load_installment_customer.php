@@ -572,12 +572,12 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
             if ($totpaybleamnt == '-0') {
                 $totpaybleamnt = '0';
             }
-            echo $dis_round_date . "#" . $customer_due . "#" . $nextpayment . "#" . $nextpaydate . "#" . $totpaybleamnt . ".00" . "#" . $balance_lease . "#" . $no_of_installments . "#" . $settlement_amount . "#" . $temp_settlement;
+            echo $dis_round_date . "#" . $customer_due . "#" . $nextpayment . "#" . $nextpaydate . "#" . $totpaybleamnt . ".00" . "#" . $balance_lease . "#" . $no_of_installments . "#" . $settlement_amount . "#" . $temp_settlement. "#" . $customer_total_paid;
 
 
             //$temp_date =
             }else{
-                echo 'NA' . "#" . '0' . "#" . '0' . "#" . 'NA' . "#" . '0' . ".00" . "#" . '0' . "#" . '0' . "#" . 'Lease is Already Settled!' . "#" . 'NA';
+                echo 'NA' . "#" . '0' . "#" . '0' . "#" . 'NA' . "#" . '0' . ".00" . "#" . '0' . "#" . '0' . "#" . 'Lease is Already Settled!' . "#" . 'NA'. "#" . 'Lease is Already Settled!';
 
              }
         }

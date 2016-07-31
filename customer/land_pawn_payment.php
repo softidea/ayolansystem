@@ -356,7 +356,6 @@ $current_date = date("Y-m-d");
                                                                 <div class="form-group required">
                                                                     <label class="control-label">Total Payable Payment:</label>
                                                                     <input type="text" readonly name="total_payable_payment" id="total_payable_payment" placeholder="Payment" class="form-control" required/>
-
                                                                 </div>
                                                             </div>
                                                         </div>

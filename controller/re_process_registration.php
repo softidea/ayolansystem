@@ -5,6 +5,36 @@ if (mysqli_connect_errno()) {
 }
 
 $ser_number=  filter_input(INPUT_GET, 'ser_number');
+
+$ser_no_sis=  filter_input(INPUT_GET, 'ser_no_sis');
+$sis_cost=  filter_input(INPUT_GET, 'sis_cost');
+$sis_date=  filter_input(INPUT_GET, 'sis_date');
+$sis_des=  filter_input(INPUT_GET, 'sis_des');
+
+if(isset($ser_no_sis) && isset($sis_cost) && isset($sis_date) && isset($sis_des)){
+    
+    $check_unpaid="SELECT * FROM sis_registration WHERE ser_number='$ser_no_sis' AND sis_status='1'";
+    $run_check_unpaid=  mysqli_query($conn, $check_unpaid);
+    if(mysqli_num_rows($run_check_unpaid)>0){
+        
+        echo 'There is unsettle re processing payment under this service number';
+        
+    }else{
+        
+        $save_sis="INSERT INTO sis_registration (ser_number,sis_date,sis_cost,sis_des,sis_status) VALUES ('$ser_no_sis','$sis_date','$sis_cost','$sis_des','1')";
+        $run_save_sis=  mysqli_query($conn, $save_sis);
+        if($run_save_sis){
+            echo 'Sis is successfully registered';
+        }
+        
+        
+        
+    }
+    
+    
+}
+
+
 if(isset($ser_number)){
     
    global $conn;

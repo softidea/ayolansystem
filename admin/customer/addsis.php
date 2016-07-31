@@ -3,11 +3,11 @@
 session_start();
 if (!isset($_SESSION['user_email'])) {
     header("Location:../index.php");
-}else{
-    
+} else {
+
     //Asia/Colombo
     date_default_timezone_set('Asia/Colombo');
-    $sis_date= date("Y-m-d");
+    $sis_date = date("Y-m-d");
 }
 ?>
 <html>
@@ -88,6 +88,100 @@ if (!isset($_SESSION['user_email'])) {
                 background-color: #009688;
             }
         </style>
+        <script type="text/javascript">
+            function searchServiceDetails() {
+                var ser_number = document.getElementById('ser_no').value;
+                if (ser_number != "" && ser_number != null) {
+                    if (window.XMLHttpRequest) {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    } else { // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function () {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                            alert(xmlhttp.responseText);
+                            var result_arr = xmlhttp.responseText.split("#");
+                            document.getElementById('cus_nic').value = result_arr[0];
+                            document.getElementById('cus_name').value = result_arr[1];
+                            document.getElementById('cus_address').value = result_arr[2];
+                            document.getElementById('reg_date').value = result_arr[3];
+                            document.getElementById('vehicle_no').value = result_arr[4];
+                            document.getElementById('ser_date').value = result_arr[5];
+                            document.getElementById('no_of_installments').value = result_arr[6];
+                            document.getElementById('installment').value = result_arr[7] + ".00";
+                            document.getElementById('rental_cost').value = result_arr[8];
+                            document.getElementById('hidden_ser_number').value = ser_number;
+                            loadServiceDetails(ser_number);
+
+                        }
+                    }
+                    xmlhttp.open("GET", "../../controller/re_process_registration.php?ser_number=" + ser_number, true);
+                    xmlhttp.send();
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            function loadServiceDetails(serviceno) {
+                alert(serviceno);
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else { // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+
+                        alert(xmlhttp.responseText);
+                        var res_value = xmlhttp.responseText;
+                        var res_arr = res_value.split("#");
+
+                        if (res_arr.length > 1) {
+
+//                            document.getElementById('total_payable_payment').value = res_arr[4];
+//
+                            document.getElementById('due_payment').value = res_arr[5] + ".00";
+//                            document.getElementById('maximumpayment').value = res_arr[5];
+                            document.getElementById('due_installments').value = res_arr[6];
+                            document.getElementById('paid_payment').value = res_arr[9] + ".00";
+                            document.getElementById('paid_installment').value = document.getElementById('no_of_installments').value - document.getElementById('due_installments').value;
+                            document.getElementById('rent_cost_with_interest').value = document.getElementById('no_of_installments').value * document.getElementById('installment').value + ".00";
+                        }
+                    }
+                }
+                xmlhttp.open("GET", "../../controller/co_load_installment_customer.php?sno_begin_ins=" + serviceno, true);
+                xmlhttp.send();
+
+            }
+        </script>
+        <script type="text/javascript">
+            function saveSis() {
+                var ser_number = document.getElementById('ser_no').value;
+                var sis_cost = document.getElementById('sis_cost').value;
+                var sis_date = document.getElementById('sis_date').value;
+                var sis_des = document.getElementById('re_process_des').value;
+                if (ser_number != "" && ser_number != null) {
+                    if (window.XMLHttpRequest) {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    } else { // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function () {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                            alert(xmlhttp.responseText);
+
+                        }
+                    }
+                    xmlhttp.open("GET", "../../controller/re_process_registration.php?ser_no_sis=" + ser_number + "&sis_cost=" + sis_cost + "&sis_date=" + sis_date + "&sis_des=" + sis_des, true);
+                    xmlhttp.send();
+                }
+            }
+        </script>
     </head>
     <body>
         <?php include '../../assets/include/navigation_bar_forAdmin.php'; ?>
@@ -140,6 +234,7 @@ if (!isset($_SESSION['user_email'])) {
                                                 <div class="form-inline required">
                                                     <input type="text"  name="ser_no" id="ser_no" placeholder="Service No" class="form-control" style="width:85%;" maxlength="10" required/>
                                                     <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="searchServiceDetails();">
+                                                    <input type="hidden" id="hidden_ser_number">
                                                 </div>
                                             </div>
                                         </div>
@@ -158,7 +253,7 @@ if (!isset($_SESSION['user_email'])) {
                                         <div class="form-group required">
                                             <div class="form-group required">
                                                 <label class="control-label">Sis Date :</label>
-                                                <input type="date" name="sis_date" id="sis_date"  min="1900-12-31" max="<?php echo $sis_date;?>" value="<?php echo $sis_date;?>" placeholder="Ex:2016-07-25" class="form-control" required/>
+                                                <input type="date" name="sis_date" id="sis_date"  min="1900-12-31" max="<?php echo $sis_date; ?>" value="<?php echo $sis_date; ?>" placeholder="Ex:2016-07-25" class="form-control" required/>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -208,29 +303,29 @@ if (!isset($_SESSION['user_email'])) {
                             <div class="col-md-4">
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label">Rental Cost :</label>
+                                        <label class="control-label">Value of Lease :</label>
                                         <input type="text" disabled name="rental_cost" id="rental_cost" placeholder="Rental Cost" class="form-control" required/>
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="form-group required">
-                                        <label class="control-label">Total Customer Due :</label>
-                                        <input type="text" disabled name="total_customer_due" id="total_customer_due" placeholder="Total Customer Due" class="form-control" required/>
+                                        <label class="control-label">Lease with Interest :</label>
+                                        <input type="text" disabled name="rent_cost_with_interest" id="rent_cost_with_interest" placeholder="Total Customer Due" class="form-control" required/>
                                     </div>
                                 </div>
                                 <div class="form-group required">
                                     <div class="form-group required">
                                         <label class="control-label">Sis Cost :</label>
-                                        <input type="text" name="sis_cost" id="sis_cost" placeholder="Sis Cost" class="form-control" required/>
+                                        <input type="text" name="sis_cost" id="sis_cost" placeholder="Sis Cost" class="form-control" required onKeyPress="return numbersonly(this, event);"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <fieldset>
                                     <legend>Re-Process Description:</legend>
-                                    <textarea  style="height: 100px;width: 100%;" name="re_process_des" id="re_process_des" placeholder="Enter Re-Process Description" required maxlength="500"></textarea>
+                                    <textarea  style="height: 100px;width: 100%;" maxlength="250" name="re_process_des" id="re_process_des" placeholder="Enter Re-Process Description" required maxlength="500"></textarea>
                                     <button type="submit"  class="btn btn" id="cservicebtn">Back</button>
-                                    <button type="submit"  class="btn btn" id="cservicebtn">Save Re-Process</button>
+                                    <button type="submit"  class="btn btn" id="cservicebtn" onclick="saveSis();">Save Re-Process</button>
                                     <button type="submit"  class="btn btn" id="cservicebtn">View All</button>
                                 </fieldset>
                             </div>
@@ -247,36 +342,30 @@ if (!isset($_SESSION['user_email'])) {
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="http://bootsnipp.com/dist/scripts.min.js"></script>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
     <script type="text/javascript">
-                                                        function searchServiceDetails() {
-                                                            var ser_number = document.getElementById('ser_no').value;
-                                                            if (ser_number != "" && ser_number != null) {
-                                                                if (window.XMLHttpRequest) {
-                                                                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                                                                    xmlhttp = new XMLHttpRequest();
-                                                                } else { // code for IE6, IE5
-                                                                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                                                                }
-                                                                xmlhttp.onreadystatechange = function () {
-                                                                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                                        function numbersonly(myfield, e, dec)
+                                        {
+                                            var key;
+                                            var keychar;
+                                            if (window.event)
+                                                key = window.event.keyCode;
+                                            else if (e)
+                                                key = e.which;
+                                            else
+                                                return true;
+                                            keychar = String.fromCharCode(key);
+                                            if ((key == null) || (key == 0) || (key == 8) ||
+                                                    (key == 9) || (key == 13) || (key == 27))
+                                                return true;
+                                            else if ((("0123456789").indexOf(keychar) > -1))
+                                                return true;
+                                            else if (dec && (keychar == ".")) {
+                                                myfield.form.elements[dec].focus();
+                                                return false;
+                                            } else
+                                                return false;
+                                        }
 
-                                                                        alert(xmlhttp.responseText);
-                                                                        var result_arr = xmlhttp.responseText.split("#");
-                                                                        document.getElementById('cus_nic').value = result_arr[0];
-                                                                        document.getElementById('cus_name').value = result_arr[1];
-                                                                        document.getElementById('cus_address').value = result_arr[2];
-                                                                        document.getElementById('reg_date').value = result_arr[3];
-                                                                        document.getElementById('vehicle_no').value = result_arr[4];
-                                                                        document.getElementById('ser_date').value = result_arr[5];
-                                                                        document.getElementById('no_of_installments').value=result_arr[6];
-                                                                        document.getElementById('installment').value=result_arr[7]+".00";
-                                                                        document.getElementById('rental_cost').value=result_arr[8]+".00";
-
-                                                                    }
-                                                                }
-                                                                xmlhttp.open("GET", "../../controller/re_process_registration.php?ser_number=" + ser_number, true);
-                                                                xmlhttp.send();
-                                                            }
-                                                        }
     </script>
 </html>
