@@ -17,9 +17,9 @@
         <link rel="stylesheet" type="text/css" href="../assets/css/customer_registration.css">
 
         <?php if (isset($_GET['bootstrap']) && $_GET['bootstrap'] == 1): ?>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <?php else: ?>
-        <link rel="stylesheet" type="text/css" href="../assets/css/zebra_pagination.css">
+            <link rel="stylesheet" type="text/css" href="../assets/css/zebra_pagination.css">
         <?php endif ?>
 
         <link rel="icon" href="favicon.ico">
@@ -73,7 +73,7 @@
         </script>
         <script type="text/javascript">
             function changeModel() {
-                if (document.getElementById('v_code').value == "newmodel") 
+                if (document.getElementById('v_code').value == "newmodel")
                 {
                     document.getElementById('newmodel').readOnly = false;
                 }
@@ -83,10 +83,10 @@
                 }
             }
             function showTypes(str) {
-                if (document.getElementById('v_brand').value == "newbrand") 
+                if (document.getElementById('v_brand').value == "newbrand")
                 {
                     document.getElementById('newbrand').readOnly = false;
-                } else 
+                } else
                 {
                     document.getElementById('newbrand').readOnly = true;
                     document.getElementById('newbrand').value = "";
@@ -178,7 +178,7 @@
         include '../assets/include/navigation_bar.php';
         $conn = mysqli_connect("77.104.142.97", "ayolanin_dev", "WelComeDB1129", "ayolanin_datahost");
         if (mysqli_connect_errno()) {
-        echo "Falied to Connect the Database" . mysqli_connect_error();
+            echo "Falied to Connect the Database" . mysqli_connect_error();
         }
         ?>
         <!--Customer Panel Section-->
@@ -235,7 +235,7 @@
                                             <button type="submit"  class="btn btn" id="cservicebtn">Add Vehicle Rate</button>
                                             <button type="submit"  class="btn btn" id="cservicebtn">Add Land Rate</button>
                                             <button type="submit"  class="btn btn" id="cservicebtn">Update Rates</button>
-                                            <button type="submit"  class="btn btn" id="cservicebtn" onclick="PrintDoc();">Print Report</button>
+                                            <a href="../print_report/Print_vehicleRate_bike.php"><button type="submit"  class="btn btn" id="cservicebtn" onclick="PrintDoc();">Print Report</button></a>
                                             <button type="submit"  class="btn btn" id="cservicebtn" onclick="PrintPreview();">Preview</button>
                                         </div>
                                     </div>
@@ -252,8 +252,8 @@
                             $result = mysqli_query($conn, $sql_query);
                             if (!($result)) {
 
-                            // stop execution and display error message
-                            die(mysql_error());
+                                // stop execution and display error message
+                                die(mysql_error());
                             }
                             $rows = mysqli_fetch_assoc(mysqli_query($conn, 'SELECT FOUND_ROWS() AS rows'));
                             $pagination->records($rows['rows']);
@@ -277,16 +277,16 @@
                                             <tbody id="bike_tbody">
                                                 <?php $index = 0; ?>
                                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                                <tr<?php echo $index++% 2 ? ' class="even"' : '' ?>>
+                                                    <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?>>
 
-                                                    <td><?php echo $row['ser_vehicles_pre_id'] ?></td>
-                                                    <td><?php echo $row['model_year'] ?></td>
-                                                    <td><?php echo $row['model'] ?></td>
-                                                    <td><?php echo $row['type'] ?></td>
-                                                    <td><?php echo $row['min_value'] ?></td>
-                                                    <td><?php echo $row['max_value'] ?></td>
+                                                        <td><?php echo $row['ser_vehicles_pre_id'] ?></td>
+                                                        <td><?php echo $row['model_year'] ?></td>
+                                                        <td><?php echo $row['model'] ?></td>
+                                                        <td><?php echo $row['type'] ?></td>
+                                                        <td><?php echo $row['min_value'] ?></td>
+                                                        <td><?php echo $row['max_value'] ?></td>
 
-                                                </tr>
+                                                    </tr>
                                                 <?php endwhile ?>
                                             </tbody>
                                         </table>
@@ -307,8 +307,8 @@
                                 $result = mysqli_query($conn, $sql_query);
                                 if (!($result)) {
 
-                                // stop execution and display error message
-                                die(mysql_error());
+                                    // stop execution and display error message
+                                    die(mysql_error());
                                 }
                                 $rows = mysqli_fetch_assoc(mysqli_query($conn, 'SELECT FOUND_ROWS() AS rows'));
                                 $pagination->records($rows['rows']);
@@ -329,16 +329,16 @@
                                         <tbody id="tw_tbody">
                                             <?php $index = 0; ?>
                                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                            <tr<?php echo $index++% 2 ? ' class="even"' : '' ?>>
+                                                <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?>>
 
-                                                <td><?php echo $row['threewheel_pre_id'] ?></td>
-                                                <td><?php echo 'None' ?></td>
-                                                <td><?php echo $row['tw_type'] ?></td>
-                                                <td><?php echo $row['tw_mode'] ?></td>
-                                                <td><?php echo $row['min_val'] ?></td>
-                                                <td><?php echo $row['max_val'] ?></td>
+                                                    <td><?php echo $row['threewheel_pre_id'] ?></td>
+                                                    <td><?php echo 'None' ?></td>
+                                                    <td><?php echo $row['tw_type'] ?></td>
+                                                    <td><?php echo $row['tw_mode'] ?></td>
+                                                    <td><?php echo $row['min_val'] ?></td>
+                                                    <td><?php echo $row['max_val'] ?></td>
 
-                                            </tr>
+                                                </tr>
                                             <?php endwhile ?>
                                         </tbody>
                                     </table>
@@ -356,8 +356,8 @@
                                 $result = mysqli_query($conn, $sql_query);
                                 if (!($result)) {
 
-                                // stop execution and display error message
-                                die(mysql_error());
+                                    // stop execution and display error message
+                                    die(mysql_error());
                                 }
                                 $rows = mysqli_fetch_assoc(mysqli_query($conn, 'SELECT FOUND_ROWS() AS rows'));
                                 $pagination->records($rows['rows']);
@@ -377,27 +377,27 @@
                                             <?php $index = 0; ?>
                                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
 
-                                            <?php
-                                            $lid = $row['id'];
-                                            $l_yid = $row['year_id'];
-                                            $l_aid = $row['amount_id'];
-                                            $l_interest = $row['interest'];
-                                            ?>
-                                            <?php if ($l_yid == "1" && $l_yid != "0") { ?>
-                                            <tr<?php echo $index++% 2 ? ' class="even"' : '' ?>>
-                                                <td><?php echo $l_aid?></td>
-                                                <td><?php echo $l_yid.' Year' ?></td>
-                                                <td><?php echo $l_aid.'00,000.00'?></td>
-                                                <td><?php echo $l_interest ?></td>
-                                            </tr>
-                                           <?php } else if ($l_yid != "1" && $l_yid != "0") {?>
-                                            <tr<?php echo $index++% 2 ? ' class="even"' : '' ?>>
-                                                 <td><?php echo $l_aid?></td>
-                                                <td><?php echo $l_yid.' Years' ?></td>
-                                                <td><?php echo $l_aid.'00,000.00'?></td>
-                                                <td><?php echo $l_interest ?></td>
-                                               </tr>
-                                           <?php }?>
+                                                <?php
+                                                $lid = $row['id'];
+                                                $l_yid = $row['year_id'];
+                                                $l_aid = $row['amount_id'];
+                                                $l_interest = $row['interest'];
+                                                ?>
+                                                <?php if ($l_yid == "1" && $l_yid != "0") { ?>
+                                                    <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?>>
+                                                        <td><?php echo $l_aid ?></td>
+                                                        <td><?php echo $l_yid . ' Year' ?></td>
+                                                        <td><?php echo $l_aid . '00,000.00' ?></td>
+                                                        <td><?php echo $l_interest ?></td>
+                                                    </tr>
+                                                <?php } else if ($l_yid != "1" && $l_yid != "0") { ?>
+                                                    <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?>>
+                                                        <td><?php echo $l_aid ?></td>
+                                                        <td><?php echo $l_yid . ' Years' ?></td>
+                                                        <td><?php echo $l_aid . '00,000.00' ?></td>
+                                                        <td><?php echo $l_interest ?></td>
+                                                    </tr>
+                                                <?php } ?>
 
                                             <?php endwhile ?>
                                         </tbody>
@@ -577,27 +577,17 @@
 
 
 </script>
+
+<?php
+$url = "../print_report/PrintArea.php";
+?>
 <script type="text/javascript">
-    /*--This JavaScript method for Print command--*/
-    function PrintDoc() {
-//        var toPrint = document.getElementById('printarea');
-//        var popupWin = window.open('', '_blank', 'width=1024,height=600,location=no,left=200px');
-//        popupWin.document.open();
-//        popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="print.css" /></head><body onload="window.print()">')
-//        popupWin.document.write(toPrint.innerHTML);
-//        popupWin.document.write('</html>');
-//        popupWin.document.close();
-        window.print();
-    }
+
     /*--This JavaScript method for Print Preview command--*/
     function PrintPreview() {
-        var toPrint = document.getElementById('printarea');
-        var popupWin = window.open('', '_blank', 'width=1024,height=600,location=no,left=200px');
-        popupWin.document.open();
-        popupWin.document.write('<html><title>::Print Preview::</title><link rel="stylesheet" type="text/css" href="Print.css" media="screen"/></head><body">')
-        popupWin.document.write(toPrint.innerHTML);
-        popupWin.document.write('</html>');
-        popupWin.document.close();
+
+        echo '<script type="text/javascript">window.location.href="../print_report/PrintArea.php"';
+
     }
 </script>
 </html>
