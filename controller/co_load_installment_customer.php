@@ -166,7 +166,7 @@ if ($service_no != "" && $service_no != null) {
         while ($row = mysqli_fetch_array($run_query)) {
 
             $installment = $row['int_id'];
-//        $ser_number=$row['ser_number'];
+//         $ser_number=$row['ser_number'];
             $date = $row['date'];
             $paid_date = $row['paid_date'];
             $payment = $row['payment'];

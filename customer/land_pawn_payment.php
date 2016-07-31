@@ -26,6 +26,8 @@ $current_date = date("Y-m-d");
             function searchPawnByDeed() {
                 var deed_no = document.getElementById('deed_no').value;
                 alert(deed_no);
+                document.getElementById('hidden_deed_number').value = "NONE";
+
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
@@ -35,21 +37,27 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                      var result_arr= xmlhttp.responseText.split("#");
-                      if(result_arr[0]==1){
-                          document.getElementById('pawn_period').value=result_arr[0]+" Year";
-                      }else{
-                         document.getElementById('pawn_period').value=result_arr[0]+" Years"; 
-                      }
-                      
-                      document.getElementById('pawn_amount').value=result_arr[1];
-                      document.getElementById('ser_installment').value=result_arr[2];
-                      document.getElementById('cus_nic').value=result_arr[3];
-                      document.getElementById('cus_name').value=result_arr[4];
-                      document.getElementById('cus_tp').value=result_arr[5];
-                      document.getElementById('cus_address').value=result_arr[6];
-                      document.getElementById('cus_reg_date').value=result_arr[7];
-                      checkInstallmentHave(deed_no);
+                        var result_arr = xmlhttp.responseText.split("#");
+
+                        if (result_arr.length > 1) {
+                            if (result_arr[0] == 1) {
+                                document.getElementById('pawn_period').value = result_arr[0] + " Year";
+                            } else {
+                                document.getElementById('pawn_period').value = result_arr[0] + " Years";
+                            }
+
+                            document.getElementById('pawn_amount').value = result_arr[1];
+                            document.getElementById('ser_installment').value = result_arr[2];
+                            document.getElementById('cus_nic').value = result_arr[3];
+                            document.getElementById('cus_name').value = result_arr[4];
+                            document.getElementById('cus_tp').value = result_arr[5];
+                            document.getElementById('cus_address').value = result_arr[6];
+                            document.getElementById('cus_reg_date').value = result_arr[7];
+                            checkInstallmentHave(deed_no);
+                            document.getElementById('hidden_deed_number').value = deed_no;
+                        } else {
+                            alert("No deed is Found Under this Number!");
+                        }
                     }
                 }
                 xmlhttp.open("GET", "../controller/land_pawn_search.php?deed_no=" + deed_no, true);
@@ -57,7 +65,7 @@ $current_date = date("Y-m-d");
             }
         </script>
         <script type="text/javascript">
-            function checkInstallmentHave(deed_no){
+            function checkInstallmentHave(deed_no) {
                 alert(deed_no);
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -68,14 +76,17 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                      if(xmlhttp.responseText=="No Pawn Installment Found"){
-                          alert(xmlhttp.responseText);
-                          document.getElementById('installment_result_panel').innerHTML="";
-                          document.getElementById('tbl_installment_body').innerHTML="";
-                      }else{
-                          alert(xmlhttp.responseText);
-                          document.getElementById('tbl_installment_body').innerHTML=xmlhttp.responseText;
-                      }
+                        if (xmlhttp.responseText == "No Pawn Installment Found") {
+                            alert(xmlhttp.responseText);
+                            //document.getElementById('installment_result_panel').innerHTML = "";
+                            document.getElementById('tbl_installment_body').innerHTML = "";
+                            alert("deed_number");
+                            LoadDeedInstallmentDetails();
+                        } else {
+                            alert(xmlhttp.responseText);
+                            document.getElementById('tbl_installment_body').innerHTML = xmlhttp.responseText;
+                            LoadDeedInstallmentDetails();
+                        }
                     }
                 }
                 xmlhttp.open("GET", "../controller/land_pawn_search.php?deed_no_for_check_ins=" + deed_no, true);
@@ -83,8 +94,100 @@ $current_date = date("Y-m-d");
             }
         </script>
         <script type="text/javascript">
-            function savePawnInstallment(){
+            function LoadDeedInstallmentDetails() {
+                var deed_number = document.getElementById('hidden_deed_number').value;
+
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else { // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        alert(xmlhttp.responseText);
+//                        document.getElementById('pawn_period').value=xmlhttp.responseText;
+
+                        var result_arr = xmlhttp.responseText.split("#");
+                        if(result_arr.length>1){
+                        document.getElementById('payable_date').value = result_arr[0];
+                        document.getElementById('payble_installment').value = result_arr[1] + ".00";
+                        document.getElementById('next_installment').value = result_arr[2] + ".00";
+                        document.getElementById('next_installment_date').value = result_arr[3];
+                        document.getElementById('total_payable_payment').value = result_arr[4];
+                        document.getElementById('remain_amount').value = result_arr[5] + ".00";
+                        document.getElementById('total_payable_installment').value = result_arr[6];
+                        document.getElementById('total_payabale').value = result_arr[7] + ".00";
+                        document.getElementById('requiredpayment').value = result_arr[7];
+                        }else{
+                            alert("Deed Number Not Found.. Search Again");
+                        }
+//                        
+
+                    }
+                }
+                xmlhttp.open("GET", "../controller/land_pawn_search.php?deed_number=" + deed_number, true);
+                xmlhttp.send();
+            }
+        </script>
+        <script type="text/javascript">
+            function savePawnInstallment() {
+                var deed_number = document.getElementById('hidden_deed_number').value;
+                var paid_date = document.getElementById('paid_date').value;
+                var payment = document.getElementById('payment_submit').value;
+                var remain = document.getElementById('remain_amount').value;
+                if(remain<=0){
+                    alert("Cannot Complete...The Pawn is Already Settled");
+                }else if(payment>remain){
+                    alert("Please Enter a Amount Equal or Lesser than the Remaining Amount");
+                }else{
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else { // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        alert(xmlhttp.responseText);
+                        checkInstallmentHave(deed_number);
+                        document.getElementById('hidden_deed_number').value="NONE";
+                       
+                        
+                    }
+                }
+                xmlhttp.open("GET", "../controller/land_pawn_search.php?save_installment_deed_no=" + deed_number + "&paid_date=" + paid_date + "&payment=" + payment, true);
+                xmlhttp.send();
                 
+                }
+                
+            }
+        </script>
+        <script type="text/javascript">
+            function savePawnSettlment() {
+                var deed_number = document.getElementById('hidden_deed_number').value;
+                var paid_date = document.getElementById('paid_date').value;
+                var payment = document.getElementById('settle_payment').value;
+                var requiredpayment = document.getElementById('requiredpayment').value;
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else { // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        alert(xmlhttp.responseText);
+                        checkInstallmentHave(deed_number);
+                        document.getElementById('hidden_deed_number').value="NONE";
+                       
+                    }
+                }
+                xmlhttp.open("GET", "../controller/land_pawn_search.php?save_settlment_deed_no=" + deed_number + "&paid_date=" + paid_date + "&payment=" + payment+"&requiredpayment="+requiredpayment, true);
+                xmlhttp.send();
             }
         </script>
     </head>
@@ -152,6 +255,7 @@ $current_date = date("Y-m-d");
                                             <div class="form-inline required">
                                                 <input type="text"  name="deed_no" id="deed_no" placeholder="Deed No" class="form-control" style="width:85%;" required/>
                                                 <input type="button" class="btn btn" id="custcontinue" value="Search" onclick="searchPawnByDeed();">
+                                                <input type="hidden" id="hidden_deed_number" value="NONE">
                                             </div>
                                         </div>
                                         <div class="form-group required">
@@ -189,26 +293,20 @@ $current_date = date("Y-m-d");
                                                         <th>Date</th>
                                                         <th>Paid Date</th>
                                                         <th>Payment</th>
-                                                        <th>Customer Due</th>
-                                                        <th>Company Due</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbl_installment_body">
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td>2016/01/10</td>
-                                                        <td>2016-10-12</td>
-                                                        <td>6000.00</td>
-                                                        <td>00.00</td>
-                                                        <td>264.00</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">2</th>
-                                                        <td>2016/02/10</td>
-                                                        <td>2016-10-12</td>
-                                                        <td>5000.00</td>
-                                                        <td>736.00</td>
-                                                        <td>00.00</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -217,10 +315,8 @@ $current_date = date("Y-m-d");
                                             <div class="container">
                                                 <ul class="nav nav-tabs" style="width: 1000px;">
                                                     <li class="active"><a data-toggle="tab" href="#home">Add New</a></li>
-                                                    <!--<li><a data-toggle="tab" href="#menu2">View</a></li>-->
                                                     <li><a data-toggle="tab" href="#menu3">Settlement</a></li>
                                                 </ul>
-
                                                 <div class="tab-content">
                                                     <div id="home" class="tab-pane fade in active">
                                                         <h3>Add New Installment Here</h3>
@@ -231,22 +327,36 @@ $current_date = date("Y-m-d");
                                                                     <label class="control-label">Payable Installment:</label>
                                                                     <input type="text" readonly name="payble_installment" id="payble_installment" placeholder="Payable Installment" class="form-control" required/>
                                                                 </div>
-                                                            </div>
-                                                            <button type="button"  class="btn btn" id="cservicebtn" onclick="">Add Installment</button>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label">Payment:</label>
-                                                                    <input type="text" name="payment_submit" id="payment_submit" placeholder="Payment" class="form-control" required/>
+                                                                    <label class="control-label">Next Installment:</label>
+                                                                    <input type="text" readonly name="next_installment" id="next_installment" placeholder="Payable Installment" class="form-control" required/>
+
                                                                 </div>
                                                             </div>
+                                                            <button type="button"  class="btn btn" id="cservicebtn" onclick="savePawnInstallment();">Add Installment</button>
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
                                                                     <label class="control-label">Payable Date:</label>
                                                                     <input type="text" readonly name="payable_date" id="payable_date" placeholder="Payable Date" class="form-control" required/>
+                                                                </div>
+                                                                <div class="form-group required">
+                                                                    <label class="control-label">Next Installment Date:</label>
+                                                                    <input type="text" readonly name="next_installment_date" id="next_installment_date" placeholder="Payable Date" class="form-control" required/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group required">
+                                                                <div class="form-group required">
+                                                                    <label class="control-label">Payment:</label>
+                                                                    <input type="text" name="payment_submit" id="payment_submit" placeholder="Payment" class="form-control" required onKeyPress="return numbersonly(this, event);"/>
+                                                                </div>
+                                                                <div class="form-group required">
+                                                                    <label class="control-label">Total Payable Payment:</label>
+                                                                    <input type="text" readonly name="total_payable_payment" id="total_payable_payment" placeholder="Payment" class="form-control" required/>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -256,55 +366,12 @@ $current_date = date("Y-m-d");
                                                                     <label class="control-label">Paid Date:</label>
                                                                     <input type="date" name="paid_date" id="paid_date" value="<?php echo $current_date; ?>" placeholder="Paid Date" class="form-control" required/>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="menu2" class="tab-pane fade">
-                                                        <h3>View Installment Information Here</h3>
-                                                        <p>Total Service Installments ad due payments available here</p>
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Installment:</label>
-                                                                    <input type="text" name="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Next Installment Date:</label>
-                                                                    <input type="text" name="fname" value="2016-10-10" placeholder="Payment" id="input-email" class="form-control" required/>
+                                                                    <label class="control-label">Remaining Lease:</label>
+                                                                    <input type="text" readonly name="remain_amount" id="remain_amount"  placeholder="Remaining Amount" class="form-control" required/>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Customer Due:</label>
-                                                                    <input type="text" name="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Next Installment:</label>
-                                                                    <input type="text" name="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Company Due:</label>
-                                                                    <input type="text" name="fname" value="00.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group required">
-                                                                <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Payable:</label>
-                                                                    <input type="text" name="fname" value="35000.00" placeholder="Payment" id="input-email" class="form-control" required/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
                                                     </div>
                                                     <div id="menu3" class="tab-pane fade">
                                                         <h3>Settlement of the Loan Payment</h3>
@@ -312,29 +379,30 @@ $current_date = date("Y-m-d");
                                                         <div class="col-md-3">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Payable Installments:</label>
-                                                                    <input type="text" disabled name="fname" value="10" placeholder="Payment" id="input-email" class="form-control" required/>
+                                                                    <label class="control-label">Total Payable Installments:</label>
+                                                                    <input type="text" disabled name="total_payable_installment" placeholder="Payment" id="total_payable_installment" class="form-control" required/>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Total Payable:</label>
-                                                                    <input type="text" disabled name="fname" value="35000.00" placeholder="Payment" id="input-email" class="form-control" required/>
+                                                                    <label class="control-label">Total Payable:</label>
+                                                                    <input type="text" disabled name="total_payabale" placeholder="Payment" id="total_payabale" class="form-control" required/>
+                                                                    <input type="hidden" value="NONE" id="requiredpayment" name="requiredpaymeny">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <label class="control-label" for="input-email">Payment:</label>
-                                                                    <input type="text" name="fname" value="35000.00" placeholder="Payment" id="input-email" class="form-control" required/>
+                                                                    <label class="control-label">Payment:</label>
+                                                                    <input type="text" name="settle_payment" placeholder="Payment" id="settle_payment" class="form-control" required/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
-                                                                    <button type="submit"  class="btn btn" id="cservicebtn">Settle Loan</button>
+                                                                    <button type="submit"  class="btn btn" id="cservicebtn" onclick="savePawnSettlment();">Settle Loan</button>
                                                                 </div>
                                                             </div>
                                                         </div>

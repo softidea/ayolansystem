@@ -165,6 +165,5 @@ VALUES (
     }else{
             echo "Error while saving lan pawn";
         }
-
 }
 ?>
