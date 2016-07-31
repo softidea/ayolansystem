@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
 session_start();
- date_default_timezone_set('Asia/Colombo');
- $date_setter = date("Y-m-d");
+date_default_timezone_set('Asia/Colombo');
+$date_setter = date("Y-m-d");
 ?>
 <html>
     <head>
@@ -64,7 +64,15 @@ session_start();
                                                 <input type="text" name="fname" id="fname" value="" placeholder="Search Here" id="input-email" class="form-control" maxlength="10" required/>
                                                 <br>
                                                 <button type="submit" name="search_buton"  id="cservicebtn" method="post" class="btn btn">Search</button>
+                                                
                                             </div>
+                                        </form>
+                                        <form method="post">
+                                            
+                                             <div class="form-group required">
+                                                <button type="submit" name="search_buton_view_All"  id="cservicebtn" method="post" class="btn btn">View All</button>
+                                            </div>
+                                            
                                         </form>
                                         <?php
                                         if (isset($_POST['cbopayment'])) {
@@ -81,11 +89,11 @@ session_start();
                                 <form method="post">
                                     <div class="form-group required">
                                         <label class="control-label">Start Date:</label>
-                                        <input type="date" name="date1" id="date1" min="1900-12-31" max="<?php echo $date_setter; ?>" value="<?php echo $date_setter;?>" placeholder="Registration Date" class="form-control"/>
+                                        <input type="date" name="date1" id="date1" min="1900-12-31" max="<?php echo $date_setter; ?>" value="<?php echo $date_setter; ?>" placeholder="Registration Date" class="form-control"/>
                                     </div>
                                     <div class="form-group required">
                                         <label class="control-label">End Here:</label>
-                                        <input type="date" name="date2" id="date2" min="1900-12-31" max="<?php echo $date_setter; ?>" value="<?php echo $date_setter;?>" placeholder="Search Here" class="form-control" required/>
+                                        <input type="date" name="date2" id="date2" min="1900-12-31" max="<?php echo $date_setter; ?>" value="<?php echo $date_setter; ?>" placeholder="Search Here" class="form-control" required/>
                                         <br>
                                         <button type="submit" on name="search_date" id="cservicebtn" class="btn btn">Search</button>
                                     </div>
@@ -113,6 +121,10 @@ session_start();
                             } elseif (isset($_POST['search_date'])) {
 
                                 $sql_query = "SELECT SQL_CALC_FOUND_ROWS cus_id,cus_fullname,cus_nic,cus_address,cus_reg_date,cus_tp FROM customer WHERE `cus_reg_date` BETWEEN '" . $_POST['date1'] . "' AND '" . $_POST['date2'] . "' LIMIT " . (($pagination->get_page() - 1) * $records_per_page) . "," . $records_per_page;
+                            } elseif (isset($_POST['search_buton_view_All'])) {
+                                
+                                $sql_query = "SELECT SQL_CALC_FOUND_ROWS cus_id,cus_fullname,cus_nic,cus_address,cus_reg_date,cus_tp FROM customer  ORDER BY cus_id LIMIT " . (($pagination->get_page() - 1) * $records_per_page) . "," . $records_per_page;
+                                
                             } else {
                                 $sql_query = "SELECT SQL_CALC_FOUND_ROWS cus_id,cus_fullname,cus_nic,cus_address,cus_reg_date,cus_tp FROM customer  ORDER BY cus_id LIMIT " . (($pagination->get_page() - 1) * $records_per_page) . "," . $records_per_page;
                             }
@@ -148,7 +160,7 @@ session_start();
                                         $i = 1;
                                         ?>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                            <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?>>
+                                        <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?> onclick="readValues(this)">
 
 
                                                 <td><?php echo $row['cus_id'] ?></td>
@@ -172,7 +184,7 @@ session_start();
                                         <div class="form-inline">
                                             <button type="submit"  class="btn btn" id="cservicebtn">Save as PDF</button>
                                             <button type="submit"  class="btn btn" id="cservicebtn">Print</button>
-<!--                                            <script>
+                                            <script>
 
                                                 var cel;
                                                 function readValues(x) {
@@ -182,20 +194,20 @@ session_start();
                                                     alert(cus_nic);
                                                     window.location.href = "customer_updateinfo.php?nic=" + cus_nic;
                                                 }
-                                            </script>                                           -->
+                                            </script>                                           
 
                                         </div>
                                     </div>
                                 </div>
-<!--                                <div class="col-sm-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body" style="height: 250px;">
-
-
-
-                                        </div>
-                                    </div>
-                                </div>-->
+                                <!--                                <div class="col-sm-12">
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-body" style="height: 250px;">
+                                
+                                
+                                
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
                             </div>
                         </div>
 
@@ -214,22 +226,22 @@ session_start();
 <script src="http://bootsnipp.com/dist/scripts.min.js"></script>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
-    function setServiceOptionPanel()
-    {
-        var sp_value = document.getElementById('input-search-option').value;
-        if (sp_value == 'serviceno')
-        {
-            document.getElementById('cboservice').disabled = false;
+                                                function setServiceOptionPanel()
+                                                {
+                                                    var sp_value = document.getElementById('input-search-option').value;
+                                                    if (sp_value == 'serviceno')
+                                                    {
+                                                        document.getElementById('cboservice').disabled = false;
 
-            alert(sp_value);
-        }
-        else if (sp_value == 'cname' || sp_value == 'tp')
-        {
-            document.getElementById('cboservice').selectedIndex = "0";
-            document.getElementById('cboservice').disabled = true;
-            alert(sp_value);
-        }
-    }
+                                                        alert(sp_value);
+                                                    }
+                                                    else if (sp_value == 'cname' || sp_value == 'tp')
+                                                    {
+                                                        document.getElementById('cboservice').selectedIndex = "0";
+                                                        document.getElementById('cboservice').disabled = true;
+                                                        alert(sp_value);
+                                                    }
+                                                }
 
 
 

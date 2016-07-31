@@ -11,65 +11,92 @@ if (mysqli_connect_errno()) {
 
 if ($cust_nic != "" && $cust_nic != null) {
 
-$cus_fullname = "";
-$cus_address = "";
-$cus_tp = "";
-$cus_nic = "";
-$cus_dob = "";
-$cus_ms = "";
-$cus_dependdency = "";
-$cus_position = "";
-$cus_monthly_salary = "";
-$cus_emp_name = "";
-$cus_emp_address = "";
 
-$cus_hhalf_name = "";
-$cus_bhalf_dob = "";
-$cus_bhalf_position = "";
-$cus_bhalf_monthly_salary = "";
-$cus_bhalf_emp_name = "";
+    $cus_name = "";
+    $cus_address = "";
+    $cus_tp = "";
+    $cus_nic = "";
+    $cus_dob = "";
+    $cus_position = "";
+    $cus_salary = "";
+    $cus_emp_name = "";
+    $cus_emp_address = "";
+    $cus_ms = "";
+    $cus_dependdency = "";
+    $cus_spouse_name = "";
+    $cus_spouse_dob = "";
+    $cus_spouse_position = "";
+    $cus_spouse_salary = "";
+    $cus_spouse_emp_name = "";
+    $cus_addr_map_link = "";
+    $prop_name = "";
+    $prop_address = "";
+    $prop_tp = "";
+    $prop_dob = "";
+    $prop_nic = "";
+    $prop_ms = "";
+//Asia/Colombo
+    date_default_timezone_set('Asia/Colombo');
+    $cus_regdate = date("Y-m-d");
 
-$reg_date = "";
+    $prop_spouse_name = "";
+    $prop_postion = "";
+    $prop_salary = "";
+    $prop_emp_name = "";
+    $prop_emp_address = "";
 
-$gua_fullname = "";
-$gua_address = "";
-$gua_tp = "";
-$gua_dob = "";
-$gua_ms = "";
-$gua_nic = "";
-$gua_position = "";
-$gua_monthly_salary = "";
-$gua_emp_name = "";
-$gua_emp_address = "";
+    $g1_name = "";
+    $g1_address = "";
+    $g1_tp = "";
+    $g1_dob = "";
+    $g1_nic = "";
+    $g1_ms = "";
+    $g1_spouse = "";
+    $g1_position = "";
+    $g1_salary = "";
+    $g1_emp_name = "";
+    $g1_emp_address = "";
 
-$real_prp_house_position = "";
-$real_prp_house_size = "";
-$real_prp_house_value = "";
-$real_prp_house_pawned = "";
-$real_prp_house_pawn_getter = "";
+    $g2_name = "";
+    $g2_address = "";
+    $g2_tp = "";
+    $g2_dob = "";
+    $g2_nic = "";
+    $g2_ms = "";
+    $g2_spouse = "";
+    $g2_position = "";
+    $g2_salary = "";
+    $g2_emp_name = "";
+    $g2_emp_address = "";
 
-$real_prp_other_position = "";
-$real_prp_other_size = "";
-$real_prp_other_value = "";
-$real_prp_other_pawned = "";
-$real_prp_other_pawn_getter = "";
+    $real_prp_house_position = "";
+    $real_prp_house_size = "";
+    $real_prp_house_value = "";
+    $real_prp_house_pawned = "";
+    $real_prp_house_pawn_getter = "";
 
-$cus_savings_bank_branch = "";
-$cus_savings_facilities = "";
-$cus_savings_account_no = "";
+    $real_prp_other_position = "";
+    $real_prp_other_size = "";
+    $real_prp_other_value = "";
+    $real_prp_other_pawned = "";
+    $real_prp_other_pawn_getter = "";
 
-$cus_mobile_bank_branch = "";
-$cus_mobile_facilities = "";
-$cus_mobile_account_no = "";
+    $cus_savings_bank_branch = "";
+    $cus_savings_facilities = "";
+    $cus_savings_account_no = "";
 
-$cus_daily_loan_bank_branch = "";
-$cus_daily_loan_facilities = "";
-$cus_daily_loan_account_no = "";
+    $cus_mobile_bank_branch = "";
+    $cus_mobile_facilities = "";
+    $cus_mobile_account_no = "";
+
+    $cus_daily_loan_bank_branch = "";
+    $cus_daily_loan_facilities = "";
+    $cus_daily_loan_account_no = "";
 
 
 
 
-    $customer_table_data_quarry = "select 
+    $customer_table_data_quarry = "SELECT 
 
   `cus_fullname`,
   `cus_address`,
@@ -89,36 +116,59 @@ $cus_daily_loan_account_no = "";
   `wife_dob`,
   `wife_position`,
   `wife_salary`,
-  `wife_emp_name`
-
-from
+  `wife_emp_name`,
+  `proposer_name`,
+  `proposer_address`,
+  `proposer_tp`,
+  `proposer_dob`,
+  `proposer_nic`,
+  `proposer_ms`,
+  `proposer_spouse`,
+  `proposer_position`,
+  `proposer_salary`,
+  `proposer_employer`,
+  `proposer_emp_address` 
+FROM
   `ayolanin_datahost`.`customer` 
-  
   where `cus_nic` ='" . $cust_nic . "'";
     $result_customer_all = mysqli_query($conn, $customer_table_data_quarry);
 
     if ($result_customer_all) {
         $cus_row = mysqli_fetch_assoc($result_customer_all);
 
-        $cus_fullname = $cus_row['cus_fullname'];
+
+        $cus_name = $cus_row['cus_fullname'];
         $cus_address = $cus_row['cus_address'];
         $cus_tp = $cus_row['cus_tp'];
         $cus_nic = $cus_row['cus_nic'];
         $cus_dob = $cus_row['cus_dob'];
-        $cus_ms = $cus_row['cus_ms'];
-        $cus_dependdency = $cus_row['cus_dependdency'];
         $cus_position = $cus_row['cus_position'];
-        $cus_monthly_salary = $cus_row['cus_monthly_salary'];
+        $cus_salary = $cus_row['cus_monthly_salary'];
         $cus_emp_name = $cus_row['cus_emp_name'];
         $cus_emp_address = $cus_row['cus_emp_address'];
+        $cus_ms = $cus_row['cus_ms'];
+        $cus_dependdency = $cus_row['cus_dependdency'];
+        $cus_spouse_name = $cus_row['wife_name'];
+        $cus_spouse_dob = $cus_row['wife_dob'];
+        $cus_spouse_position = $cus_row['wife_position'];
+        $cus_spouse_salary = $cus_row['wife_salary'];
+        $cus_spouse_emp_name = $cus_row['wife_emp_name'];
+        $cus_addr_map_link = $cus_row['cus_addr_map_link'];
+        $prop_name = $cus_row['proposer_name'];
+        $prop_address = $cus_row['proposer_address'];
+        $prop_tp = $cus_row['proposer_tp'];
+        $prop_dob = $cus_row['proposer_dob'];
+        $prop_nic = $cus_row['proposer_nic'];
+        $prop_ms = $cus_row['proposer_ms'];
+//Asia/Colombo
+        date_default_timezone_set('Asia/Colombo');
+        $cus_regdate = $cus_row['cus_reg_date'];
 
-        $cus_hhalf_name = $cus_row['wife_name'];
-        $cus_bhalf_dob = $cus_row['wife_dob'];
-        $cus_bhalf_position = $cus_row['wife_position'];
-        $cus_bhalf_monthly_salary = $cus_row['wife_salary'];
-        $cus_bhalf_emp_name = $cus_row['wife_emp_name'];
-
-        $reg_date = $cus_row['cus_reg_date'];
+        $prop_spouse_name = $cus_row['proposer_spouse'];
+        $prop_postion = $cus_row['proposer_position'];
+        $prop_salary = $cus_row['proposer_salary'];
+        $prop_emp_name = $cus_row['proposer_employer'];
+        $prop_emp_address = $cus_row['proposer_emp_address'];
     } else {
         die(mysql_error());
     }
@@ -135,25 +185,47 @@ from
   g.`ger_salerry`,
   g.`ger_emp_name`,
   g.`ger_emp_address`,
-  g.`ger_status`,
-  g.`ser_number` 
+  g.`ger_status`
 from
   `guarantor` g left join `service` s on g.`ser_number`=s.`ser_number` where s.`cus_nic` ='" . $cust_nic . "'";
     $result_ger_all = mysqli_query($conn, $gerenter_table_data_quarry);
+$count=1;
 
-    if ($result_ger_all) {
-        $gur_row = mysqli_fetch_assoc($result_ger_all);
-        $gua_fullname = $gur_row['ger_fullname'];
-        $gua_address = $gur_row['ger_address'];
-        $gua_tp = $gur_row['ger_tp'];
-        $gua_dob = $gur_row['ger_dob'];
-        $gua_ms = $gur_row['ger_ms'];
-        $gua_nic = $gur_row['ger_nic'];
-        $gua_position = $gur_row['ger_position'];
-        $gua_monthly_salary = $gur_row['ger_salerry'];
-        $gua_emp_name = $gur_row['ger_emp_name'];
-        $gua_emp_address = $gur_row['ger_emp_address'];
-    } else {
+    while ( $ger_row = mysqli_fetch_assoc($result_customer_all)) {
+       
+        if ($count=1) {
+        $g1_name = $ger_row['g.`ger_fullname`'];
+        $g1_address = $ger_row['g.`ger_address`'];
+        $g1_tp = $ger_row['g.`ger_tp`'];
+        $g1_dob = $ger_row['g.`ger_dob`'];
+        $g1_nic = $ger_row['g.`ger_nic`'];
+        $g1_ms = $ger_row[' g.`ger_ms`'];
+        $g1_spouse = $ger_row['g.`ger_wife_name`'];
+        $g1_position = $ger_row['g.`ger_position`'];
+        $g1_salary = $ger_row['g.`ger_salerry`'];
+        $g1_emp_name = $ger_row['g.`ger_emp_name`'];
+        $g1_emp_address = $ger_row['g.`ger_emp_address`'];
+        $count=2;
+        }
+        if ($count=2) {
+        $g2_name = $ger_row['g.`ger_fullname`'];
+        $g2_address = $ger_row['g.`ger_address`'];
+        $g2_tp = $ger_row['g.`ger_tp`'];
+        $g2_dob = $ger_row['g.`ger_dob`'];
+        $g2_nic = $ger_row['g.`ger_nic`'];
+        $g2_ms = $ger_row[' g.`ger_ms`'];
+        $g2_spouse = $ger_row['g.`ger_wife_name`'];
+        $g2_position = $ger_row['g.`ger_position`'];
+        $g2_salary = $ger_row['g.`ger_salerry`'];
+        $g2_emp_name = $ger_row['g.`ger_emp_name`'];
+        $g2_emp_address = $ger_row['g.`ger_emp_address`'];
+        $count=1;
+        }
+
+       
+    }
+    $count=1;
+    if(!($result_ger_all)) {
         die(mysql_error());
     }
 
@@ -260,6 +332,6 @@ WHERE `idbank_acc_cat`='3' AND `cus_nic`='" . $cust_nic . "'
         $cus_daily_loan_facilities = $cus_daily_loan_bank_row['cus_facilities'];
         $cus_daily_loan_account_no = $cus_daily_loan_bank_row['cus_bnk_account_no'];
     }
-    echo $cus_fullname."#".$cus_address."#".$cus_tp."#".$cus_nic."#".$cus_dob."#".$cus_ms ."#".$cus_dependdency ."#".$cus_position."#".$cus_monthly_salary."#".$cus_emp_name ."#".$cus_emp_address."#".$cus_hhalf_name ."#".$cus_bhalf_dob ."#".$cus_bhalf_position ."#".$cus_bhalf_monthly_salary ."#".$cus_bhalf_emp_name."#".$reg_date."#".$gua_fullname."#".$gua_address ."#".$gua_tp."#".$gua_dob."#".$gua_ms."#".$gua_nic."#".$gua_position."#".$gua_monthly_salary ."#".$gua_emp_name."#".$gua_emp_address."#".$real_prp_house_position."#".$real_prp_house_size."#".$real_prp_house_value."#".$real_prp_house_pawned."#".$real_prp_house_pawn_getter."#".$real_prp_other_position."#".$real_prp_other_size."#".$real_prp_other_value."#".$real_prp_other_pawned."#".$real_prp_other_pawn_getter."#".$cus_savings_bank_branch."#".$cus_savings_facilities ."#".$cus_savings_account_no ."#".$cus_mobile_bank_branch."#".$cus_mobile_facilities."#".$cus_mobile_account_no."#".$cus_daily_loan_bank_branch."#".$cus_daily_loan_facilities ."#".$cus_daily_loan_account_no;
+    echo $cus_name . "#" . $cus_address . "#" . $cus_tp . "#" . $cus_nic . "#" . $cus_dob . "#" . $cus_position . "#" . $cus_salary . "#" . $cus_emp_name . "#" . $cus_emp_address . "#" . $cus_ms . "#" . $cus_dependdency . "#" . $cus_spouse_name . "#" . $cus_spouse_dob . "#" . $cus_spouse_position . "#" . $cus_spouse_salary . "#" . $cus_spouse_emp_name . "#" . $prop_name . "#" . $prop_address . "#" . $prop_tp . "#" . $prop_dob . "#" . $prop_nic . "#" . $prop_ms . "#" . $cus_regdate . "#" . $prop_spouse_name . "#" . $prop_postion . "#" . $prop_salary . "#" . $prop_emp_name . "#" . $prop_emp_address . "#" . $g1_name . "#" . $g1_address . "#" . $g1_tp . "#" . $g1_dob . "#" . $g1_nic . "#" . $g1_ms . "#" . $g1_spouse . "#" . $g1_position . "#" . $g1_salary . "#" . $g1_emp_name . "#" . $g1_emp_address . "#" . $g2_name  . "#" . $g2_address . "#" . $g2_tp . "#" . $g2_dob . "#" . $g2_nic . "#" . $g2_ms . "#" . $g2_spouse. "#" . $g2_position. "#" . $g2_emp_name . "#" . $g2_emp_address . "#" . $real_prp_house_position. "#" . $real_prp_house_size. "#" . $real_prp_house_value. "#" . $real_prp_house_pawned. "#" . $real_prp_house_pawn_getter. "#" . $real_prp_other_position. "#" . $real_prp_other_size . "#" . $real_prp_other_value . "#" . $real_prp_other_pawned. "#" . $real_prp_other_pawn_getter. "#" . $cus_savings_bank_branch . "#" . $cus_savings_facilities. "#" . $cus_savings_account_no. "#" . $cus_mobile_bank_branch. "#" . $cus_mobile_facilities. "#" . $cus_mobile_account_no. "#" . $cus_daily_loan_bank_branch. "#" . $cus_daily_loan_facilities. "#" . $cus_daily_loan_account_no;
 }
 ?>

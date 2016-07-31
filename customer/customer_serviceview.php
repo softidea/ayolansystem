@@ -66,6 +66,15 @@
                                                 </div>
                                             </div>
                                         </form>
+                                        <form method="post">
+
+
+
+                                            <button type="submit" name="search_view_all" id="cservicebtn" class="btn btn">View All</button>
+
+
+
+                                        </form>
                                         <?php
                                         if (isset($_POST['cbo_customer_search'])) {
 
@@ -156,6 +165,9 @@
                                         } elseif (isset($_POST['searchByDate'])) {
 
                                             $sql_query = "SELECT SQL_CALC_FOUND_ROWS `ser_number`,`ser_date`,`description`,`fix_rate`,`period`,`installment`,`ser_status` FROM `service` WHERE `ser_date`='" . $_POST['install_date'] . "'  LIMIT " . (($pagination->get_page() - 1) * $records_per_page) . "," . $records_per_page;
+                                        } elseif (isset($_POST['search_view_all'])) {
+
+                                            $sql_query = "SELECT SQL_CALC_FOUND_ROWS `ser_number`,`ser_date`,`description`,`fix_rate`,`period`,`installment`,`ser_status` FROM `service` LIMIT " . (($pagination->get_page() - 1) * $records_per_page) . "," . $records_per_page;
                                         } else {
                                             $sql_query = "SELECT SQL_CALC_FOUND_ROWS `ser_number`,`ser_date`,`description`,`fix_rate`,`period`,`installment`,`ser_status` FROM `service` LIMIT " . (($pagination->get_page() - 1) * $records_per_page) . "," . $records_per_page;
                                         }
@@ -185,10 +197,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="bike_tbody">
-                                                    <?php
-                                                    $index = 0;
-                                                    $status = "";
-                                                    ?>
+<?php
+$index = 0;
+$status = "";
+?>
                                                     <?php while ($row = mysqli_fetch_assoc($result)): ?>
 
                                                         <?php
@@ -199,7 +211,7 @@
                                                         }
                                                         ?>
 
-                                                        <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?>>
+                                                    <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?> onclick="readValues(this);">
 
                                                             <td><input type="radio" name="check"/></td>
                                                             <td><?php echo $row['ser_number'] ?></td>
@@ -211,7 +223,7 @@
                                                             <td><?php echo $status ?></td>
 
                                                         </tr>
-                                                    <?php endwhile ?>
+<?php endwhile ?>
                                                 </tbody>
                                             </table>
                                             <div class="text-center">
@@ -279,8 +291,25 @@
         </div>
         <!--Customer Service Loader-->
 
-        <?php include '../assets/include/footer.php'; ?>
+<?php include '../assets/include/footer.php'; ?>
     </body>
+    <script type="text/javascript">
+
+                                                var cel;
+                                                function readValues(x) {
+
+                                                    cel = x.cells[1].innerHTML;
+                                                    var cus_nic = cel;
+                                                   // alert(cus_nic);
+                                                   <?php 
+                                                   $ser_no='documrnt.w';
+ echo cel;
+                                                   ?>
+                                                }
+                                            </script>
+                                            <?php $ser_no="<script>document.write(cel)</script>";
+ echo '<script>alert('."This Is var ".$ser_no.');</script>';
+                                            ?>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="http://bootsnipp.com/dist/scripts.min.js"></script>
