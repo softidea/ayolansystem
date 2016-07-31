@@ -25,7 +25,7 @@ $current_date = date("Y-m-d");
         <script type="text/javascript">
             function searchPawnByDeed() {
                 var deed_no = document.getElementById('deed_no').value;
-                alert(deed_no);
+                //alert(deed_no);
                 document.getElementById('hidden_deed_number').value = "NONE";
 
                 if (window.XMLHttpRequest) {
@@ -45,14 +45,13 @@ $current_date = date("Y-m-d");
                             } else {
                                 document.getElementById('pawn_period').value = result_arr[0] + " Years";
                             }
-
                             document.getElementById('pawn_amount').value = result_arr[1];
                             document.getElementById('ser_installment').value = result_arr[2];
                             document.getElementById('cus_nic').value = result_arr[3];
                             document.getElementById('cus_name').value = result_arr[4];
                             document.getElementById('cus_tp').value = result_arr[5];
                             document.getElementById('cus_address').value = result_arr[6];
-                            document.getElementById('cus_reg_date').value = result_arr[7];
+                            document.getElementById('deed_reg_date').value = result_arr[7];
                             checkInstallmentHave(deed_no);
                             document.getElementById('hidden_deed_number').value = deed_no;
                         } else {
@@ -66,7 +65,7 @@ $current_date = date("Y-m-d");
         </script>
         <script type="text/javascript">
             function checkInstallmentHave(deed_no) {
-                alert(deed_no);
+                //alert(deed_no);
                 if (window.XMLHttpRequest) {
                     // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
@@ -80,10 +79,10 @@ $current_date = date("Y-m-d");
                             alert(xmlhttp.responseText);
                             //document.getElementById('installment_result_panel').innerHTML = "";
                             document.getElementById('tbl_installment_body').innerHTML = "";
-                            alert("deed_number");
+                            //alert("deed_number");
                             LoadDeedInstallmentDetails();
                         } else {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
                             document.getElementById('tbl_installment_body').innerHTML = xmlhttp.responseText;
                             LoadDeedInstallmentDetails();
                         }
@@ -106,7 +105,7 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        alert(xmlhttp.responseText);
+                        //alert(xmlhttp.responseText);
 //                        document.getElementById('pawn_period').value=xmlhttp.responseText;
 
                         var result_arr = xmlhttp.responseText.split("#");
@@ -151,7 +150,7 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        alert(xmlhttp.responseText);
+                        //alert(xmlhttp.responseText);
                         checkInstallmentHave(deed_number);
                         document.getElementById('hidden_deed_number').value="NONE";
                        
@@ -180,7 +179,7 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        alert(xmlhttp.responseText);
+                        //alert(xmlhttp.responseText);
                         checkInstallmentHave(deed_number);
                         document.getElementById('hidden_deed_number').value="NONE";
                        
@@ -235,7 +234,7 @@ $current_date = date("Y-m-d");
                                     <div class="form-group required">
                                         <div class="form-group required">
                                             <label class="control-label">Registered Date:</label>
-                                            <input type="text"  name="cus_reg_date" id="cus_reg_date" placeholder="Registered Date" class="form-control" required readonly/>
+                                            <input type="text"  name="deed_reg_date" id="deed_reg_date" placeholder="Registered Date" class="form-control" required readonly/>
                                         </div>
                                     </div>
                                 </fieldset>

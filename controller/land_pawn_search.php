@@ -23,6 +23,7 @@ if (isset($deed_no)) {
             $pawn_amount = $deed_row['amount'];
             $pawn_rental = $deed_row['pawn_rental'];
             $cus_nic = $deed_row['cus_nic'];
+            $deed_reg_date = $deed_row['deed_reg_date'];
             $cus_query = "SELECT * FROM customer WHERE cus_nic='$cus_nic'";
             $cus_run = mysqli_query($conn, $cus_query);
             if (mysqli_num_rows($cus_run) > 0) {
@@ -30,7 +31,7 @@ if (isset($deed_no)) {
                     $cus_name = $cus_row['cus_fullname'];
                     $cus_tp = $cus_row['cus_tp'];
                     $cus_address = $cus_row['cus_address'];
-                    $cus_regdate = $cus_row['cus_reg_date'];
+                    
                     $year_query = "SELECT year FROM land_pawn_year WHERE year_id='$pawn_period'";
                     $run_year = mysqli_query($conn, $year_query);
                     if (mysqli_num_rows($run_year) > 0) {
@@ -41,7 +42,7 @@ if (isset($deed_no)) {
                             if (mysqli_num_rows($run_amount) > 0) {
                                 if ($row_amount = mysqli_fetch_assoc($run_amount)) {
                                     $amount = $row_amount['pawn_amount'];
-                                    echo $year . "#" . $amount . "#" . $pawn_rental . "#" . $cus_nic . "#" . $cus_name . "#" . $cus_tp . "#" . $cus_address . "#" . $cus_regdate;
+                                    echo $year . "#" . $amount . "#" . $pawn_rental . "#" . $cus_nic . "#" . $cus_name . "#" . $cus_tp . "#" . $cus_address . "#" . $deed_reg_date;
                                 }
                             } else {
                                 echo 'No Pawn Amount Found';
