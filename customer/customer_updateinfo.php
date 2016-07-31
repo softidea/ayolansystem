@@ -106,7 +106,13 @@ if (!isset($_SESSION['user_email'])) {
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <link rel="stylesheet" type="text/css" href="../assets/css/customer_registration.css" >
-<?php require '../controller/co_load_vehicle_brands.php'; ?>
+        <?php require '../controller/co_load_vehicle_brands.php';
+         $conn = mysqli_connect("77.104.142.97", "ayolanin_dev", "WelComeDB1129", "ayolanin_datahost");
+        if (mysqli_connect_errno()) {
+            echo "Falied to Connect the Database" . mysqli_connect_error();
+        }
+        
+        ?>
         <link rel="icon" href="favicon.ico">
         <script type="text/javascript">
             function showTypes(str) {
@@ -338,7 +344,7 @@ if (!isset($_SESSION['user_email'])) {
         <script type="text/javascript">
             function searchUpdateCustomer() {
                 var customer_nic = document.getElementById('search_cus_nic').value;
-                alert(customer_nic);
+
 
                 if (customer_nic != "" && customer_nic != null) {
 
@@ -350,7 +356,7 @@ if (!isset($_SESSION['user_email'])) {
                     }
                     xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            alert(xmlhttp.responseText);
+                            //alert(xmlhttp.responseText);
                             var result = xmlhttp.responseText;
                             var result_arr = result.split("#");
 
@@ -365,90 +371,93 @@ if (!isset($_SESSION['user_email'])) {
                             document.getElementById('cus_salary').value = result_arr[6];
                             document.getElementById('cus_emp_name').value = result_arr[7];
                             document.getElementById('cus_emp_address').value = result_arr[8];
-                            document.getElementById('cus_emp_name').value = result_arr[9];
-                            document.getElementById('cus_ms').value = result_arr[10];
-                            document.getElementById('cus_dependdency').value = result_arr[11];
-                            document.getElementById('cus_spouse_dob').value = result_arr[12];
-                            document.getElementById('cus_spouse_position').value = result_arr[13];
-                            document.getElementById('cus_spouse_salary').value = result_arr[14];
-                            document.getElementById('cus_spouse_emp_name').value = result_arr[15];
-                            document.getElementById('cus_addr_map_link').value = result_arr[16];
-                            document.getElementById('prop_name').value = result_arr[17];
-                            document.getElementById('prop_address').value = result_arr[18];
-                            document.getElementById('prop_tp').value = result_arr[19];
-                            document.getElementById('prop_dob').value = result_arr[20];
-                            document.getElementById('prop_nic').value = result_arr[21];
-                            document.getElementById('prop_ms').value = result_arr[22];
+                            document.getElementById('cus_ms').value = result_arr[9];
+                            document.getElementById('cus_dependdency').value = result_arr[10];
+                            document.getElementById('cus_spouse_dob').value = result_arr[11];
+                            document.getElementById('cus_spouse_position').value = result_arr[12];
+                            document.getElementById('cus_spouse_salary').value = result_arr[13];
+                            document.getElementById('cus_spouse_emp_name').value = result_arr[14];
+                            document.getElementById('cus_addr_map_link').value = result_arr[15];
+                            document.getElementById('prop_name').value = result_arr[16];
+                            document.getElementById('prop_address').value = result_arr[17];
+                            document.getElementById('prop_tp').value = result_arr[18];
+                            document.getElementById('prop_dob').value = result_arr[19];
+                            document.getElementById('prop_nic').value = result_arr[20];
+                            document.getElementById('prop_ms').value = result_arr[21];
 
-                            document.getElementById('cus_regdate').value = result_arr[23];
 
-                            document.getElementById('prop_spouse_name').value = result_arr[24];
-                            document.getElementById('prop_postion').value = result_arr[25];
-                            document.getElementById('prop_salary').value = result_arr[26];
-                            document.getElementById('prop_emp_name').value = result_arr[27];
-                            document.getElementById('prop_emp_address').value = result_arr[28];
+                            document.getElementById('reg_date').value = result_arr[22];
+
+                            document.getElementById('prop_spouse_name').value = result_arr[23];
+                            document.getElementById('prop_postion').value = result_arr[24];
+                            document.getElementById('prop_salary').value = result_arr[25];
+                            document.getElementById('prop_emp_name').value = result_arr[26];
+                            document.getElementById('prop_emp_address').value = result_arr[27];
 
 //                            Gerunter 1 Informations
 
-                            document.getElementById('g1_name').value = result_arr[29];
-                            document.getElementById('g1_address').value = result_arr[30];
-                            document.getElementById('g1_tp').value = result_arr[31];
-                            document.getElementById('g1_dob').value = result_arr[32];
-                            document.getElementById('g1_nic').value = result_arr[33];
-                            document.getElementById('g1_ms').value = result_arr[34];
-                            document.getElementById('g1_spouse').value = result_arr[35];
-                            document.getElementById('g1_position').value = result_arr[36];
-                            document.getElementById('g1_salary').value = result_arr[37];
-                            document.getElementById('g1_emp_name').value = result_arr[38];
-                            document.getElementById('g1_emp_address').value = result_arr[39];
+                            document.getElementById('g1_name').value = result_arr[28];
+                            document.getElementById('g1_address').value = result_arr[29];
+                            document.getElementById('g1_tp').value = result_arr[30];
+                            document.getElementById('g1_dob').value = result_arr[31];
+                            document.getElementById('g1_nic').value = result_arr[32];
+                            document.getElementById('g1_ms').value = result_arr[33];
+                            document.getElementById('g1_spouse').value = result_arr[34];
+                            document.getElementById('g1_position').value = result_arr[35];
+                            document.getElementById('g1_salary').value = result_arr[36];
+                            document.getElementById('g1_emp_name').value = result_arr[37];
+                            document.getElementById('g1_emp_address').value = result_arr[38];
 
 //                            Gerunter 2 Informations
 
-                            document.getElementById('g2_name').value = result_arr[40];
-                            document.getElementById('g2_address').value = result_arr[41];
-                            document.getElementById('g2_tp').value = result_arr[42];
-                            document.getElementById('g2_dob').value = result_arr[43];
-                            document.getElementById('g2_nic').value = result_arr[44];
-                            document.getElementById('g2_ms').value = result_arr[45];
-                            document.getElementById('g2_spouse').value = result_arr[46];
-                            document.getElementById('g2_position').value = result_arr[47];
-                            document.getElementById('g2_salary').value = result_arr[48];
-                            document.getElementById('g2_emp_name').value = result_arr[49];
-                            document.getElementById('g2_emp_address').value = result_arr[50];
+                            document.getElementById('g2_name').value = result_arr[39];
+                            document.getElementById('g2_address').value = result_arr[40];
+                            document.getElementById('g2_tp').value = result_arr[41];
+                            document.getElementById('g2_dob').value = result_arr[42];
+                            document.getElementById('g2_nic').value = result_arr[43];
+                            document.getElementById('g2_ms').value = result_arr[44];
+                            document.getElementById('g2_spouse').value = result_arr[45];
+                            document.getElementById('g2_position').value = result_arr[46];
+                            document.getElementById('g2_salary').value = result_arr[47];
+                            document.getElementById('g2_emp_name').value = result_arr[48];
+                            document.getElementById('g2_emp_address').value = result_arr[49];
 
 //                            Real Property House Details
 
-                            document.getElementById('real_prp_house_position').value = result_arr[51];
-                            document.getElementById('real_prp_house_size').value = result_arr[52];
-                            document.getElementById('real_prp_house_value').value = result_arr[53];
-                            document.getElementById('real_prp_house_pawned').value = result_arr[54];
-                            document.getElementById('real_prp_house_pawn_getter').value = result_arr[55];
+                            document.getElementById('real_prp_house_position').value = result_arr[50];
+                            document.getElementById('real_prp_house_size').value = result_arr[51];
+                            document.getElementById('real_prp_house_value').value = result_arr[52];
+                            document.getElementById('real_prp_house_pawned').value = result_arr[53];
+                            document.getElementById('real_prp_house_pawn_getter').value = result_arr[54];
 
 //                            Other Property House Details
 
-                            document.getElementById('real_prp_other_position').value = result_arr[56];
-                            document.getElementById('real_prp_other_size').value = result_arr[57];
-                            document.getElementById('real_prp_other_value').value = result_arr[58];
-                            document.getElementById('real_prp_other_pawned').value = result_arr[59];
-                            document.getElementById('real_prp_other_pawn_getter').value = result_arr[60];
+                            document.getElementById('real_prp_other_position').value = result_arr[55];
+                            document.getElementById('real_prp_other_size').value = result_arr[56];
+                            document.getElementById('real_prp_other_value').value = result_arr[57];
+                            document.getElementById('real_prp_other_pawned').value = result_arr[58];
+                            document.getElementById('real_prp_other_pawn_getter').value = result_arr[59];
 
 //                            Saving Bank Details
 
-                            document.getElementById('cus_savings_bank_branch').value = result_arr[61];
-                            document.getElementById('cus_savings_facilities').value = result_arr[62];
-                            document.getElementById('cus_savings_account_no').value = result_arr[63];
+                            document.getElementById('cus_savings_bank_branch').value = result_arr[60];
+                            document.getElementById('cus_savings_facilities').value = result_arr[61];
+                            document.getElementById('cus_savings_account_no').value = result_arr[62];
 
 //                            Mobile Bank Details
 
-                            document.getElementById('cus_mobile_bank_branch').value = result_arr[64];
-                            document.getElementById('cus_mobile_facilities').value = result_arr[65];
-                            document.getElementById('cus_mobile_account_no').value = result_arr[66];
+                            document.getElementById('cus_mobile_bank_branch').value = result_arr[63];
+                            document.getElementById('cus_mobile_facilities').value = result_arr[64];
+                            document.getElementById('cus_mobile_account_no').value = result_arr[65];
 
 //                            Saving Bank Details
 
-                            document.getElementById('cus_daily_loan_bank_branch').value = result_arr[67];
-                            document.getElementById('cus_daily_loan_facilities').value = result_arr[68];
-                            document.getElementById('cus_daily_loan_account_no').value = result_arr[69];
+                            document.getElementById('cus_daily_loan_bank_branch').value = result_arr[66];
+                            document.getElementById('cus_daily_loan_facilities').value = result_arr[67];
+                            document.getElementById('cus_daily_loan_account_no').value = result_arr[67];
+
+                            document.getElementById('g1_id').value = result_arr[68];
+                            document.getElementById('g2_id').value = result_arr[69];
 
                         }
                     }
@@ -461,10 +470,10 @@ if (!isset($_SESSION['user_email'])) {
     </head>
     <body>
 
-<?php include '../assets/include/navigation_bar.php'; ?>
+        <?php include '../assets/include/navigation_bar.php'; ?>
 
         <!--Customer Panel Section-->
-        <form action="../controller/co_customer.php" method="POST" enctype="multipart/form-data">
+        <form  method="POST" enctype="multipart/form-data">
             <div class="container" style="margin-top: 80px;display: block;" id="one">
 
                 <div class="row">
@@ -480,18 +489,18 @@ if (!isset($_SESSION['user_email'])) {
                                         <div class="form-group required">
                                             <label class="control-label">Enter Customer NIC:</label>
                                             <div class="form-inline required">
-                                                <input type="text"  name="search_cus_nic" id="search_cus_nic" placeholder="NIC" class="form-control" style="width:85%;text-transform: uppercase;" maxlength="10" required/>
+                                                <input type="text"  name="search_cus_nic" id="search_cus_nic" placeholder="NIC" class="form-control" style="width:85%;text-transform: uppercase;" maxlength="10" required autofocus/>
                                                 <input type="button" class="btn btn" id="custcontinue" onclick="searchUpdateCustomer();" value="Search">
                                             </div>
                                         </div>
                                         <legend>Customer Personal Details</legend>
                                         <div class="form-group  ">
                                             <label class="control-label">Full Name:</label>
-                                            <input type="text" id="cus_name" maxlength="100"  name="cus_name" placeholder="Full Name"   class="form-control" maxlength="100" autofocus />
+                                            <input type="text" id="cus_name" maxlength="100"  name="cus_name" class="form-control" maxlength="100"  />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Permanent Address :</label>
-                                            <input type="text" id="cus_address" maxlength="255"  name="cus_address" placeholder="Permanent Address"   class="form-control" maxlength="150"/>
+                                            <input type="text" id="cus_address" maxlength="255"  name="cus_address" class="form-control" maxlength="150"/>
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Telephone:</label>
@@ -499,27 +508,27 @@ if (!isset($_SESSION['user_email'])) {
                                         </div>
                                         <div class="form-group  ">
                                             <span style="color:red;">*</span>  <label class="control-label" >NIC Number:</label>
-                                            <input type="text" id="cus_nic" name="cus_nic" maxlength="10" placeholder="XXXXXXXXXV"  class="form-control" style="text-transform: uppercase;" required/>
+                                            <input type="text" id="cus_nic" name="cus_nic" maxlength="10" class="form-control" disabled style="text-transform: uppercase;" required/>
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Date of Birth (dd/mm/yyyy):</label>
-                                            <input type="date" id="cus_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" name="cus_dob"  placeholder="Date of Birth" class="form-control" />
+                                            <input type="date" id="cus_dob" min="1900-12-31"  name="cus_dob" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Employment/Position:</label>
-                                            <input type="text" id="cus_position" maxlength="100" name="cus_position"  placeholder="Employment/Position"  class="form-control" maxlength="80"/>
+                                            <input type="text" id="cus_position" maxlength="100" name="cus_position"  class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Monthly Salary/Net Income:</label>
-                                            <input type="number" id="cus_salary" name="cus_salary"  placeholder="XXXXXXXX"  class="form-control" min="0"/>
+                                            <input type="number" id="cus_salary" name="cus_salary"  class="form-control" min="0"/>
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Employer Name:</label>
-                                            <input type="text" name="cus_emp_name" maxlength="100" id="cus_emp_name" placeholder="Employer Name"   class="form-control" maxlength="200"/>
+                                            <input type="text" name="cus_emp_name" id="cus_emp_name" class="form-control" maxlength="100"/>
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Employer Address:</label>
-                                            <input type="text" id="cus_emp_address" maxlength="100"  name="cus_emp_address"  placeholder="No,Street,City"   class="form-control" maxlength="250"/>
+                                            <input type="text" id="cus_emp_address" name="cus_emp_address" class="form-control" maxlength="250"/>
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Married Status:</label>
@@ -531,7 +540,7 @@ if (!isset($_SESSION['user_email'])) {
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label" >Have any Dependencies:</label>
-                                            <input type="number" id="cus_dependdency" min="0" max="20" name="cus_dependdency" value="0" placeholder="Have any Dependencies"  class="form-control" maxlength="2" readonly/>
+                                            <input type="number" id="cus_dependdency" min="0" max="20" name="cus_dependdency" class="form-control" maxlength="2" readonly/>
                                         </div>
                                     </fieldset>
                                     <fieldset id="account">
@@ -540,29 +549,29 @@ if (!isset($_SESSION['user_email'])) {
 
                                         <div class="form-group  ">
                                             <label class="control-label">Full Name:</label>
-                                            <input type="text" id="cus_spouse_name"  readonly maxlength="100"  name="cus_spouse_name" id="fname" placeholder="Full Name" class="form-control" />
+                                            <input type="text" id="cus_spouse_name"  readonly maxlength="100"  name="cus_spouse_name" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Date of Birth (dd/mm/yyyy):</label>
-                                            <input type="date" id="cus_spouse_dob" readonly min="1900-12-31" max="<?php echo $reg_date; ?>"  name="cus_spouse_dob" placeholder="Date of Birth" class="form-control" />
+                                            <input type="date" id="cus_spouse_dob" readonly min="1900-12-31" max="<?php echo $reg_date; ?>"  name="cus_spouse_dob" class="form-control" />
                                         </div>
 
                                         <div class="form-group  ">
                                             <label class="control-label">Employment/Position:</label>
-                                            <input type="text" id="cus_spouse_position" readonly maxlength="100" name="cus_spouse_position" placeholder="Employment/Position" class="form-control" />
+                                            <input type="text" id="cus_spouse_position" readonly maxlength="100" name="cus_spouse_position" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Monthly Salary/Net Income:</label>
-                                            <input type="number" id="cus_spouse_salary" readonly min="0" name="cus_spouse_salary" placeholder="XXXXXXXX" class="form-control" />
+                                            <input type="number" id="cus_spouse_salary" readonly min="0" name="cus_spouse_salary" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Employer Name:</label>
-                                            <input type="text" id="cus_spouse_emp_name" readonly maxlength="100"  name="cus_spouse_emp_name" placeholder="Employer Name" class="form-control" />
+                                            <input type="text" id="cus_spouse_emp_name" readonly maxlength="100"  name="cus_spouse_emp_name" class="form-control" />
                                         </div>
 
                                         <div class="form-group  ">
                                             <label class="control-label">Map Link :</label>
-                                            <input type="text" readonly id="cus_addr_map_link" name="cus_addr_map_link" placeholder="Map Link" class="form-control" form="f1_cus"/>
+                                            <input type="text" readonly id="cus_addr_map_link" name="cus_addr_map_link"  class="form-control" form="f1_cus"/>
                                         </div>
 
                                     </fieldset>
@@ -570,19 +579,19 @@ if (!isset($_SESSION['user_email'])) {
                                         <legend>Proposer Personal Details</legend>
                                         <div class="form-group">
                                             <label class="control-label">Full Name:</label>
-                                            <input type="text" maxlength="100" name="prop_name" id="prop_name" placeholder="Full Name" class="form-control" />
+                                            <input type="text" maxlength="100" name="prop_name" id="prop_name" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Permanent Address :</label>
-                                            <input type="text" id="prop_address" maxlength="255" name="prop_address"  placeholder="Permanent Address" class="form-control" />
+                                            <input type="text" id="prop_address" maxlength="255" name="prop_address"  class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Telephone:</label>
-                                            <input type="number" id="prop_tp" name="prop_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" placeholder="077XXXXXXX"  min="0" class="form-control" />
+                                            <input type="number" id="prop_tp" name="prop_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10"  min="0" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Date of Birth (dd/mm/yyyy):</label>
-                                            <input type="date" id="prop_dob" min="1900-12-31" max="<?php echo $reg_date; ?>" name="prop_dob" placeholder="Date of Birth" class="form-control" />
+                                            <input type="date" id="prop_dob" min="1900-12-31"  name="prop_dob" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">NIC Number:</label>
@@ -598,23 +607,23 @@ if (!isset($_SESSION['user_email'])) {
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Spouse Name:</label>
-                                            <input type="text" id="prop_spouse_name" readonly maxlength="100" name="prop_spouse_name" id="fname" placeholder="Spouse Name" class="form-control"/>
+                                            <input type="text" id="prop_spouse_name" readonly maxlength="100" name="prop_spouse_name" id="fname"  class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Employment/Position:</label>
-                                            <input type="text" id="prop_postion" name="prop_postion" placeholder="Employment/Position" class="form-control" />
+                                            <input type="text" id="prop_postion" name="prop_postion" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Monthly Salary/Net Income:</label>
-                                            <input type="number" id="prop_salary" min="0" name="prop_salary" placeholder="XXXXXXXX" class="form-control" />
+                                            <input type="number" id="prop_salary" min="0" name="prop_salary" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Employer Name:</label>
-                                            <input type="text" id="prop_emp_name" maxlength="100" name="prop_emp_name" placeholder="Employer Name" class="form-control"/>
+                                            <input type="text" id="prop_emp_name" maxlength="100" name="prop_emp_name" class="form-control"/>
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Employer Address:</label>
-                                            <input type="text" id="prop_emp_address" maxlength="255" name="prop_emp_address"  placeholder="No,Street,City" class="form-control"/>
+                                            <input type="text" id="prop_emp_address" maxlength="255" name="prop_emp_address"  class="form-control"/>
                                         </div>
                                     </fieldset>
                                 </div>
@@ -626,15 +635,15 @@ if (!isset($_SESSION['user_email'])) {
                                         <legend>Guarantor-01 Personal Details</legend>
                                         <div class="form-group  ">
                                             <label class="control-label">Full Name:</label>
-                                            <input type="text" id="g1_name" maxlength="100"  name="g1_name" id="g1_name" placeholder="Full Name" class="form-control" />
+                                            <input type="text" id="g1_name" maxlength="100"  name="g1_name"  class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Permanent Address :</label>
-                                            <input type="text" id="g1_address" maxlength="255"  name="g1_address" placeholder="Permanent Address" class="form-control" />
+                                            <input type="text" id="g1_address" maxlength="255"  name="g1_address" class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Telephone:</label>
-                                            <input type="number" id="g1_tp" name="g1_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" min="0" value="<?php echo $gua_tp; ?>" placeholder="077XXXXXXX" class="form-control" />
+                                            <input type="number" id="g1_tp" name="g1_tp" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "10" min="0"  class="form-control" />
                                         </div>
                                         <div class="form-group  ">
                                             <label class="control-label">Date of Birth (dd/mm/yyyy):</label>
@@ -725,6 +734,14 @@ if (!isset($_SESSION['user_email'])) {
                                             <label class="control-label">Employer Address:</label>
                                             <input type="text" id="g2_emp_address" maxlength="255" name="g2_emp_address" value="<?php echo $gua_emp_address; ?>" placeholder="No,Street,City" class="form-control"/>
                                         </div>
+                                        <div class="form-group  ">
+
+                                            <input type="hidden" id="g1_id" maxlength="255" name="g1_id"  class="form-control" />
+                                        </div>
+                                        <div class="form-group  ">
+
+                                            <input type="hidden" id="g2_id" maxlength="255" name="g2_id"  class="form-control" />
+                                        </div>
                                     </fieldset>
                                 </div>
 
@@ -780,7 +797,7 @@ if (!isset($_SESSION['user_email'])) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                   <tr>
+                                                    <tr>
                                                         <td>Savings Account</td>
                                                         <td><input type="text" name="cus_savings_bank_branch" id="cus_savings_bank_branch" class="form-control" maxlength="100"/></td>
                                                         <td><input type="text" name="cus_savings_facilities" id="cus_savings_facilities" class="form-control" maxlength="100"/></td>
@@ -805,16 +822,12 @@ if (!isset($_SESSION['user_email'])) {
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Registration Date</label>
-                                        <div class="fomr-inline" id="msg_caption">
-                                            <input type="date" id="cus_regdate" name="cus_regdate"  placeholder="Date" class="form-control" disabled/>
-                                            <br><p><b>Warning</b> :~~  ~~ are mandatory fields, should not be empty</p>
-                                        </div>
-                                    </div>
+                                    <label class="control-label" for="input-email">Registration Date</label>   
+                                    <input type="date" name="reg_date" id="reg_date" class="form-control" disabled />
+
                                 </div>
                                 <div class="col-md-12">
-                                    <input type="submit" class="btn btn" name="customer_update" id="custcontinue" value="Continue">
+                                    <input type="submit" class="btn btn" name="customer_update" id="custcontinue" value="Update">
                                 </div>
                             </div>
 
@@ -826,11 +839,190 @@ if (!isset($_SESSION['user_email'])) {
         </form>
         <!--Over.Property Panel Section-->
 
+        <!--Update customers start--> 
+        <?php
+        if (isset($_POST['customer_update'])) {
 
+            //update customer
+            $quary_update_customer = "UPDATE 
+  `ayolanin_datahost`.`customer` 
+SET
+
+  `cus_fullname` = '" . $_POST['cus_name'] . "',
+  `cus_address` = '" . $_POST['cus_address'] . "',
+  `cus_tp` = '" . $_POST['cus_tp'] . "',
+  `cus_dob` = '" . $_POST['cus_dob'] . "',
+  `cus_ms` = '" . $_POST['cus_ms'] . "',
+  `cus_dependdency` = '" . $_POST['cus_dependdency'] . "',
+  `cus_position` = '" . $_POST['cus_position'] . "',
+  `cus_monthly_salary` = '" . $_POST['cus_salary'] . "',
+  `cus_emp_name` = '" . $_POST['cus_emp_name'] . "',
+  `cus_emp_address` = '" . $_POST['cus_emp_address'] . "',
+  `cus_addr_map_link` = '" . $_POST['cus_addr_map_link'] . "',
+  `wife_name` = '" . $_POST['cus_spouse_name'] . "',
+  `wife_dob` = '" . $_POST['cus_spouse_dob'] . "',
+  `wife_position` = '" . $_POST['cus_spouse_position'] . "',
+  `wife_salary` = '" . $_POST['cus_spouse_salary'] . "',
+  `wife_emp_name` = '" . $_POST['cus_spouse_emp_name'] . "',
+  `proposer_name` = '" . $_POST['prop_name'] . "',
+  `proposer_address` = '" . $_POST['prop_address'] . "',
+  `proposer_tp` = '" . $_POST['prop_tp'] . "',
+  `proposer_dob` = '" . $_POST['prop_dob'] . "',
+  `proposer_nic` = '" . $_POST['prop_nic'] . "',
+  `proposer_ms` = '" . $_POST['prop_ms'] . "',
+  `proposer_spouse` = '" . $_POST['prop_spouse_name'] . "',
+  `proposer_position` = '" . $_POST['prop_postion'] . "',
+  `proposer_salary` = '" . $_POST['prop_salary'] . "',
+  `proposer_employer` = '" . $_POST['prop_emp_name'] . "',
+  `proposer_emp_address` = '" . $_POST['prop_emp_address'] . "' 
+WHERE `cus_nic` = '" . $_POST['search_cus_nic'] . "'    
+";
+
+//            update Gerenter 1
+
+            $quary_update_gernter1 = "UPDATE 
+  `ayolanin_datahost`.`guarantor` 
+SET
+
+  `ger_fullname` = '" . $_POST['g1_name'] . "',
+  `ger_address` = '" . $_POST['g1_address'] . "',
+  `ger_tp` = '" . $_POST['g1_tp'] . "',
+  `ger_nic` = '" . $_POST['g1_nic'] . "',
+  `ger_dob` = '" . $_POST['g1_dob'] . "',
+  `ger_ms` = '" . $_POST['g1_ms'] . "',
+  `ger_wife_name` = '" . $_POST['g1_spouse'] . "',
+  `ger_position` = '" . $_POST['g1_position'] . "',
+  `ger_salerry` = '" . $_POST['g1_salary'] . "',
+  `ger_emp_name` = '" . $_POST['g1_emp_name'] . "',
+  `ger_emp_address` = '" . $_POST['g1_emp_address'] . "'
+
+
+WHERE `ger_id` = '".$_POST['g1_id']."' 
+
+
+";
+//            update Gerenter 2
+
+            $quary_update_gernter2 = "UPDATE 
+  `ayolanin_datahost`.`guarantor` 
+SET
+
+  `ger_fullname` = '" . $_POST['g2_name'] . "',
+  `ger_address` = '" . $_POST['g2_address'] . "',
+  `ger_tp` = '" . $_POST['g2_tp'] . "',
+  `ger_nic` = '" . $_POST['g2_nic'] . "',
+  `ger_dob` = '" . $_POST['g2_dob'] . "',
+  `ger_ms` = '" . $_POST['g2_ms'] . "',
+  `ger_wife_name` = '" . $_POST['g2_spouse'] . "',
+  `ger_position` = '" . $_POST['g2_position'] . "',
+  `ger_salerry` = '" . $_POST['g2_salary'] . "',
+  `ger_emp_name` = '" . $_POST['g2_emp_name'] . "',
+  `ger_emp_address` = '" . $_POST['g2_emp_address'] . "'
+
+
+WHERE `ger_id` = '".$_POST['g2_id']."' 
+
+
+";
+
+//            Update property House
+
+            $quary_update_house = "UPDATE 
+  `ayolanin_datahost`.`cus_real_property` 
+SET
+
+  `place` = '" . $_POST['real_prp_house_position'] . "',
+  `size` = '" . $_POST['real_prp_house_size'] . "',
+  `val` = '" . $_POST['real_prp_house_value'] . "',
+  `is_pawned` = '" . $_POST['real_prp_house_pawned'] . "',
+  `pawn_getter` = '" . $_POST['real_prp_house_pawn_getter'] . "'
+WHERE `category`='1' AND `cus_nic`='" . $_POST['search_cus_nic'] . "'
+
+";
+
+//            Update property Other
+
+            $quary_update_other = "UPDATE 
+  `ayolanin_datahost`.`cus_real_property` 
+SET
+
+  `place` = '" . $_POST['real_prp_other_position'] . "',
+  `size` = '" . $_POST['real_prp_other_size'] . "',
+  `val` = '" . $_POST['real_prp_other_value'] . "',
+  `is_pawned` = '" . $_POST['real_prp_other_pawned'] . "',
+  `pawn_getter` = '" . $_POST['real_prp_other_pawn_getter'] . "'
+WHERE `category`='2' AND `cus_nic`='" . $_POST['search_cus_nic'] . "'
+
+";
+
+//            Update Savings Bank
+
+            $quary_update_savings_bank = "UPDATE 
+  `ayolanin_datahost`.`cus_bnk_acc` 
+SET
+
+  `cus_bnk_name_and_branch` = '" . $_POST['cus_savings_bank_branch'] . "',
+  `cus_facilities` = '" . $_POST['cus_savings_facilities'] . "',
+  `cus_bnk_account_no` = '" . $_POST['cus_savings_account_no'] . "'
+ 
+WHERE `idbank_acc_cat` = '1' AND `cus_nic` = '" . $_POST['search_cus_nic'] . "'
+";
+
+//            Update Mobile Bank
+
+            $quary_update_mobile_bank = "UPDATE 
+  `ayolanin_datahost`.`cus_bnk_acc` 
+SET
+
+  `cus_bnk_name_and_branch` = '" . $_POST['cus_mobile_bank_branch'] . "',
+  `cus_facilities` = '" . $_POST['cus_mobile_facilities'] . "',
+  `cus_bnk_account_no` = '" . $_POST['cus_mobile_account_no'] . "'
+ 
+WHERE `idbank_acc_cat` = '2' AND `cus_nic` = '" . $_POST['search_cus_nic'] . "'
+";
+
+//            Update Daily Loan Bank
+
+            $quary_update_daily_loan_bank = "UPDATE 
+  `ayolanin_datahost`.`cus_bnk_acc` 
+SET
+
+  `cus_bnk_name_and_branch` = '" . $_POST['cus_daily_loan_bank_branch'] . "',
+  `cus_facilities` = '" . $_POST['cus_daily_loan_facilities'] . "',
+  `cus_bnk_account_no` = '" . $_POST['cus_daily_loan_account_no'] . "'
+ 
+WHERE `idbank_acc_cat` = '3' AND `cus_nic` = '" . $_POST['search_cus_nic'] . "'
+";
+
+//            Update Quary Execution
+            $result_update_customer = mysqli_query($conn, $quary_update_customer);
+            $result_update_gernter1 = mysqli_query($conn, $quary_update_gernter1);
+            $result_update_gernter2 = mysqli_query($conn, $quary_update_gernter2);
+            $result_update_house = mysqli_query($conn, $quary_update_house);
+            $result_update_other = mysqli_query($conn, $quary_update_other);
+            $result_update_savings_bank = mysqli_query($conn, $quary_update_savings_bank);
+            $result_update_mobile_bank = mysqli_query($conn, $quary_update_mobile_bank);
+            $result_update_daily_loan_bank = mysqli_query($conn, $quary_update_daily_loan_bank);
+
+
+            if ($result_update_customer and $result_update_gernter1 and $result_update_gernter2 and $result_update_house and $result_update_other and $result_update_savings_bank and $result_update_mobile_bank and $result_update_daily_loan_bank) {
+
+                echo '<script>alert("Successfully Updated")</script>';
+            } else {
+                echo '<script>alert("Updated Failed")</script>';
+               // echo '<script>alert("'.  mysqli_error().'")</script>';
+                
+                die(mysql_error());
+            }
+            $na = $_POST['cus_fullname'];
+            echo '<script>alert("' . $na . '")</script>';
+        }
+        ?>
+        <!--update customers end-->
 
 
         <!--Footer Section-->
-<?php include '../assets/include/footer.php'; ?>
+        <?php include '../assets/include/footer.php'; ?>
         <!--Footer Section-->
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

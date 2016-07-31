@@ -160,7 +160,7 @@ $date_setter = date("Y-m-d");
                                         $i = 1;
                                         ?>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?> onclick="readValues(this)">
+                                        <tr<?php echo $index++ % 2 ? ' class="even"' : '' ?> >
 
 
                                                 <td><?php echo $row['cus_id'] ?></td>
