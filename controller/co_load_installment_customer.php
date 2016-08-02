@@ -3,11 +3,10 @@
 //session_start();
 
 $conn = mysqli_connect("77.104.142.97", "ayolanin_dev", "WelComeDB1129", "ayolanin_datahost");
+//$conn = mysqli_connect("localhost", "root", "1234", "ayolanin_datahost");
 if (mysqli_connect_errno()) {
     echo "Falied to Connect the Database" . mysqli_connect_error();
 }
-
-
 date_default_timezone_set('Asia/Colombo');
 $current_date = date("Y-m-d");
 
@@ -203,7 +202,7 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
             $installment_amount = $row['installment'];
             $service_date = $row['ser_date'];
             $fixed_rate = $row['period'] * $installment_amount;
-           // $service_date = "2016-04-26";
+            //$service_date = "2016-04-26";
 
             $curr_ser_date = explode("-", $service_date)[2];
 
@@ -341,9 +340,9 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                                
                                if($tempdatediff==0){
                                    $monfreepay+=$row['payment'];
-                               }elseif($tempdatediff<7){
+                               }elseif($tempdatediff<=7){
                                    $weekfreepay+=$row['payment'];
-                               }elseif($tempdatediff<14){
+                               }elseif($tempdatediff<=14){
                                    $fiveppay+=$row['payment'];
                                }else{
                                    $tenppay+=$row['payment'];
@@ -621,13 +620,14 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
 //                      }
 //                        
 //                    }
-//                   
-                    
-                    
+                   
+                   
+                   // print_r($payment_arr);
+                    //print_r($payment_arr_calc);
             }
                     
         
-                    
+                               
                      for($x=0;$x<  sizeof($payment_arr);$x++){
                                                                
                                 if($is_arriers[$x]){
@@ -678,9 +678,9 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                                
                                if($tempdatediff==0){
                                    $monfreepay+=$row['payment'];
-                               }elseif($tempdatediff<7){
+                               }elseif($tempdatediff<=7){
                                    $weekfreepay+=$row['payment'];
-                               }elseif($tempdatediff<14){
+                               }elseif($tempdatediff<=14){
                                    $fiveppay+=$row['payment'];
                                }else{
                                    $tenppay+=$row['payment'];
