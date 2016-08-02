@@ -171,6 +171,7 @@ if (isset($deed_number)) {
 
                 $d1 = new DateTime($rounded_off_date);  // Get First PAyment date as date
                 $d2 = new DateTime($now_date);          // Get Today Date As date
+                
 
                 $no_of_months = ($d1->diff($d2)->m);  // Get the number of months between 1st month to pay and this month
 
@@ -196,6 +197,15 @@ if (isset($deed_number)) {
                 $temp_prv_round_date = "NONE";
                 $balance_lease = $fixed_rate;
                 $ft = true;
+               
+                
+                
+                $td2= strtotime($now_date);
+                $td3= strtotime($prv_round_date);
+                
+                $no_of_days=  floor(($td2-$td3)/(60*60*24));
+                $maxDays=date('t');
+                
 
 
                 for ($i = 0; $i < $no_of_months + 1; $i++) {    //Looping through no of months
@@ -223,7 +233,7 @@ if (isset($deed_number)) {
                                 $mon_pay = $row[0];
                                 $customer_total_paid+=$mon_pay;
                             }
-                            //echo $sql_payment;
+                            //echo $sql_payment_payment."-1";
                             $temp_due = (($installment_amount + $temp_due) - $mon_pay);
 
 
@@ -254,7 +264,7 @@ if (isset($deed_number)) {
 
                                 $dis_round_date = $temp_rounded_off_date;
                                 $sql_payment = "SELECT SUM(payment) FROM pawn_installment where paid_date<='$temp_rounded_off_date' and paid_date>'$rounded_off_date' and deed_no='$deed_number'";
-                                //echo $sql_payment;
+                                //echo $sql_payment_payment."-2";
 
                                 $run_payment = mysqli_query($conn, $sql_payment);
                                 if ($row = mysqli_fetch_array($run_payment)) {
@@ -293,13 +303,13 @@ if (isset($deed_number)) {
                                 $customer_total_overpaid+=(($temp_due) * (05 / 100));
                                 //echo $customer_total_overpaid."10%|";
                                 $temp_due = ($temp_due) * (105 / 100);
-                                $temp_rounded_off_date = date('Y-m-d', strtotime('+3 week', strtotime($rounded_off_date)));
+                                $temp_rounded_off_date = date('Y-m-d', strtotime('+1 month', strtotime($rounded_off_date)));
                                 $temp_roun_off_from = date('Y-m-d', strtotime('+1 week', strtotime($rounded_off_date)));
                                 //$dis_round_date = $temp_rounded_off_date;
                                 $dis_round_date = date('Y-m-d', strtotime('+1 month', strtotime($rounded_off_date)));
                                 $sql_payment = "SELECT SUM(payment) FROM pawn_installment where paid_date<='$temp_rounded_off_date' and paid_date>'$temp_roun_off_from' and deed_no='$deed_number'";
 
-                                //echo $sql_payment;
+                                //echo $sql_payment_payment."-3";
                                 $run_payment = mysqli_query($conn, $sql_payment);
                                 if ($row = mysqli_fetch_array($run_payment)) {
                                     $mon_pay = $row[0];
@@ -333,6 +343,7 @@ if (isset($deed_number)) {
                             $customer_due = $temp_due;
                             //echo $customer_due."{4}";
                         } else {
+                            if($no_of_days>$maxDays){
                             $check_need_to_pistl = FALSE;
 
                             $temp_due = $customer_due;
@@ -340,7 +351,7 @@ if (isset($deed_number)) {
                             $mon_pay = 0.0;
                             global $conn;
                             $sql_payment = "SELECT SUM(payment) FROM pawn_installment where paid_date<='$rounded_off_date' and paid_date>'$prv_round_date'  and deed_no='$deed_number'";
-                            //echo $sql_payment;
+                            //echo $sql_payment_payment."-4";
                             $run_payment = mysqli_query($conn, $sql_payment);
                             if ($row = mysqli_fetch_array($run_payment)) {
                                 $mon_pay = $row[0];
@@ -371,6 +382,7 @@ if (isset($deed_number)) {
                                 $checknext = FALSE;
                             }
                             //echo $temp_due;
+                            }
                         }
                         //echo $temp_prv_round_date."---------";
                         if ($temp_prv_round_date == "NONE") {
@@ -394,7 +406,7 @@ if (isset($deed_number)) {
                         $mon_pay = 0.0;
                         global $conn;
                         $sql_payment = "SELECT SUM(payment) FROM pawn_installment where paid_date>'$prv_round_date'  and deed_no='$deed_number'";
-                        //echo $sql_payment;
+                        //echo $sql_payment_payment."-4";
                         $run_payment = mysqli_query($conn, $sql_payment);
                         if ($row = mysqli_fetch_array($run_payment)) {
                             $mon_pay = $row[0];

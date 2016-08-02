@@ -170,7 +170,7 @@ $current_date = date("Y-m-d");
 
                         if (res_arr.length > 1) {
 
-                            document.getElementById('payable_date').value = res_arr[0];
+                            //document.getElementById('payable_date').value = res_arr[0];
                             document.getElementById('payble_installment').value = res_arr[1] + ".00";
                             document.getElementById('next_installment').value = res_arr[2] + ".00";
                             document.getElementById('next_installment_date').value = res_arr[3];
@@ -191,6 +191,7 @@ $current_date = date("Y-m-d");
         </script>
         <script type="text/javascript">
             function saveInstallment() {
+                alert("dvsdvsd"):
                 var installment = document.getElementById('payble_installment').value;
                 var payment = document.getElementById('payment_submit').value;
                 var paybaledate = document.getElementById('payable_date').value;
@@ -446,7 +447,7 @@ $current_date = date("Y-m-d");
                                                             <div class="form-group required">
                                                                 <div class="form-group required">
                                                                     <label class="control-label">Payable Date:</label>
-                                                                    <input type="text" readonly name="payable_date" id="payable_date" placeholder="Payable Date" class="form-control" required/>
+                                                                    <input type="text" readonly name="payable_date" id="payable_date" placeholder="Payable Date" class="form-control" required value="<?php echo $current_date;?>"/>
                                                                 </div>
                                                                 <div class="form-group required">
                                                                     <label class="control-label">Next Installment Date:</label>
@@ -473,10 +474,10 @@ $current_date = date("Y-m-d");
                                                                     <label class="control-label">Paid Date:</label>
                                                                     <input type="date" name="paid_date" id="paid_date" value="<?php echo $current_date; ?>" placeholder="Paid Date" class="form-control" required/>
                                                                 </div>
-                                                                <div class="form-group required">
+<!--                                                                <div class="form-group required">
                                                                     <label class="control-label">Remaining Lease:</label>
                                                                     <input type="text" readonly name="remain_amount" id="remain_amount"  placeholder="Remaining Amount" class="form-control" required/>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
                                                         </div>
                                                     </div>

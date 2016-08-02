@@ -6,6 +6,8 @@ $conn = mysqli_connect("77.104.142.97", "ayolanin_dev", "WelComeDB1129", "ayolan
 if (mysqli_connect_errno()) {
     echo "Falied to Connect the Database" . mysqli_connect_error();
 }
+
+
 date_default_timezone_set('Asia/Colombo');
 $current_date = date("Y-m-d");
 
@@ -188,6 +190,7 @@ if ($service_no != "" && $service_no != null) {
 }
 if ($sno_begin_ins != "" && $sno_begin_ins != null) {
     global $conn;
+   
     $sql_query = "SELECT * FROM service WHERE ser_number='$sno_begin_ins'";
     $run_query = mysqli_query($conn, $sql_query);
     if (mysqli_num_rows($run_query) > 0) {
@@ -200,7 +203,7 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
             $installment_amount = $row['installment'];
             $service_date = $row['ser_date'];
             $fixed_rate = $row['period'] * $installment_amount;
-//            $service_date = "2016-04-26";
+           // $service_date = "2016-04-26";
 
             $curr_ser_date = explode("-", $service_date)[2];
 
@@ -230,7 +233,8 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
 
             $d1 = new DateTime($rounded_off_date);  // Get First PAyment date as date
             $d2 = new DateTime($now_date);          // Get Today Date As date
-
+           
+            
             $no_of_months = ($d1->diff($d2)->m);  // Get the number of months between 1st month to pay and this month
 
             $customer_due = 0.0;                    // Getting the initial customer due as 0
@@ -242,306 +246,683 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
 
             $customer_total_overpaid = 0;
             $customer_total_paid = 0;
-            $checknext = TRUE;
+            
             $temp_prv_round_date = "NONE";
             $balance_lease = $fixed_rate;
             $ft=true;
-            for ($i = 0; $i < $no_of_months + 1; $i++) {    //Looping through no of months
-                 
-                if ($balance_lease > 0) {
-                    if ($customer_due <= 0) {                   //Proceed this if only customer due is 0
-                        $check_need_to_pistl = false;
-                        $temp_due = $customer_due;
-                        $mon_pay = 0.0;
-                        global $conn;
+         
+            $td2= strtotime($now_date);
+            $td3= strtotime($prv_round_date);
+                
+            $no_of_days=  floor(($td2-$td3)/(60*60*24));
+            $maxDays=date('t');
+            
+            //New Algorithm Change
+                
+           $flag_round_date=$rounded_off_date;     
+           $flag_temp_prv_round = $temp_prv_round_date;
+           $flag_prv_round = $prv_round_date;
+                
+           $payment_arr=  array(0);
+           $payment_arr_calc=  array(0);
+           $payment_overpaid=array(0);
+           $is_arriers = array(false);
+           $interstarray=array(1);
+           
+           for($i=0;$i<$no_of_months+3;$i++){
+                array_push($is_arriers, false);
+           }
+           
+            for($i=0;$i<$no_of_months+1;$i++){
+                array_push($payment_arr_calc,0);
+                array_push($payment_overpaid,0);
+                array_push($payment_arr, $installment_amount);
+                array_push($interstarray, 0);
+            }
+            
+           $lefttopay=$fixed_rate - $installment_amount*($no_of_months+1);
+      
+
+            
+            
+                     $mon_pay=0;
+            for($i=0;$i<$no_of_months+1;$i++){
+                
+                
+                 for($itr=(sizeof($interstarray)-1);$itr>=0;$itr--){
+                      if($itr!=0){
+                        $interstarray[$itr]=$interstarray[$itr-1];
+                        
+                        
+                      }else{
+                        $tempvar = $interstarray[0];
+                        $interstarray[0]=$interstarray[1]+1;
+                        $interstarray[1]=$tempvar;
+                      }
+                        
+                    }
+                   
+                
+                
+                
+                
+                $monfreepay=0;
+                $weekfreepay=0;
+                $fiveppay=0;
+                $tenppay=0;
+                
+                $freewkpass=true;
+                $fivepwkpass=true;
+                $tenpwkpass=true;
+           
+                if(true){
+                    //first Month
+                    
+                        
+                        $temp_due=$customer_due;
+    
+                        $sql_payment = "SELECT * FROM ser_installment where paid_date<'$rounded_off_date' and paid_date>='$prv_round_date' and ser_number='$sno_begin_ins'";
+                       // echo $sql_payment."-1";
+                        
+                    
+                        $run_payment = mysqli_query($conn, $sql_payment);
+                        
+                        $prvrounddate=  strtotime($prv_round_date);
                         
                         if($ft){
-                            $prv_round_date=date('Y-m-d', strtotime('-1 day', strtotime($prv_round_date)));
+                        while($row = mysqli_fetch_assoc($run_payment)) {
+                          $monfreepay+=$row['payment'];
                         }
                         
-                        $sql_payment = "SELECT SUM(payment) FROM ser_installment where paid_date<='$rounded_off_date' and paid_date>'$prv_round_date' and ser_number='$sno_begin_ins'";
+                        }else{
+                           while($row = mysqli_fetch_assoc($run_payment)) {
+                               $tempdate=  strtotime($row['paid_date']);
+                               $tempdatediff=floor(($tempdate-$prvrounddate)/(60*60*24));
+                               
+                               if($tempdatediff==0){
+                                   $monfreepay+=$row['payment'];
+                               }elseif($tempdatediff<7){
+                                   $weekfreepay+=$row['payment'];
+                               }elseif($tempdatediff<14){
+                                   $fiveppay+=$row['payment'];
+                               }else{
+                                   $tenppay+=$row['payment'];
+                               }
+                               
+                           }
+                            
+                        }
                         
+                        
+                            
+                      
+                        $currentmonthpay=$monfreepay+$weekfreepay+$fiveppay+$tenppay;
+                        
+                        $temp_current_mon_pay=$currentmonthpay;
+                        if($currentmonthpay>0){
+                            
+                            
+                            
+                            
+                            for($tt=0;$tt<$i;$tt++){
+                                
+                                if($is_arriers[$tt]){
+                                    
+                                    if(($payment_arr_calc[$tt]-$currentmonthpay)>=0){
+                                        
+                                        //print_r($payment_arr_calc);
+                                        
+                                        $tempvalue=$payment_arr_calc[$tt]-$currentmonthpay;
+                                        $payment_arr_calc[$tt]=$tempvalue;
+                                       
+                                        $payment_arr[$tt]=$tempvalue;
+                                        $currentmonthpay=0;
+                                        print_r($payment_arr);
+                                    }else{
+                                        $temparr=$payment_arr_calc[$tt];
+                                        $payment_arr[$tt]=0;
+                                        $currentmonthpay=$currentmonthpay-$temparr;
+                                        $is_arriers[$tt]=false;
+                                    }
+                                    
+                                }                               
+                                
+                            }      
+                        }
+                        
+                      
+                        if($currentmonthpay>0){
+                            $deducted=$temp_current_mon_pay-$currentmonthpay;
+                            
+                            if($deducted>=$monfreepay){
+                                $deducted-=$monfreepay;
+                                $monfreepay=0;
+                             
+                                
+                            }else{
+                                $monfreepay-=$deducted;
+                                $deducted=0;
+                            }
+                            
+                            if($deducted>=$weekfreepay){
+                                $deducted-=$weekfreepay;
+                                $weekfreepay=0;
+                            }else{
+                                $weekfreepay-=$deducted;
+                                $deducted=0;
+                            }
+                            
+                            if($deducted>=$fiveppay){
+                                $deducted-=$fiveppay;
+                                $fiveppay=0;
+                            }else{
+                                $fiveppay-=$deducted;
+                                $deducted=0;
+                            }
+                            
+                            if($deducted>=$tenppay){
+                                $deducted-=$tenppay;
+                                $tenppay=0;
+                            }else{
+                                $tenppay-=$deducted;
+                                $deducted=0;
+                            }
+                            
+                            
+                            
+                            
+                            $thismonthdue=$payment_arr[$i];
+                            
+                            
+                            
+                            
+                            if($thismonthdue<=$monfreepay){
+                                $payment_arr[$i]=0;
+                                $is_arriers[$i]=false;
+                                $monfreepay-=$thismonthdue;
+                                $thismonthdue=0;
+                            }else{
+                                $payment_arr[$i]=$thismonthdue-$monfreepay;
+                                $thismonthdue=$thismonthdue-$monfreepay;
+                                $monfreepay=0;
+                            }
+                            
+                            if(($thismonthdue<=$weekfreepay)){
+                                $payment_arr[$i]=0;
+                                $is_arriers[$i]=false;
+                                $weekfreepay-=$thismonthdue;
+                                $thismonthdue=0;
+                                $fivepwkpass=false;
+                            }else{
+                                $payment_arr[$i]=$thismonthdue-$weekfreepay;
+                                $thismonthdue=$thismonthdue-$weekfreepay;
+                                $weekfreepay=0;
+                            }
+                            
+                            if($fivepwkpass){
+                                $thismonthdue*=(105/100);
+                                
+                                if(($thismonthdue<=$fiveppay)){
+                                $payment_arr[$i]=0;
+                                $is_arriers[$i]=false;
+                                $fiveppay-=$thismonthdue;
+                                $thismonthdue=0;
+                                $tenpwkpass=false;
+                                }else{
+                                    $payment_arr[$i]=$thismonthdue-$fiveppay;
+                                    $thismonthdue=$thismonthdue-$fiveppay;
+                                    $fiveppay=0;
+                                }
+                               $thismonthdue*=(100/105); 
+                            }
+                            
+                            if($tenpwkpass){
+                                $thismonthdue*=(110/100);
+                                
+                                if(($thismonthdue<=$tenppay)){
+                                $payment_arr[$i]=0;
+                                $is_arriers[$i]=false;
+                                $tenppay-=$thismonthdue;
+                                $thismonthdue=0;
+                                }else{
+                                    $payment_arr[$i]=$thismonthdue-$tenppay;
+                                    $thismonthdue=$thismonthdue-$tenppay;
+                                    $tenppay=0;
+                                    
+                                    $is_arriers[$i]=true;
+                                    
+                                    
+                                    
+                                }
+                               $thismonthdue*=(100/110); 
+                            }
+                            
+                            
+                            $temp_due+=$thismonthdue-($monfreepay+$weekfreepay+$fiveppay+$tenppay);
+                      
+                        }else{
+                            
+                            $temp_due+=$payment_arr[$i];
+                            
+                        }
+                        
+                         
                         if($ft){
-                            $prv_round_date=date('Y-m-d', strtotime('+1 day', strtotime($prv_round_date)));
+                            //$prv_round_date=date('Y-m-d', strtotime('+1 day', strtotime($prv_round_date)));
                             $ft=FALSE;
                         }
                         
-                        
-                        $run_payment = mysqli_query($conn, $sql_payment);
-                        if ($row = mysqli_fetch_array($run_payment)) {
-                            $mon_pay = $row[0];
-                            $customer_total_paid+=$mon_pay;
+                        if(($temp_due>0)){
+                            
+                           // $temp_due=($temp_due*(100/110));
+                            //$customer_total_overpaid-=(($temp_due) * (10 / 100));
+                            $is_arriers[$i]=true;
+                            $payment_arr[$i]=$temp_due;
+                            
+                            $temp_due=0;
+                            
+//                        
                         }
-                        //echo $sql_payment;
-                        $temp_due = (($installment_amount + $temp_due) - $mon_pay);
+                        elseif($temp_due==0){
+                            $payment_arr[$i]=$temp_due;
                         
-                       
-                        
-                        $balance_lease = $customer_total_overpaid + $fixed_rate - $customer_total_paid;
-                        if ($balance_lease <= 0) {
-                            $checknext = FALSE;
+                            
+                        }elseif($temp_due<0){
+                            
+                            
+                            $payment_arr[$i]=0;
+                            $is_arriers[$i]=false;
+                            for($tt=1;$tt<sizeof($payment_arr);$tt++){
+                                
+                                if($is_arriers[$tt]){
+                                    
+                                    if(($payment_arr[$tt]+$temp_due)>=0){
+                                        
+                                        $payment_arr[$tt]=$payment_arr[$tt]+$temp_due;
+                                        $temp_due=0;
+                                    }else{
+                                        $temparr=$payment_arr[$tt];
+                                        $payment_arr[$tt]=0;
+                                        $temp_due=$temparr+$temp_due;
+                                        $is_arriers[$tt]=false;
+                                    }
+                                }elseif($tt>$i){
+                                   
+                                    if(($payment_arr[$tt]+$temp_due)>=0){
+                                        
+                                        $payment_arr[$tt]=$payment_arr[$tt]+$temp_due;
+                                        $temp_due=0;
+                                    }else{
+                                        
+                                        $temparr=$payment_arr[$tt];
+                                        $payment_arr[$tt]=0;
+                                        $temp_due=$temparr+$temp_due;
+                                        $is_arriers[$tt]=false;
+                                        
+                                    }
+                                }
+                                
+                                
+                            }
                         }
                         
-                        $your_date = strtotime($rounded_off_date);
-                        $datediff = $now - $your_date;
-                        $datediff = floor($datediff / (60 * 60 * 24));
-                        
-                       // $chkbool=(($rounded_off_date)==)));
                       
+                         
+                        for($x=0;$x<  sizeof($payment_arr);$x++){
+                                                               
+                                if($is_arriers[$x]){
+                                   //print_r($interstarray);
+                                    //Calulating Arriers
+                                    $arriers= ((($interstarray[$x]*10)/100)+1)*$payment_arr[$x];
+                                    //$customer_total_overpaid+=(($temp_due) * (10 / 100));
+                                    $payment_arr_calc[$x]=$arriers;
+                                    
+                               }else{
+                                    if($payment_arr[$x]==0){
+                                    $payment_arr_calc[$x]=0;
+                                    }
+                               }
+                              
+                        }
                         
-                        if (($datediff <= 0)) {
-                            $checknext = FALSE;
-                        }
-
-//                       /echo $temp_due."{0}";
-
-                        if (($temp_due > 0) && ($checknext)) {
-                            if ($temp_due > $installment_amount) {
-                                $check_need_to_pistl = TRUE;
-                            }
-                            $temp_rounded_off_date = date('Y-m-d', strtotime('+1 week', strtotime($rounded_off_date)));
-                            
-                            $dis_round_date = $temp_rounded_off_date;
-                            $sql_payment = "SELECT SUM(payment) FROM ser_installment where paid_date<='$temp_rounded_off_date' and paid_date>'$rounded_off_date' and ser_number='$sno_begin_ins'";
-                            //echo $sql_payment;
-
-                            $run_payment = mysqli_query($conn, $sql_payment);
-                            if ($row = mysqli_fetch_array($run_payment)) {
-                                $mon_pay = $row[0];
-
-                                $customer_total_paid+=$mon_pay;
-                            }
-
-                            $temp_due = ($temp_due - $mon_pay);
-                            
-                            $your_date = strtotime($temp_rounded_off_date);
-                            $datediff = $now - $your_date;
-                            $datediff = floor($datediff / (60 * 60 * 24));
-
-                            if ($datediff <= 0) {
-                                $checknext = FALSE;
-                            }
-                            //if ($temp_due <= 0) {
-                                $temp_prv_round_date = $temp_rounded_off_date;
-                            //}
-                            $balance_lease = $customer_total_overpaid + $fixed_rate - $customer_total_paid;
-                            if ($balance_lease <= 0) {
-                                $checknext = FALSE;
-                            }
-
-                           // echo $temp_due."{1}.$temp_rounded_off_date";
-                        } else {
-                            $check_need_to_pistl = false;
-                        }
-                        if (($temp_due > 0) && ($checknext)) {
-
-                            if ($temp_due > $installment_amount) {
-                                $check_need_to_pistl = TRUE;
-                            }
-                            $customer_total_overpaid+=(($temp_due) * (5 / 100));
-
-                            //echo $customer_total_overpaid."5%|";
-
-
-                            $temp_due = $temp_due * (105 / 100);
-
-                            $temp_rounded_off_date = date('Y-m-d', strtotime('+2 week', strtotime($rounded_off_date)));
-                            $temp_roun_off_from = date('Y-m-d', strtotime('+1 week', strtotime($rounded_off_date)));
-
-                            $dis_round_date = $temp_rounded_off_date;
-                            $sql_payment = "SELECT SUM(payment) FROM ser_installment where paid_date<='$temp_rounded_off_date' and paid_date>'$temp_roun_off_from'  and ser_number='$sno_begin_ins'";
-                            //echo $sql_payment;
-                            $run_payment = mysqli_query($conn, $sql_payment);
-                            if ($row = mysqli_fetch_array($run_payment)) {
-                                $mon_pay = $row[0];
-
-                                $customer_total_paid+=$mon_pay;
-                            }
-
-                            $temp_due = $temp_due - $mon_pay;
-                            //echo $temp_due."|";
-                            // $temp_rounded_off_date = date('Y-m-d', strtotime('+2 week', strtotime($rounded_off_date)));
-                            $your_date = strtotime($temp_rounded_off_date);
-                            $datediff = $now - $your_date;
-
-                            $datediff = floor($datediff / (60 * 60 * 24));
-                            //echo ".....$datediff....";
-                            if ($datediff <= 0) {
-                                $checknext = FALSE;
-                            }
-                            //if ($temp_due <= 0) {
-                                $temp_prv_round_date = $temp_rounded_off_date;
-                            //}
-                            $balance_lease = $customer_total_overpaid + $fixed_rate - $customer_total_paid;
-                            if ($balance_lease <= 0) {
-                                $checknext = FALSE;
-                            }
-                            //echo $temp_due."{2}";
-                        } else {
-                            $check_need_to_pistl = false;
-                        }
-                        if (($temp_due > 0) && ($checknext)) {
-
-                            $temp_due = ($temp_due) * (100 / 105);
-                            $customer_total_overpaid-=($temp_due * (5 / 100));
-                            //echo $customer_total_overpaid."-5%|";
-                            if ($temp_due > $installment_amount) {
-                                $check_need_to_pistl = TRUE;
-                            }
-                            $customer_total_overpaid+=(($temp_due) * (10 / 100));
-                            //echo $customer_total_overpaid."10%|";
-                            $temp_due = ($temp_due) * (110 / 100);
-                            $temp_rounded_off_date = date('Y-m-d', strtotime('+3 week', strtotime($rounded_off_date)));
-                            $temp_roun_off_from = date('Y-m-d', strtotime('+2 week', strtotime($rounded_off_date)));
-                            //$dis_round_date = $temp_rounded_off_date;
-                            $dis_round_date = date('Y-m-d', strtotime('+1 month', strtotime($rounded_off_date)));
-                            $sql_payment = "SELECT SUM(payment) FROM ser_installment where paid_date<='$temp_rounded_off_date' and paid_date>'$temp_roun_off_from' and ser_number='$sno_begin_ins'";
-
-                            //echo $sql_payment;
-                            $run_payment = mysqli_query($conn, $sql_payment);
-                            if ($row = mysqli_fetch_array($run_payment)) {
-                                $mon_pay = $row[0];
-
-                                $customer_total_paid+=$mon_pay;
-                            }
-
-                            $temp_due = ($temp_due - $mon_pay);
-
-
-                            $your_date = strtotime($temp_rounded_off_date);
-                            $datediff = $now - $your_date;
-                            $datediff = floor($datediff / (60 * 60 * 24));
-                            if ($datediff <= 0) {
-                                $checknext = FALSE;
-                            }
-                            //if ($temp_due <= 0) {
-                                $temp_prv_round_date = $temp_rounded_off_date;
-                            //}
-                            $balance_lease = $customer_total_overpaid + $fixed_rate - $customer_total_paid;
-                            if ($balance_lease <= 0) {
-                                $checknext = FALSE;
-                            }
-                        } else {
-                            $check_need_to_pistl = false;
-                        }
-
-                        if ($temp_due > $installment_amount) {
-                            $check_need_to_pistl = TRUE;
-                        }
-                        $customer_due = $temp_due;
-                        //echo $customer_due."{4}";
-                    } else {
-                        $check_need_to_pistl = FALSE;
-
-                        $temp_due = $customer_due;
-                        // $temp_due = $temp_due * (110 / 100);
-                        $mon_pay = 0.0;
-                        global $conn;
-                        $sql_payment = "SELECT SUM(payment) FROM ser_installment where paid_date<='$rounded_off_date' and paid_date>'$prv_round_date'  and ser_number='$sno_begin_ins'";
-                        //echo $sql_payment;
-                        $run_payment = mysqli_query($conn, $sql_payment);
-                        if ($row = mysqli_fetch_array($run_payment)) {
-                            $mon_pay = $row[0];
-                            $customer_total_paid+=$mon_pay;
-                        }
-
-                        $temp_due = ($installment_amount + $temp_due) - $mon_pay;
-
-                        if ($temp_due > 0) {
-                            $customer_total_overpaid+=(($temp_due) * (10 / 100));
-                            $temp_due = $temp_due * (110 / 100);
-                        }
-
-                        $dis_round_date = date('Y-m-d', strtotime('+1 month', strtotime($rounded_off_date)));
-
-                        if ($temp_due > 0) {
-                            $check_need_to_pistl = true;
-                            $customer_due = $temp_due;
-                        }
-                        $your_date = strtotime($rounded_off_date);
-                        $datediff = $now - $your_date;
-                        $datediff = floor($datediff / (60 * 60 * 24));
-                        if ($datediff <= 0) {
-                            $checknext = FALSE;
-                        }
-                        $balance_lease = $customer_total_overpaid + $fixed_rate - $customer_total_paid;
-                        if ($balance_lease <= 0) {
-                            $checknext = FALSE;
-                        }
-                        //echo $temp_due;
-                    }
-                    //echo $temp_prv_round_date."---------";
+                       //print_r($payment_arr_calc);
+                  }else{
+                      
+                      
+                      echo "else";
+                      
+                      
+                      
+                  }
+                 
                     if ($temp_prv_round_date == "NONE") {
                         $prv_round_date = $rounded_off_date;
                     } else {
                         $prv_round_date = $temp_prv_round_date;
-
+                        
                         $temp_prv_round_date = "NONE";
                     }
+                    $dis_round_date=$rounded_off_date;
                     $rounded_off_date = date('Y-m-d', strtotime('+1 month', strtotime($rounded_off_date)));
-
-                    $customer_due = $temp_due;
-                }
-            }
-
-            if ($checknext) {
-                if ($balance_lease > 0) {
-                    $check_need_to_pistl = FALSE;
-                    $temp_due = $customer_due;
-                    // $temp_due = $temp_due * (110 / 100);
-                    $mon_pay = 0.0;
-                    global $conn;
-                    $sql_payment = "SELECT SUM(payment) FROM ser_installment where paid_date>'$prv_round_date'  and ser_number='$sno_begin_ins'";
-                    //echo $sql_payment;
-                    $run_payment = mysqli_query($conn, $sql_payment);
-                    if ($row = mysqli_fetch_array($run_payment)) {
-                        $mon_pay = $row[0];
-                        $customer_total_paid+=$mon_pay;
-                        
-                    }
+                    
+                    $customer_due=$temp_due;
                     
                     
-                        
-                    $temp_due = ($temp_due - $mon_pay);
-                    //$customer_total_overpaid+=(($temp_due) * (10 / 100));
-                    //echo $customer_total_overpaid."10%|";
-                    //$temp_due = $temp_due * (110 / 100);
-                    //dis_round_date = date('Y-m-d', strtotime('+1 month', strtotime($rounded_off_date)));
-                    $customer_due = $temp_due;
-                    if ($temp_due > 0) {
-                        $check_need_to_pistl = true;
+                  
+//                    for($itr=(sizeof($interstarray)-1);$itr>=0;$itr--){
+//                      if($itr!=0){
+//                        $interstarray[$itr]=$interstarray[$itr-1];
+//                        
+//                        
+//                      }else{
+//                        $tempvar = $interstarray[0];
+//                        $interstarray[0]=$interstarray[1]+1;
+//                        $interstarray[1]=$tempvar;
+//                      }
+//                        
+//                    }
+//                   
+                    
+                    
+            }
+                    
+        
+                    
+                     for($x=0;$x<  sizeof($payment_arr);$x++){
+                                                               
+                                if($is_arriers[$x]){
+                                   //print_r($interstarray);
+                                    //Calulating Arriers
+                                    $arriers= ((($interstarray[$x]*10)/100)+1)*$payment_arr[$x];
+                                    //$customer_total_overpaid+=(($temp_due) * (10 / 100));
+                                    $payment_arr_calc[$x]=$arriers;
+                                    
+                               }else{
+                                    if($payment_arr[$x]==0){
+                                    $payment_arr_calc[$x]=0;
+                                    }
+                               }
+                              
                     }
+                    //print_r($payment_arr_calc);
+                          
+                  
+            
+            
+            ///////////////////////////////////From Last day to Today////////////////////////
+            $datediff=floor(($now-  strtotime($prv_round_date))/(60*60*24));  
+           
+           $tenpwkpass=false;
+           $fivepwkpass=false;
+            if($datediff>14){
+                $tenpwkpass=true;
+                
+            }elseif($datediff>7){
+                $fivepwkpass=true;
+                
+            }
+            
+            $sql_payment = "SELECT * FROM ser_installment where paid_date<='$now_date' and paid_date>='$prv_round_date' and ser_number='$sno_begin_ins'";
+            
+            
+            $run_payment = mysqli_query($conn, $sql_payment);
+                        
+                        $prvrounddate=  strtotime($prv_round_date);
+                        $monfreepay=0;
+                        $weekfreepay=0;
+                        $fiveppay=0;
+                        $tenppay=0;
+                        while($row = mysqli_fetch_assoc($run_payment)) {
+                               $tempdate=  strtotime($row['paid_date']);
+                               $tempdatediff=floor(($tempdate-$prvrounddate)/(60*60*24));
+                               
+                               if($tempdatediff==0){
+                                   $monfreepay+=$row['payment'];
+                               }elseif($tempdatediff<7){
+                                   $weekfreepay+=$row['payment'];
+                               }elseif($tempdatediff<14){
+                                   $fiveppay+=$row['payment'];
+                               }else{
+                                   $tenppay+=$row['payment'];
+                               }
+                               
+                        }
+                        $temp_due=0; 
+                        
+                        $currentmonthpay=$monfreepay+$weekfreepay+$fiveppay+$tenppay;
+                        
+                        $temp_current_mon_pay=$currentmonthpay;
+                        if($currentmonthpay>0){
+                            
+                            
+                            
+                            
+                            for($tt=0;$tt<sizeof($payment_arr);$tt++){
+                                
+                                if($is_arriers[$tt]){
+                                    
+                                    if(($payment_arr_calc[$tt]-$currentmonthpay)>=0){
+                                        
+                                        $payment_arr_calc[$tt]=$payment_arr_calc[$tt]-$currentmonthpay;
+                                        $payment_arr[$tt]=$payment_arr_calc[$tt]-$currentmonthpay;
+                                        $currentmonthpay=0;
+                                    }else{
+                                        $temparr=$payment_arr_calc[$tt];
+                                        $payment_arr_calc[$tt]=0;
+                                        $payment_arr[$tt]=0;
+                                        $currentmonthpay=$currentmonthpay-$temparr;
+                                        $is_arriers[$tt]=false;
+                                    }
+                                    
+                                }                               
+                                
+                            }
+                           
+                        }
+                        
+                        $need_to_calc=true;
+                          if($currentmonthpay>0){
+                            $need_to_calc=false;
+                            $deducted=$temp_current_mon_pay-$currentmonthpay;
+                           
+                            
+                            if($deducted>=$monfreepay){
+                                $deducted-=$monfreepay;
+                                $monfreepay=0;
+                             
+                                
+                            }else{
+                                $monfreepay-=$deducted;
+                                $deducted=0;
+                            }
+                            
+                            
+                            if($deducted>=$weekfreepay){
+                                $deducted-=$weekfreepay;
+                                $weekfreepay=0;
+                            }else{
+                                $weekfreepay-=$deducted;
+                                $deducted=0;
+                            }
+                            
+                            if($deducted>=$fiveppay){
+                                $deducted-=$fiveppay;
+                                $fiveppay=0;
+                            }else{
+                                $fiveppay-=$deducted;
+                                $deducted=0;
+                            }
+                            
+                            if($deducted>=$tenppay){
+                                $deducted-=$tenppay;
+                                $tenppay=0;
+                            }else{
+                                $tenppay-=$deducted;
+                                $deducted=0;
+                            }
+                            
+                            
+                             
+                            
+                            $thismonthdue=$payment_arr[sizeof($payment_arr)-1];
+                            
+                           
+                            
+                            
+                            if($thismonthdue<=$monfreepay){
+                                $payment_arr[sizeof($payment_arr)-1];
+                                $is_arriers[$i]=false;
+                                $monfreepay-=$thismonthdue;
+                                $thismonthdue=0;
+                            }else{
+                                $payment_arr[sizeof($payment_arr)-1]=$thismonthdue-$monfreepay;
+                                $thismonthdue=$thismonthdue-$monfreepay;
+                                $monfreepay=0;
+                            }
+                            
+                            if(($thismonthdue<=$weekfreepay)){
+                                
+                                $payment_arr[sizeof($payment_arr)-1]=0;
+                                $is_arriers[sizeof($payment_arr)-1]=false;
+                                $weekfreepay-=$thismonthdue;
+                                $thismonthdue=0;
+                                $fivepwkpass=false;
+                            }else{
+                                $payment_arr[sizeof($payment_arr)-1]=$thismonthdue-$weekfreepay;
+                                $thismonthdue=$thismonthdue-$weekfreepay;
+                                $weekfreepay=0;
+                            }
+                           
+                            if($fivepwkpass){
+                                 
+                                $thismonthdue*=(105/100);
+                                
+                                if(($thismonthdue<=$fiveppay)){
+                                $payment_arr[sizeof($payment_arr)-1]=0;
+                                $is_arriers[sizeof($payment_arr)-1]=false;
+                                $fiveppay-=$thismonthdue;
+                                $thismonthdue=0;
+                                $tenpwkpass=false;
+                                }else{
+                                    $payment_arr[sizeof($payment_arr)-1]=$thismonthdue-$fiveppay;
+                                    $thismonthdue=$thismonthdue-$fiveppay;
+                                    $fiveppay=0;
+                                }
+                            }
+                            
+                            if($tenpwkpass){
+                                $thismonthdue*=(110/100);
+                                
+                                if(($thismonthdue<=$tenppay)){
+                                $payment_arr[sizeof($payment_arr)-1]=0;
+                                $is_arriers[sizeof($payment_arr)-1]=false;
+                                $tenppay-=$thismonthdue;
+                                $thismonthdue=0;
+                                }else{
+                                    $payment_arr[sizeof($payment_arr)-1]=$thismonthdue-$tenppay;
+                                    $thismonthdue=$thismonthdue-$tenppay;
+                                    $tenppay=0;
+                                    
+                                    $is_arriers[sizeof($payment_arr)-1]=true;
+                                }
+                                
+                            }
+                            
+                           
+                           $temp_due+=$thismonthdue-($monfreepay+$weekfreepay+$fiveppay+$tenppay);
+                            if($temp_due<=0){
+                                $customer_due+=$temp_due;
+                            }
+                            
+                        }
+                       
+          
+            
+           //////////////////////////////////////////////////////////////////////////////////////////// 
+            
+            
+            $datediff=floor(($now-  strtotime($dis_round_date))/(60*60*24));    
+            
+            
+            $nextpayment=$payment_arr[sizeof($payment_arr)-1];
+            
+            
+            if($datediff>=0){
+            
+                
+             
+                
+            if($datediff==0){
+                    
+                     for($x=0;$x<sizeof($payment_arr);$x++){
+                                                               
+                                if($is_arriers[$x]){
+                                    $tempx=$interstarray[$x]-1;
+                                    if($tempx>=0){
+                                    $arriers= ((($tempx*10)/100)+1)*$payment_arr[$x];
+                                    //$customer_total_overpaid+=(($temp_due) * (10 / 100));
+                                    $payment_arr_calc[$x]=$arriers;
+                                    }
+                               }else{
+                                    if($payment_arr[$x]==0){
+                                    $payment_arr_calc[$x]=0;
+                                    }
+                               }
+                              
+                        }
+                    
+              
+            }else{
+                $dis_round_date=date('Y-m-d', strtotime('+1 week', strtotime($dis_round_date)));
+            }    
+                
+                    
+                    
+            foreach ($payment_arr_calc as $value) {
+                $customer_due+=$value;
+            }
+                    
+           
+                    
+            if($datediff>14){
+                if($need_to_calc){
+                $nextpayment*=(110/100);
                 }
-               
+              
+                $dis_round_date=$rounded_off_date;
+            }elseif($datediff>7){
+                if($need_to_calc){
+                $nextpayment*=(105/100);
+                }
+                if($customer_due>=0){
+                    $dis_round_date=date('Y-m-d', strtotime('+1 week', strtotime($dis_round_date)));
+                }else{
+                   $dis_round_date=$rounded_off_date;  
+                }
+                
             }
-
-
-
-
-
-            if ($customer_due <= 0) {
-//                //$customer_due = $installment_amount + $customer_due;
-                
-                
-                
-                 // $dis_round_date = date('Y-m-d', strtotime('-1 month', strtotime($rounded_off_date)));
-                   //$dis_round_date=$rounded_off_date;
+            
+            if($datediff!=0){
+            $nextpayment+=$installment_amount;
             }
-
+            
+            }
+            
+            
+            ///////////////////////////////////////////
+            
+            
+            
+            $customer_due+=$nextpayment;
+            
+            
+            
+        
             $nextpayment = "NA";
             $nextpaydate = "NA";
             $totpaybleamnt = $customer_due;
 
-            if ($check_need_to_pistl || $customer_due <= 0) {
-                $totpaybleamnt = $installment_amount + $customer_due;
-                $nextpayment = $installment_amount;
-                $nextpaydate = $rounded_off_date;
-                if (($customer_due * -1) >= $installment_amount) {
-                    $nextpaydate = date('Y-m-d', strtotime('+1 month', strtotime($rounded_off_date)));
-                }
-            }
-
-            $balance_lease = $customer_total_overpaid + $fixed_rate - $customer_total_paid;
+            $balance_lease = $lefttopay+$customer_due;
             $no_of_installments = ceil(($balance_lease - $customer_total_overpaid) / $installment_amount);
 
 
@@ -559,11 +940,11 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                 $settlement_amount = $settlement_amount . " (With 6% Discount ($temp_settlement.00))";
             }
 
-            if ($balance_lease <= 0) {
-                $update_service_status = "UPDATE service SET ser_status='0' WHERE ser_number='$sno_begin_ins'";
-                $run_update = mysqli_query($conn, $update_service_status);
-                
-            }
+//            if ($balance_lease <= 0) {
+//                $update_service_status = "UPDATE service SET ser_status='0' WHERE ser_number='$sno_begin_ins'";
+//                $run_update = mysqli_query($conn, $update_service_status);
+//                
+//            }
 
 
             if ($customer_due == '-0') {
