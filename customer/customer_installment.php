@@ -172,9 +172,9 @@ $current_date = date("Y-m-d");
 
                             //document.getElementById('payable_date').value = res_arr[0];
                             document.getElementById('payble_installment').value = res_arr[1] + ".00";
-                            document.getElementById('next_installment').value = res_arr[2] + ".00";
-                            document.getElementById('next_installment_date').value = res_arr[3];
-                            document.getElementById('total_payable_payment').value = res_arr[4];
+                            //document.getElementById('next_installment').value = res_arr[2] + ".00";
+                            //document.getElementById('next_installment_date').value = res_arr[3];
+                            //document.getElementById('total_payable_payment').value = res_arr[4];
 
                             document.getElementById('remain_amount').value = res_arr[5] + ".00";
                             document.getElementById('total_payable_in_settlement').value = res_arr[7];
@@ -413,10 +413,7 @@ $current_date = date("Y-m-d");
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbl_installment_body"></tbody>
-
-
                                             </table>
-
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="container">
@@ -436,9 +433,8 @@ $current_date = date("Y-m-d");
                                                                     <input type="text" readonly name="payble_installment" id="payble_installment" placeholder="Payable Installment" class="form-control" required/>
                                                                 </div>
                                                                 <div class="form-group required">
-                                                                    <label class="control-label">Next Installment:</label>
-                                                                    <input type="text" readonly name="next_installment" id="next_installment" placeholder="Payable Installment" class="form-control" required/>
-
+                                                                    <label class="control-label">Remaining Lease:</label>
+                                                                    <input type="text" readonly name="remain_amount" id="remain_amount"  placeholder="Remaining Amount" class="form-control" required/>
                                                                 </div>
                                                             </div>
                                                             <button type="button"  class="btn btn" id="cservicebtn" onclick="saveInstallment();">Add Installment</button>
@@ -449,10 +445,7 @@ $current_date = date("Y-m-d");
                                                                     <label class="control-label">Payable Date:</label>
                                                                     <input type="text" readonly name="payable_date" id="payable_date" placeholder="Payable Date" class="form-control" required value="<?php echo $current_date;?>"/>
                                                                 </div>
-                                                                <div class="form-group required">
-                                                                    <label class="control-label">Next Installment Date:</label>
-                                                                    <input type="text" readonly name="next_installment_date" id="next_installment_date" placeholder="Payable Date" class="form-control" required/>
-                                                                </div>
+                                                                
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
@@ -461,10 +454,7 @@ $current_date = date("Y-m-d");
                                                                     <label class="control-label">Payment:</label>
                                                                     <input type="text" name="payment_submit" id="payment_submit" placeholder="Payment" class="form-control" required onKeyPress="return numbersonly(this, event);"/>
                                                                 </div>
-                                                                <div class="form-group required">
-                                                                    <label class="control-label">Total Payable Payment:</label>
-                                                                    <input type="text" readonly name="total_payable_payment" id="total_payable_payment" placeholder="Payment" class="form-control" required/>
-                                                                </div>
+                                                              
                                                             </div>
                                                         </div>
 
@@ -542,28 +532,6 @@ $current_date = date("Y-m-d");
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="http://bootsnipp.com/dist/scripts.min.js"></script>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script type="text/javascript">
-                                                    /*--This JavaScript method for Print command--*/
-                                                    function PrintDoc() {
-                                                        var toPrint = document.getElementById('printarea');
-                                                        var popupWin = window.open('', '_blank', 'width=1024,height=600,location=no,left=200px');
-                                                        popupWin.document.open();
-                                                        popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="" /></head><body onload="window.print()">')
-                                                        popupWin.document.write(toPrint.innerHTML);
-                                                        popupWin.document.write('</html>');
-                                                        popupWin.document.close();
-                                                    }
-                                                    /*--This JavaScript method for Print Preview command--*/
-                                                    function PrintPreview() {
-                                                        var toPrint = document.getElementById('printarea');
-                                                        var popupWin = window.open('', '_blank', 'width=1024,height=600,location=no,left=200px');
-                                                        popupWin.document.open();
-                                                        popupWin.document.write('<html><title>::Print Preview::</title><link rel="stylesheet" type="text/css" href="" media="screen"/></head><body">')
-                                                        popupWin.document.write(toPrint.innerHTML);
-                                                        popupWin.document.write('</html>');
-                                                        popupWin.document.close();
-                                                    }
-    </script>
     <script type="text/javascript">
         function numbersonly(myfield, e, dec)
         {

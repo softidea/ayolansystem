@@ -362,28 +362,37 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                             
                             
                             
-                            
+                           
                             for($tt=0;$tt<$i;$tt++){
                                 
                                 if($is_arriers[$tt]){
                                     
-                                    if(($payment_arr_calc[$tt]-$currentmonthpay)>=0){
+                                    if(($currentmonthpay!=0)&&($payment_arr_calc[$tt]-$currentmonthpay)>0){
+                                       // echo $currentmonthpay."|".$tt."|".$i."|";
                                         
-                                        //print_r($payment_arr_calc);
                                         
                                         $tempvalue=$payment_arr_calc[$tt]-$currentmonthpay;
                                         $payment_arr_calc[$tt]=$tempvalue;
                                        
                                         $payment_arr[$tt]=$tempvalue;
                                         $currentmonthpay=0;
-                                        print_r($payment_arr);
+                                        
                                     }else{
+                                        if(($payment_arr_calc[$tt]-$currentmonthpay<=0)){
                                         $temparr=$payment_arr_calc[$tt];
                                         $payment_arr[$tt]=0;
+                                        $payment_arr_calc[$tt]=0;
                                         $currentmonthpay=$currentmonthpay-$temparr;
                                         $is_arriers[$tt]=false;
+                                        //echo $currentmonthpay."|".$tt."|".$i."|";
+                                        }
                                     }
                                     
+                                }else{
+                                    
+                                    $payment_arr_calc[$tt]=0;
+                                    
+                                   
                                 }                               
                                 
                             }      
@@ -539,13 +548,18 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                                         
                                         $payment_arr[$tt]=$payment_arr[$tt]+$temp_due;
                                         $temp_due=0;
+                                        
                                     }else{
                                         $temparr=$payment_arr[$tt];
                                         $payment_arr[$tt]=0;
                                         $temp_due=$temparr+$temp_due;
                                         $is_arriers[$tt]=false;
                                     }
-                                }elseif($tt>$i){
+                                }else{
+                                
+                                    $payment_arr_calc[$tt]=0;
+                                
+                                if($tt>$i){
                                    
                                     if(($payment_arr[$tt]+$temp_due)>=0){
                                         
@@ -560,6 +574,7 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                                         
                                     }
                                 }
+                                }
                                 
                                 
                             }
@@ -570,6 +585,7 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                         for($x=0;$x<  sizeof($payment_arr);$x++){
                                                                
                                 if($is_arriers[$x]){
+                                    
                                    //print_r($interstarray);
                                     //Calulating Arriers
                                     $arriers= ((($interstarray[$x]*10)/100)+1)*$payment_arr[$x];
@@ -622,8 +638,7 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
 //                    }
                    
                    
-                   // print_r($payment_arr);
-                    //print_r($payment_arr_calc);
+                  
             }
                     
         
@@ -697,27 +712,62 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                             
                             
                             
-                            for($tt=0;$tt<sizeof($payment_arr);$tt++){
+//                            for($tt=0;$tt<sizeof($payment_arr);$tt++){
+//                                
+//                                if($is_arriers[$tt]){
+//                                    
+//                                    if(($payment_arr_calc[$tt]-$currentmonthpay)>=0){
+//                                        $tempvalue=$payment_arr_calc[$tt]-$currentmonthpay;
+//                                        $payment_arr_calc[$tt]=$tempvalue;
+//                                        $payment_arr[$tt]=$tempvalue;
+//                                        $currentmonthpay=0;
+//                                    }else{
+//                                        $temparr=$payment_arr_calc[$tt];
+//                                        $payment_arr_calc[$tt]=0;
+//                                        $payment_arr[$tt]=0;
+//                                        $currentmonthpay=$currentmonthpay-$temparr;
+//                                        $is_arriers[$tt]=false;
+//                                    }
+//                                    
+//                                }                               
+//                                
+//                            }
+//                            
+                            
+                             for($tt=0;$tt<$i;$tt++){
                                 
                                 if($is_arriers[$tt]){
                                     
-                                    if(($payment_arr_calc[$tt]-$currentmonthpay)>=0){
+                                    if(($currentmonthpay!=0)&&($payment_arr_calc[$tt]-$currentmonthpay)>0){
+                                       // echo $currentmonthpay."|".$tt."|".$i."|";
                                         
-                                        $payment_arr_calc[$tt]=$payment_arr_calc[$tt]-$currentmonthpay;
-                                        $payment_arr[$tt]=$payment_arr_calc[$tt]-$currentmonthpay;
+                                        
+                                        $tempvalue=$payment_arr_calc[$tt]-$currentmonthpay;
+                                        $payment_arr_calc[$tt]=$tempvalue;
+                                       
+                                        $payment_arr[$tt]=$tempvalue;
                                         $currentmonthpay=0;
+                                        
                                     }else{
+                                        if((($payment_arr_calc[$tt]-$currentmonthpay)<=0)){
                                         $temparr=$payment_arr_calc[$tt];
-                                        $payment_arr_calc[$tt]=0;
                                         $payment_arr[$tt]=0;
+                                        $payment_arr_calc[$tt]=0;
                                         $currentmonthpay=$currentmonthpay-$temparr;
                                         $is_arriers[$tt]=false;
+                                        //echo $currentmonthpay."|".$tt."|".$i."|";
+                                        }
                                     }
                                     
+                                }else{
+                                    
+                                    $payment_arr_calc[$tt]=0;
+                                    
+                                   
                                 }                               
                                 
-                            }
-                           
+                            }      
+                                            
                         }
                         
                         $need_to_calc=true;
@@ -945,7 +995,8 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
 //                $run_update = mysqli_query($conn, $update_service_status);
 //                
 //            }
-
+//                print_r($payment_arr_calc);
+//                print_r($payment_arr);
 
             if ($customer_due == '-0') {
                 $customer_due = '0';
