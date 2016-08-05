@@ -164,7 +164,7 @@ $current_date = date("Y-m-d");
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
                     {
-                        //alert(xmlhttp.responseText);
+                        
                         var res_value = xmlhttp.responseText;
                         var res_arr = res_value.split("#");
 
@@ -186,12 +186,10 @@ $current_date = date("Y-m-d");
                 }
                 xmlhttp.open("GET", "../controller/co_load_installment_customer.php?sno_begin_ins=" + serviceno, true);
                 xmlhttp.send();
-
+                
             }
-        </script>
-        <script type="text/javascript">
-            function saveInstallment() {
-                alert("dvsdvsd"):
+             function saveInstallment(){
+                
                 var installment = document.getElementById('payble_installment').value;
                 var payment = document.getElementById('payment_submit').value;
                 var paybaledate = document.getElementById('payable_date').value;
@@ -226,6 +224,13 @@ $current_date = date("Y-m-d");
                     alert("The lease is already settled");
                 }
             }
+            
+            
+//            
+        </script>
+        <script type="text/javascript">
+            
+           
         </script>
         <script type="text/javascript">
             function loadInstallmentService() {

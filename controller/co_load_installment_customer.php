@@ -230,12 +230,21 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
             $now_date = date("Y-m-d");          // Get Today's Date
 
 
-            $d1 = new DateTime($rounded_off_date);  // Get First PAyment date as date
-            $d2 = new DateTime($now_date);          // Get Today Date As date
-           
+            //$d1 = new DateTime($rounded_off_date);  // Get First PAyment date as date
+            //$d2 = new DateTime($now_date);          // Get Today Date As date
             
-            $no_of_months = ($d1->diff($d2)->m);  // Get the number of months between 1st month to pay and this month
-
+            $d1=  strtotime($rounded_off_date);
+            $d2 = strtotime($now_date);
+            
+            
+            
+           // $no_of_months = ($d1->diff($d2)->m);  // Get the number of months between 1st month to pay and this month
+            $no_of_months = floor(($d2-$d1)/(60*60*24*30));
+            
+            
+            
+            
+            
             $customer_due = 0.0;                    // Getting the initial customer due as 0
             $prv_round_date = $service_date;        // Getting the last Service date as first date
             //$installment_amount=4043;
@@ -321,7 +330,7 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                         $temp_due=$customer_due;
     
                         $sql_payment = "SELECT * FROM ser_installment where paid_date<'$rounded_off_date' and paid_date>='$prv_round_date' and ser_number='$sno_begin_ins'";
-                       // echo $sql_payment."-1";
+                        //echo $sql_payment."-1";
                         
                     
                         $run_payment = mysqli_query($conn, $sql_payment);
@@ -895,15 +904,14 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
             
             
             $nextpayment=$payment_arr[sizeof($payment_arr)-1];
-            
-            
-            if($datediff>=0){
+          
+//            if($datediff>=0){
             
                 
              
                 
-            if($datediff==0){
-                    
+//            if($datediff==0){
+              if($datediff<=0){      
                      for($x=0;$x<sizeof($payment_arr);$x++){
                                                                
                                 if($is_arriers[$x]){
@@ -922,17 +930,28 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
                         }
                     
               
-            }else{
-                $dis_round_date=date('Y-m-d', strtotime('+1 week', strtotime($dis_round_date)));
-            }    
-                
-                    
-                    
+            }
+            
+            
+            
+//            else{
+//                $dis_round_date=date('Y-m-d', strtotime('+1 week', strtotime($dis_round_date)));
+//            }  
+            
+              
             foreach ($payment_arr_calc as $value) {
                 $customer_due+=$value;
             }
+            
+            
+                
                     
-           
+            
+//             foreach ($payment_arr_calc as $value) {
+//                $customer_due+=$value;
+//            }     
+             
+            if($datediff>0){
                     
             if($datediff>14){
                 if($need_to_calc){
@@ -995,8 +1014,8 @@ if ($sno_begin_ins != "" && $sno_begin_ins != null) {
 //                $run_update = mysqli_query($conn, $update_service_status);
 //                
 //            }
-//                print_r($payment_arr_calc);
-//                print_r($payment_arr);
+                print_r($payment_arr_calc);
+                print_r($payment_arr);
 
             if ($customer_due == '-0') {
                 $customer_due = '0';
